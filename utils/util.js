@@ -1,5 +1,6 @@
-const svrUrl = "http://123.57.180.141";
-// const authKey = "484F215F522B6B7B2A60265D5C4C266F28654A6B4B225835202D41584F673B2C";
+// const svrUrl = "http://123.57.180.141";
+const svrUrl = "http://westsunshine.sapet.cn/_minipro"
+const authKey = "484F215F522B6B7B2A60265D5C4C266F28654A6B4B225835202D41584F673B2C";
 
 const Promise = require('../utils/bluebird.core.min.js')
 
@@ -26,9 +27,10 @@ function loginSync() {
 				console.log(res.code);
 				if (res.code) {
 					wx.request({
-						url: svrUrl + "/system/login",
+						url: svrUrl + "/login.php",
 						method:'POST',
 						data: {
+							auth_key: authKey,
 							code: res.code
 						},
 						header: {
@@ -140,7 +142,7 @@ String.prototype.endWith = function (endStr) {
 module.exports = {
 	formatTime: formatTime,
 	svrUrl: svrUrl,
-	// authKey: authKey,
+	authKey: authKey,
 	loginSync: loginSync,
 	getUserInfo: getUserInfo,
 	randomString: randomString,
