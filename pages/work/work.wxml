@@ -1,0 +1,75 @@
+<image src="{{ curBg }}" mode="aspectFill" class="bg" />
+
+<image src="/img/home.png" class="home" />
+<view class="title">艺术馆大厅</view>
+
+<swiper class="swiper" next-margin="120rpx" previous-margin="120rpx" current="{{currentItemId}}" bindchange="swiperChange" indicator-dots="{{false}}" indicator-active-color="#0C6D4A" circular>
+	<block wx:for="{{ works }}" wx:for-item="item" wx:for-index="index" wx:key="index">
+		<swiper-item item-id="{{index}}" data-item-id="{{index}}" bindtap='clickChange'>
+			<view class='row'>
+				<view class='col {{currentItemId == index ? "selected" : ""}}' style="background:url('{{ item.wobg_url }}') no-repeat; background-size:480rpx 724rpx; padding:20rpx 0 0 0rpx; text-align:center;">
+					<image src="{{ item.poem_url }}" mode="aspectFit" style="width:350rpx; height:770rpx;" />
+				</view>
+			</view>
+		</swiper-item>
+	</block>
+</swiper>
+
+<view class="comments" style="height:250rpx; overflow-y:scroll;">
+	<view wx:for="{{ curWork.comments }}" wx:for-item="comment" wx:key="index" wx:for-index="index" class="comment">
+		<image src="{{ comment.user_portrait }}" />
+		<view>
+			<view class="nickname">@{{ comment.user_nickname }}</view>
+			<view class="text">{{ comment.comm_text }}</view>
+		</view>
+		<view style="display:flex; color:#ffffff; font-size:24rpx; margin-left:auto;">
+			<view style="display:flex; align-items:center;"><image src="/img/like.png" style="width:32rpx; height:32rpx; margin-right:5rpx;" /> 2</view>
+			<view style="display:flex; align-items:center;"><image src="/img/comment.png" style="width:32rpx; height:32rpx; margin-right:5rpx;" /> 2</view>
+		</view>
+	</view>
+</view>
+
+<view class="action">
+	<image wx:if="{{ owner_id == user.user_id }}" src="/img/forward.png" bindtap="showForward" style="width:145rpx; height:60rpx;" />
+	<image wx:if="{{ owner_id == user.user_id }}" src="/img/sell.png" bindtap="showSell" style="width:145rpx; height:60rpx;" />
+	<image wx:if="{{ owner_id == user.user_id }}" src="/img/sponsor.png" bindtap="showSponsor" style="width:145rpx; height:60rpx;" />
+	<image wx:if="{{ owner_id == user.user_id }}" src="/img/showcomment.png" bindtap="showComment" style="width:145rpx; height:60rpx;" />
+</view>
+
+<view class="bg_black" wx:if="{{ sponsorShow || commentShow }}"></view>
+<view class="sponsor" wx:if="{{ sponsorShow }}">
+	<image src="/img/sunflower.png" style="width:217rpx; height:221rpx; margin-top:82rpx;" />
+	<view class="sponsorCount">
+		<view>我要打赏 + </view>
+		<view><input type="number" /></view>
+		<view> - 阳光值</view>
+	</view>
+	<view class="">
+		<image src="/img/submit.png" style="width:145rpx; height:60rpx; margin-top:30rpx;" bindtap="submitSponsor" />
+		<image src="/img/cancel.png" style="width:145rpx; height:60rpx; margin-top:30rpx; margin-left:70rpx;" bindtap="cancelSponsor" />
+	</view>
+</view>
+
+<!--发布评论-->
+<view class="sponsor" wx:if="{{ commentShow }}" style="background-color:#E5E5E5;">
+	<view class="submitComment">
+		<textarea placeholder="说点什么吧......" bindinput="commentInput" data-name="describe" placeholder-class="placeholder" placeholder-style="padding:20rpx;" style="margin:50rpx; background-color:#ffffff; width:407rpx; height:301rpx; font-size:24rpx; padding:20rpx;"></textarea>
+	</view>
+	<view class="">
+		<image src="/img/send.png" style="width:145rpx; height:60rpx; margin-top:30rpx;" bindtap="submitComment" />
+		<image src="/img/cancel.png" style="width:145rpx; height:60rpx; margin-top:30rpx; margin-left:70rpx;" bindtap="cancelComment" />
+	</view>
+</view>
+
+
+<!-- 拍卖 -->
+<view wx:if="{{ ifShowSell }}" style="position:absolute; width:515rpx; height:559rpx; background-color:#ffffff; top:300rpx; left:117rpx; border-radius:30rpx; text-align:center;">
+	<image src="/img/sunflower.png" style="width:217rpx; height:221rpx; margin-top:83rpx;"/>
+	<view style="font-size:24rpx; padding:30rpx 50rpx; background-color:#FFC836;">
+		<view>该作品可获得500阳光值</view>
+	</view>
+	<view style="display:flex; justify-content:space-around; margin-top:50rpx;">
+		<image src="/img/submit.png" bindtap="confirmSell" style="width:145rpx; height:60rpx;"/>
+		<image src="/img/cancel.png" bindtap="hideSell" style="width:145rpx; height:60rpx;"/>
+	</view>
+</view>
