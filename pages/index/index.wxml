@@ -2,7 +2,12 @@
 
 <view class="level">
 	<view style="position:relative; background-color:#ffffff; height:50rpx; border-radius:25rpx;">
-		<image src="/img/level.png" style="width:166rpx; height:50rpx;" />
+		<!-- <image src="/img/level.png" style="width:166rpx; height:50rpx;" /> -->
+		<view class="levelContent">
+			<view class="levelContentItem">
+				<view class="levelContentItemCurrent"></view>
+			</view>
+		</view>
 		<view style="position:absolute; top:0rpx; left:15rpx; display:flex; align-items:center; height:50rpx;">
 			<image src="/img/leveicon.png" style="width:27rpx; height:27rpx;" />
 			<view style=" display:flex; align-items:center;">
@@ -72,7 +77,7 @@
 </view>
 
 <!-- 排行榜 -->
-<view wx:if="{{ ifShowRank }}" class="bg_black" style="z-index:101;" bindtap="showRank"></view>
+<view wx:if="{{ ifShowRank }}" catchtouchmove="move" class="bg_black" style="z-index:101;" bindtap="showRank"></view>
 <view wx:if="{{ ifShowRank }}" style="z-index:102; background-color:#FFC936; width:700rpx; height:1100rpx; position:absolute; top:200rpx; left:25rpx;">
 	<view style="position:relative; display:flex; padding-top:0rpx; background-color:#ffffff;">
 		<view style="width:217.5rpx;">

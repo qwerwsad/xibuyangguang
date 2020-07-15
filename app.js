@@ -8,7 +8,7 @@ App({
 		let that = this;
 		// 登录
 		util.loginSync().then(function ( res ) {
-			console.log(res, 'onLaunch', that.employIdCallback )
+			// console.log(res, 'onLaunch', that.employIdCallback )
 			if ( that.employIdCallback ) {
 				that.employIdCallback( res );
 			}

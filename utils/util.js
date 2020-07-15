@@ -1,5 +1,5 @@
-const svrUrl = "http://westsunshine.sapet.cn/_minipro";
-const authKey = "484F215F522B6B7B2A60265D5C4C266F28654A6B4B225835202D41584F673B2C";
+const svrUrl = "http://123.57.180.141";
+// const authKey = "484F215F522B6B7B2A60265D5C4C266F28654A6B4B225835202D41584F673B2C";
 
 const Promise = require('../utils/bluebird.core.min.js')
 
@@ -25,33 +25,36 @@ function loginSync() {
 			success: function (res) {
 				console.log(res.code);
 				if (res.code) {
-					// wx.request({
-					// 	url: svrUrl + "/login.php",
-					// 	data: {
-					// 		auth_key: authKey,
-					// 		code: res.code
-					// 	},
-					// 	success: function ( res ) {
-					// 		// console.log( res.data );
+					wx.request({
+						url: svrUrl + "/system/login",
+						method:'POST',
+						data: {
+							code: res.code
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' // 默认值
+						},
+						success: function ( res ) {
+							// console.log( res.data );
 
-					// 		getApp().globalData.user = res.data;
-					// 		getApp().globalData.ifShowAddToMyMiniproTip = res.data.ifShowAddToMyMiniproTip;
-					// 		getApp().globalData.ifShowShareTip = res.data.ifShowShareTip;
-					// 		getApp().globalData.ifShowFollowTeacherTip = res.data.ifShowFollowTeacherTip;
-					// 		getApp().globalData.ifShowFollowShopTip = res.data.ifShowFollowShopTip;
-					// 		getApp().globalData.ifShowSearchTypeTip = res.data.ifShowSearchTypeTip;
+							getApp().globalData.user = res.data;
+							getApp().globalData.ifShowAddToMyMiniproTip = res.data.ifShowAddToMyMiniproTip;
+							getApp().globalData.ifShowShareTip = res.data.ifShowShareTip;
+							getApp().globalData.ifShowFollowTeacherTip = res.data.ifShowFollowTeacherTip;
+							getApp().globalData.ifShowFollowShopTip = res.data.ifShowFollowShopTip;
+							getApp().globalData.ifShowSearchTypeTip = res.data.ifShowSearchTypeTip;
 
-					// 		// 测试几个引导框
-					// 		// getApp().globalData.ifShowAddToMyMiniproTip = 1;
-					// 		// getApp().globalData.ifShowShareTip = 1;
-					// 		// getApp().globalData.ifShowFollowTeacherTip = 1;
-					// 		// getApp().globalData.ifShowFollowShopTip = 1;
-					// 		// getApp().globalData.ifShowSearchTypeTip = 1;
-					// 		//END
+							// 测试几个引导框
+							// getApp().globalData.ifShowAddToMyMiniproTip = 1;
+							// getApp().globalData.ifShowShareTip = 1;
+							// getApp().globalData.ifShowFollowTeacherTip = 1;
+							// getApp().globalData.ifShowFollowShopTip = 1;
+							// getApp().globalData.ifShowSearchTypeTip = 1;
+							//END
 
-					// 		reslove( res.data );
-					// 	}
-					// });
+							reslove( res.data );
+						}
+					});
 				};
 			}
 		});
@@ -137,7 +140,7 @@ String.prototype.endWith = function (endStr) {
 module.exports = {
 	formatTime: formatTime,
 	svrUrl: svrUrl,
-	authKey: authKey,
+	// authKey: authKey,
 	loginSync: loginSync,
 	getUserInfo: getUserInfo,
 	randomString: randomString,

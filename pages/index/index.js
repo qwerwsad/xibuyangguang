@@ -25,6 +25,7 @@ Page({
 		myRank: "",
 		recipients: [],
 		curRecipient: {},
+		friendAsync: []
 	},
 	onLoad: function (options) {
 		that = this;
@@ -38,7 +39,7 @@ Page({
 		} else {
 			app.employIdCallback = res => {
 				that.setData({ user: res });
-				if ( that.data.user.user_if_geted_weixin_info == 0 ) {
+				if (that.data.user.accessed == 0 ) {
 					that.shouQuan();
 				}
 				that.init();
@@ -51,6 +52,9 @@ Page({
 	onShow: function () {
 	},
 	onShareAppMessage: function () {
+	},
+	move: function() {
+
 	},
 	init() {
 		that.getWorks();
