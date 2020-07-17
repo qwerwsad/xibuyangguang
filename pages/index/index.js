@@ -1,8 +1,10 @@
 let util = require('../../utils/util.js');
+let requestFunc = require('../../utils/request.js');
 const app = getApp();
 let that;
 Page({
 	data: {
+		levelWid: 0,
 		user: {},
 		getWechatInfoViewShow: 0,
 		currentItemId: 0,
@@ -31,15 +33,22 @@ Page({
 		that = this;
 		console.log(app.globalData.user, 'app.globalData.user')
 		if ( app.globalData.user != null ) {
-			that.setData({ user: app.globalData.user }); 
+			let levelWid = 0
+			levelWid = app.globalData.user.data.givePoint / app.globalData.user.data.point
+			that.setData({ user: app.globalData.user, levelWid }); 
 			if ( that.data.user.user_if_geted_weixin_info == 0 ) {
 				that.shouQuan();
 			}
 			that.init();
 		} else {
 			app.employIdCallback = res => {
-				that.setData({ user: res });
-				if (that.data.user.accessed == 0 ) {
+				let levelWid = 0
+				if (res) {
+					levelWid = res.data.givePoint / app.globalData.user.data.point
+				}
+				that.setData({ user: res, levelWid});
+				console.log(that.data.user, 'that.data.user')
+				if (that.data.user.data.accessed == 0 ) {
 					that.shouQuan();
 				}
 				that.init();
@@ -83,24 +92,17 @@ Page({
 		});
 	},
 	getRanks() {
-		wx.request({ method: "GET", dataType: "json",
-			url: util.svrUrl + '/get_ranks.php',
+		requestFunc.requestFunc({
+			url: '/friend/alluser',
+			method: "GET",
 			data: {
-				auth_key: util.authKey,
-				user_id: that.data.user.user_id,
-			},
-			success: function (res) {
-				// console.log( res );
-				that.setData({
-					friendsRanks: res.data.friendRanks,
-					totalRanks: res.data.totalRanks,
-					ranks: res.data.totalRanks,
-					myFriendRank: res.data.myFriendRank,
-					myTotalRank: res.data.myTotalRank,
-					myRank: res.data.myFriendRank,
-				});
+				
 			}
-		});
+		}).then((data) => {
+			that.setData({
+				totalRanks: data.data
+			});
+		})
 	},
 	getFriends() {
 		wx.request({ method: "GET", dataType: "json",
@@ -143,31 +145,38 @@ Page({
 		});
 	},
 	saveWechatUserInfo: function (e) {
+		var that = this
 		wx.showLoading({ mask: true, title: '加载中' });
-		wx.request({ method: "POST", dataType: "json", header: { 'content-type': 'application/x-www-form-urlencoded' },
-		url: util.svrUrl + '/save_user_wechat_info.php',
+		console.log(e.detail.userInfo)
+		requestFunc.requestFunc({
+			url: '/system/add-user-basic',
+			method: "POST",
 			data: {
-				auth_key: util.authKey,
-				user_id: that.data.user.user_id,
-				openid: that.data.user.openid,
-				portrait: e.detail.userInfo.avatarUrl,
-				nickname: e.detail.userInfo.nickName,
+				id: that.data.user.data.id,
+				avatar: e.detail.userInfo.avatarUrl,
+				nickName: '111' || e.detail.userInfo.nickName,
 				gender: e.detail.userInfo.gender,
 				country: e.detail.userInfo.country,
 				province: e.detail.userInfo.province,
 				city: e.detail.userInfo.city,
 				area: e.detail.userInfo.area,
 				address: e.detail.userInfo.address,
-				ifGetedWeixinInfo: 1,
-				encryptedData: e.detail.encryptedData,
-				iv: e.detail.iv,
-			},
-			success: function (res) {
-				console.log( res );
+				"accessed": 0,
+				"givePoint": 0,
+				"leftPoint": 0,
+				"level": 0,
+				"levelId": 0,
+				"openId": "",
+				"phoneNumber": "",
+				"pictureUrl": "",
+				"point": ""
+			}
+		}).then((data) => {
+			if (data.result == 0) {
 				wx.showToast({
-					title: res.data.msg,
+					title: data.msg,
 				});
-				util.loginSync().then(function ( res2 ) {
+				util.loginSync().then(function (res2) {
 					// console.log( res2 );
 					that.setData({
 						user: app.globalData.user,
@@ -175,8 +184,48 @@ Page({
 					});
 					wx.hideLoading();
 				});
+			} else {
+				wx.showToast({
+					title: '授权失败，请重试',
+					icon: 'none',
+					duration: 1500
+				});
 			}
-		});
+			
+		})
+		// wx.request({ method: "POST", dataType: "json", header: { 'content-type': 'application/x-www-form-urlencoded' },
+		// 	url: util.svrUrl + '/system/add-user-basic',
+		// 	data: {
+		// 		auth_key: util.authKey,
+		// 		user_id: that.data.user.user_id,
+		// 		openid: that.data.user.openid,
+		// 		portrait: e.detail.userInfo.avatarUrl,
+		// 		nickname: e.detail.userInfo.nickName,
+		// 		gender: e.detail.userInfo.gender,
+		// 		country: e.detail.userInfo.country,
+		// 		province: e.detail.userInfo.province,
+		// 		city: e.detail.userInfo.city,
+		// 		area: e.detail.userInfo.area,
+		// 		address: e.detail.userInfo.address,
+		// 		ifGetedWeixinInfo: 1,
+		// 		encryptedData: e.detail.encryptedData,
+		// 		iv: e.detail.iv,
+		// 	},
+		// 	success: function (res) {
+		// 		console.log( res );
+		// 		wx.showToast({
+		// 			title: res.data.msg,
+		// 		});
+		// 		util.loginSync().then(function ( res2 ) {
+		// 			// console.log( res2 );
+		// 			that.setData({
+		// 				user: app.globalData.user,
+		// 				getWechatInfoViewShow: false
+		// 			});
+		// 			wx.hideLoading();
+		// 		});
+		// 	}
+		// });
 	},
 	ShowGetSunshineValue() {
 		that.setData({

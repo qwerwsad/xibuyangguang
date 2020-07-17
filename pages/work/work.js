@@ -1,4 +1,5 @@
 let util = require('../../utils/util.js');
+let requestFunc = require('../../utils/request.js');
 const app = getApp();
 let that;
 Page({
@@ -54,35 +55,53 @@ Page({
 		that.getWorks();
 	},
 	getWorks() {
-		wx.request({
-			url: util.svrUrl + '/works.php',
+		requestFunc.requestFunc({
+			url: '/works/list',
+			method: "POST",
 			data: {
-				auth_key: util.authKey,
-				user_id: that.data.owner_id,
-			},
-			success: function (res) {
-				// console.log(res);
+				userId: that.data.user.data.id
+			}
+		}).then((data) => {
+			console.log(data)
+			that.setData({
+				works: data.data,
+			});
+			if (data.data.length > 0 ) {
 				that.setData({
-					works: res.data,
+					curBg: that.data.currentItemId ? data.data[that.data.currentItemId].wobg_url :data.data[ 0 ].wobg_url,
+					curWork: that.data.currentItemId ? data.data[that.data.currentItemId] : data.data[0],
 				});
-				if ( that.data.works.length > 0 ) {
-					that.setData({
-						curBg: that.data.works[ that.data.currentItemId ].wobg_url,
-						curWork: that.data.works[ that.data.currentItemId ],
-					});
-				}
 			}
-		});
-		wx.request({
-			url: util.svrUrl + '/work.php',
-			data: {
-				auth_key: util.authKey,
-				user_id: that.data.owner_id,
-			},
-			success: function (res) {
+		})
+		// wx.request({
+		// 	url: util.svrUrl + '/works/list',
+		// 	method: 'POST',
+		// 	data: {
+		// 		userId: that.data.user.data.id,
+		// 	},
+		// 	success: function (res) {
+		// 		that.setData({
+				// 	works: res.data,
+				// });
+				// if ( that.data.works.length > 0 ) {
+				// 	that.setData({
+				// 		curBg: that.data.works[ that.data.currentItemId ].wobg_url,
+				// 		curWork: that.data.works[ that.data.currentItemId ],
+				// 	});
+				// }
 				
-			}
-		});
+		// 	}
+		// });
+		// wx.request({
+		// 	url: util.svrUrl + '/work.php',
+		// 	data: {
+		// 		auth_key: util.authKey,
+		// 		user_id: that.data.owner_id,
+		// 	},
+		// 	success: function (res) {
+				
+		// 	}
+		// });
 	},
 	swiperChange: function (e) {
 		var currentItemId = e.detail.currentItemId;

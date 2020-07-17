@@ -1,4 +1,5 @@
 let util = require('../../utils/util.js');
+let requestFunc = require('../../utils/request.js');
 const app = getApp();
 let that;
 
@@ -18,12 +19,31 @@ Page({
 		recordFile: "",
 		recordStatus: "stop",
 		recordIcon: "/img/mic.png", //录音按钮图标：开始录音和停止录音
+		currentMusicIndex: -1,
+		mp3Url: '',
+		bgmId: ''
+	},
+	gotoCreateC: function() {
+		requestFunc.requestFunc({
+			url: '/works/create',
+			method: "POST",
+			data: {
+				"userId": that.data.user.data.id,
+				"audioUrl": that.data.mp3Url,
+				"bgMusicId": Number(that.data.bgmId),
+				"bgPictureId": Number(that.data.wobg_id),
+				"bgPoetryId": Number(that.data.poem_id),
+			}
+		}).then((data) => {
+			console.log(data, ' data.data. create')
+		})
 	},
 	onLoad: function (options) {
 		that = this;
 		if (options.wobg_id == undefined || options.poem_id == undefined) {
 			wx.navigateBack();
 		}
+		console.log(options, 'options')
 		this.setData({
 			wobg_id: options.wobg_id,
 			poem_id: options.poem_id,
@@ -47,6 +67,10 @@ Page({
 		}
 		that.init();
 	},
+	onUnload: function() {
+		this.innerAudioContext && this.innerAudioContext.pause()
+		this.innerAudioContext = ''
+	},
 	onReady: function () {},
 	onShow: function () {},
 	onShareAppMessage: function () {},
@@ -56,67 +80,107 @@ Page({
 		that.getBgms();
 	},
 	getWorkBg() {
-		wx.request({
-			url: util.svrUrl + '/work_bg.php',
+		requestFunc.requestFunc({
+			url: '/multimedia/bg-pictures',
+			method: "GET",
 			data: {
-				auth_key: util.authKey,
-				user_id: that.data.user.user_id,
-				wobg_id: that.data.wobg_id,
-			},
-			success: function (res) {
-				console.log(res);
-				that.setData({
-					work_bg: res.data,
-				});
+				userId: that.data.user.data.id
 			}
-		});
+		}).then((data) => {
+			for (let index = 0; index < data.data.length; index++) {
+				if (data.data[index].id == that.data.wobg_id) {
+					that.setData({
+						work_bg: data.data[index],
+					});
+				}
+			}
+		})
 	},
 	getPoem() {
-		wx.request({
-			url: util.svrUrl + '/poem.php',
+		requestFunc.requestFunc({
+			url: '/multimedia/bg-poetry',
+			method: "GET",
 			data: {
-				auth_key: util.authKey,
-				user_id: that.data.user.user_id,
-				poem_id: that.data.poem_id,
-			},
-			success: function (res) {
-				console.log(res);
-				that.setData({
-					poem: res.data,
-				});
+				userId: that.data.user.id
 			}
-		});
+		}).then((data) => {
+			for (let index = 0; index < data.data.length; index++) {
+				if (data.data[index].id == that.data.poem_id) {
+					that.setData({
+						poem: data.data[index],
+					});
+				}
+			}
+		})
+	},
+	hideCert() {
+		// this.data.ifShowRecord = false
+		this.setData({
+			ifShowRecord: false
+		})
 	},
 	getBgms() {
-		wx.request({
-			url: util.svrUrl + '/bgms.php',
+		requestFunc.requestFunc({
+			url: '/multimedia/bgms',
+			method: "POST",
 			data: {
-				auth_key: util.authKey,
-				user_id: that.data.user.user_id,
-			},
-			success: function (res) {
-				console.log(res);
-				that.setData({
-					bgms: res.data,
-				});
+				userId: that.data.user.id,
+				"order": "",
+				"pageNum": 0,
+				"pageSize": 10
 			}
-		});
+		}).then((data) => {
+			console.log(data.data, ' data.data')
+			that.setData({
+				bgms: data.data,
+			});
+		})
+		// wx.request({
+		// 	url: util.svrUrl + '/bgms.php',
+		// 	data: {
+		// 		auth_key: util.authKey,
+		// 		user_id: that.data.user.user_id,
+		// 	},
+		// 	success: function (res) {
+		// 		console.log(res);
+		// 		that.setData({
+		// 			bgms: res.data,
+		// 		});
+		// 	}
+		// });
 	},
 	play(e) {
-		const innerAudioContext = wx.createInnerAudioContext()
-		innerAudioContext.autoplay = true
-		innerAudioContext.src = e.currentTarget.dataset.bgmurl;
-		innerAudioContext.onPlay(() => {
-			console.log('开始播放')
+		if (e.currentTarget.dataset.currentmusicindex == this.data.currentMusicIndex) {
+			this.innerAudioContext.pause()
+			this.setData({
+				currentMusicIndex: -1
+			})
+			return
+		}
+		this.setData({
+			currentMusicIndex: e.currentTarget.dataset.currentmusicindex
 		})
-		innerAudioContext.onError((res) => {
-			console.log(res.errMsg)
-			console.log(res.errCode)
-		})
+		if (this.innerAudioContext) {
+			this.innerAudioContext.src = e.currentTarget.dataset.bgmurl;
+			this.innerAudioContext.play()
+		} else {
+			this.innerAudioContext = wx.createInnerAudioContext()
+			this.innerAudioContext.autoplay = true
+			this.innerAudioContext.src = e.currentTarget.dataset.bgmurl;
+			this.innerAudioContext.onPlay(() => {
+				console.log('开始播放')
+			})
+			this.innerAudioContext.onError((res) => {
+				console.log(res.errMsg)
+				console.log(res.errCode)
+			})
+		}
 	},
-	record() {
+	record(e) {
+		const bgmId = e.currentTarget.dataset.bgmid;
 		that.setData({
 			ifShowRecord: 1,
+			bgmId: bgmId
 		});
 	},
 	clickChange: function (e) {
@@ -203,33 +267,28 @@ Page({
 		innerAudioContext.stop();
 	},
 	uploadRecordFile() {
-		wx.showLoading({
-			title: '上传中，请稍后',
-		});
+		// wx.showLoading({
+		// 	title: '上传中，请稍后',
+		// });
+		console.log(that.data.recordFile)
 		wx.uploadFile({
-			url: util.svrUrl + '/upload_record_file.php',
+			url: util.svrUrl + '/upload',
 			filePath: that.data.recordFile,
 			name: "file", //后台要绑定的名称
-			header: { "Content-Type": "multipart/form-data" },
-			// header: { 'content-type': 'application/x-www-form-urlencoded' },
-			formData: {
-				auth_key: util.authKey,				
-				user_id: that.data.user.user_id,
-				wobg_id: that.data.wobg_id,
-				poem_id: that.data.poem_id,
-			},
+			// header: { "Content-Type": "multipart/form-data" },
 			success: function (res) {
 				// console.log( res );
-				let data = res.data && JSON.parse( res.data );
-				wx.hideLoading();
-				wx.showToast({
-					title: data.msg,
-				});
-				setTimeout( function() {
-					wx:wx.navigateTo({
-						url: '/pages/work/work?id=' + data.newId,
-					});
-				}, 1000 );
+				console.log(res, '上传cheng')
+				const data = res.data && JSON.parse(res.data)
+				if (data) {
+					that.setData({
+						mp3Url: data.data.fileUrl,
+						ifShowRecord: false
+					})
+				}
+			},
+			fail: function(err) {
+				console.log(err)
 			}
 		});
 	}

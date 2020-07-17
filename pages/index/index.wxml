@@ -1,18 +1,18 @@
-<image src="http://westsunshine.sapet.cn/static/bg2.png" mode="widthFix" class="bg" />
+<image src="{{user.data.pictureUrl}}" mode="widthFix" class="bg" />
 
 <view class="level">
 	<view style="position:relative; background-color:#ffffff; height:50rpx; border-radius:25rpx;">
 		<!-- <image src="/img/level.png" style="width:166rpx; height:50rpx;" /> -->
 		<view class="levelContent">
 			<view class="levelContentItem">
-				<view class="levelContentItemCurrent"></view>
+				<view class="levelContentItemCurrent" style="width:{{levelWid}}%;"></view>
 			</view>
 		</view>
 		<view style="position:absolute; top:0rpx; left:15rpx; display:flex; align-items:center; height:50rpx;">
 			<image src="/img/leveicon.png" style="width:27rpx; height:27rpx;" />
 			<view style=" display:flex; align-items:center;">
-				<view style="font-size:24rpx; margin-left:5rpx;">Lv.1</view>
-				<view style="font-size:18rpx; color:#808080; margin-left:5rpx; margin-top:5rpx;">80/100</view>
+				<view style="font-size:24rpx; margin-left:5rpx;">Lv.{{user.data.level}}</view>
+				<view style="font-size:18rpx; color:#808080; margin-left:5rpx; margin-top:5rpx;">{{user.data.givePoint}}/{{app.globalData.user.data.point}}</view>
 			</view>
 		</view>
 	</view>
@@ -21,7 +21,7 @@
 <view class="sunshinevalue">
 	<view style="position:relative; height:50rpx;">
 		<image src="/img/sunshinevalue.png" style="width:166rpx; height:50rpx;" />
-		<view style="position:absolute; top:15rpx; left:70rpx; font-size:24rpx;">2100</view>
+		<view style="position:absolute; top:15rpx; left:70rpx; font-size:24rpx;">{{user.data.leftPoint}}</view>
 	</view>
 </view>
 
@@ -33,7 +33,7 @@
 
 <image src="/img/name.png" class="name" />
 
-<view class="buttons" style="top:1220rpx; z-index:1000;">
+<view class="buttons" style="top:1220rpx; z-index:100;">
 	<view bindtap="showRank" style="{{ ifShowRank ? ' background-color:#FFC936;' : ''}}">排行榜</view>
 	<view bindtap="showTask" style="{{ ifShowTask ? ' background-color:#FFC936;' : ''}}">任务</view>
 	<view bindtap="showFriend" style="{{ ifShowFriend ? ' background-color:#FFC936;' : ''}}">好友</view>
@@ -78,7 +78,7 @@
 
 <!-- 排行榜 -->
 <view wx:if="{{ ifShowRank }}" catchtouchmove="move" class="bg_black" style="z-index:101;" bindtap="showRank"></view>
-<view wx:if="{{ ifShowRank }}" style="z-index:102; background-color:#FFC936; width:700rpx; height:1100rpx; position:absolute; top:200rpx; left:25rpx;">
+<view wx:if="{{ ifShowRank }}" style="z-index:102; background-color:#FFC936; width:700rpx; height:90%; position:fixed; top:50rpx; left:25rpx;">
 	<view style="position:relative; display:flex; padding-top:0rpx; background-color:#ffffff;">
 		<view style="width:217.5rpx;">
 			<view style="display:flex; align-items:center; justify-content:center; margin-top:20rpx;">
@@ -100,17 +100,23 @@
 		</view>
 	</view>
 	<view style="background-color:#FFC936; padding:30rpx 0;">
-		<view style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
+		<view 
+			style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
 			<view style="margin-left:50rpx; font-size:24rpx; width:50rpx; text-align:center;">{{ myRank }}</view>
 			<image src="http://westsunshine.sapet.cn/static/portrait.jpg" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
 			<view style="width:250rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">我</view>
 			<view style="margin-left:0rpx; color:#676767; font-size:24rpx;">{{ user.user_sunshine_value }}</view>
 		</view>
-		<view wx:for="{{ ranks }}" wx:for-item="rank" wx:key="rank" wx:for-index="index" style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
-			<view style="margin-left:50rpx; width:50rpx; padding-top:5rpx;"><image src="/img/no1.png" style="width:50rpx; height:50rpx; border-radius:50%;" /></view>
-			<image src="{{ rank.user_portrait }}" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
-			<view style="width:250rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">{{ rank.user_nickname }}</view>
-			<view style="margin-left:0rpx; color:#676767; font-size:24rpx;">{{ rank.user_sunshine_value }} </view>
+		<view   class="paihangbangBox">
+			<view wx:for="{{ totalRanks }}" wx:for-item="rank" wx:key="index" wx:for-index="index" style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
+				<view style="margin-left:50rpx; width:50rpx; padding-top:5rpx;">
+					<view wx:if="{{index>=3}}">NO.{{index + 1}}</view>
+					<image wx:if="{{index<3}}" src="/img/no{{index + 1}}.png" style="width:50rpx; height:50rpx; border-radius:50%;" />
+				</view>
+				<image src="{{ rank.avatar }}" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
+				<view style="width:250rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">{{ rank.nickName }}</view>
+				<view style="margin-left:0rpx; color:#676767; font-size:24rpx;">{{ rank.leftPoint }} </view>
+			</view>
 		</view>
 	</view>
 </view>

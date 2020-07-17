@@ -349,3 +349,10 @@ view {
 .modals .cancel {
     margin: 16rpx 0;
 }
+
+.paihangbangBox {
+    width: 100%;
+    height: 588rpx;
+    overflow-y: scroll;
+    z-index: 200;
+}

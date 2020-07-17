@@ -1,21 +1,37 @@
-<image src="{{ work_bg.wobg_url }}" mode="aspectFill" class="bg" />
+<image src="{{ work_bg.pictureUrl }}" mode="aspectFill" class="bg" />
 
 <image src="/img/home.png" class="home" />
 <image src="/img/share.png" class="home" style="left:150rpx;" />
 <view class="title">艺术馆大厅</view>
 <image src="/img/next.png" class="home" style="left:650rpx;" bindtap="gotoCreateC" />
 
-<view style="position:absolute; top:200rpx; width:750rpx; text-align:center;">
+<!-- <view style="position:absolute; top:200rpx; width:750rpx; text-align:center;">
 	<image src="/img/step1-active.png" style="width:79rpx; height:44rpx;" />
 	<image src="/img/step2.png" style="width:79rpx; height:44rpx; margin-left:30rpx;" />
 	<image src="/img/step3.png" style="width:79rpx; height:44rpx; margin-left:30rpx;" />
+	
+</view> -->
+<view class="stepBox" style="position:absolute; top:200rpx; width:750rpx; text-align:center;">
+	<!-- <image src="/img/step1-active.png" style="width:79rpx; height:44rpx;" /> -->
+	<view class="step">
+		<view class="normal"></view>
+		<view class="steptext">Step1</view>
+	</view>
+	<view class="step" style="margin:0 16rpx;">
+		<view class="normal"></view>
+		<view class="steptext">Step2</view>
+	</view>
+	<view class="step">
+		<view class="active"></view>
+		<view class="steptext">Step3</view>
+	</view>
 </view>
 
 <scroll-view scroll-y="true" class="swiper" style="height:800rpx; overflow:hidden;">
 	<view wx:for="{{ bgms }}" wx:for-item="item" wx:for-index="index" wx:key="index" style="width:650rpx; height:120rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
-		<image src="/img/play.png" data-bgmurl="{{ item.bgm_url }}" bindtap="play" style="width:63rpx; height:63rpx; margin-left:40rpx;" />
-		<view style="width:320rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">{{ item.bgm_name }}</view>
-		<image src="/img/record.png" bindtap="record" style="width:165rpx; height:78rpx; margin-top:10rpx;" />
+		<image src="{{index == currentMusicIndex ? '/img/stop.png': '/img/play.png'}}" data-currentmusicindex="{{index}}" data-bgmurl="{{ item.bgmUrl }}" bindtap="play" style="width:63rpx; height:63rpx; margin-left:40rpx;" />
+		<view style="width:320rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">{{ item.bgmName }}</view>
+		<image src="/img/record.png" bindtap="record"  data-bgmid="{{ item.id }}" style="width:165rpx; height:78rpx; margin-top:10rpx;" />
 	</view>
 </scroll-view>
 
@@ -27,7 +43,7 @@
 <view wx:if="{{ ifShowRecord }}" style="z-index:102; position:absolute; top:300rpx; width:660rpx; height:689rpx; left:45rpx; background-color:#ffffff; border-radius:50rpx; overflow:hidden;">
 	<view style="text-align:center; font-size:24rpx; height:485rpx;">
 		<text style="">
-			{{ poem.poem_text }}
+			{{ poem.content }}
 		</text>
 	</view>
 	<view style="text-align:center; margin-top:20rpx;"><image src="/img/wave.png" style="width:303rpx; height:65rpx;" /></view>

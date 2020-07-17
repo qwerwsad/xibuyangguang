@@ -1,14 +1,30 @@
-<image src="{{ work_bg.wobg_url }}" mode="aspectFill" class="bg" />
+<image src="{{ work_bg.pictureUrl }}" mode="aspectFill" class="bg" />
 
 <image src="/img/home.png" class="home" />
 <image src="/img/share.png" class="home" style="left:150rpx;" />
 <view class="title">艺术馆大厅</view>
 <image src="/img/next.png" class="home" style="left:650rpx;" bindtap="gotoCreateC" />
 
-<view style="position:absolute; top:200rpx; width:750rpx; text-align:center;">
+<!-- <view style="position:absolute; top:200rpx; width:750rpx; text-align:center;">
 	<image src="/img/step1-active.png" style="width:79rpx; height:44rpx;" />
 	<image src="/img/step2.png" style="width:79rpx; height:44rpx; margin-left:30rpx;" />
 	<image src="/img/step3.png" style="width:79rpx; height:44rpx; margin-left:30rpx;" />
+	
+</view> -->
+<view class="stepBox" style="position:absolute; top:200rpx; width:750rpx; text-align:center;">
+	<!-- <image src="/img/step1-active.png" style="width:79rpx; height:44rpx;" /> -->
+	<view class="step">
+		<view class="normal"></view>
+		<view class="steptext">Step1</view>
+	</view>
+	<view class="step" style="margin:0 16rpx;">
+		<view class="active"></view>
+		<view class="steptext">Step2</view>
+	</view>
+	<view class="step">
+		<view class="normal"></view>
+		<view class="steptext">Step3</view>
+	</view>
 </view>
 
 <swiper class="swiper" next-margin="120rpx" previous-margin="120rpx" current="{{currentItemId}}" bindchange="swiperChange" indicator-dots="{{false}}" indicator-active-color="#0C6D4A" circular>
@@ -17,7 +33,7 @@
 			<view class='row' style="">
 				<view class="title">{{item.name}}</view>
 				<view class='col {{currentItemId == index ? "selected" : ""}}'>
-					<image src="{{item.poem_url}}"> </image>
+					<image src="{{item.pictureUrl}}"> </image>
 				</view>
 			</view>
 		</swiper-item>
@@ -36,14 +52,11 @@
 <view wx:if="{{ ifShowPoemStory }}" class="bg_black" style="z-index:101;" bindtap="hideCert"></view>
 <view wx:if="{{ ifShowPoemStory }}" style="z-index:102; position:absolute; width:628rpx; height:670rpx; background-color:#ffffff; top:300rpx; left:61rpx; text-align:center; border-radius:50rpx;">
 	<view style="display:flex; align-items:flex-end; background-color:#FFC836; font-size:28rpx; padding:50rpx; border-top-left-radius:50rpx; border-top-right-radius:50rpx;">
-		<view>作者故事</view>
-		<view style="font-size:24rpx; margin-left:auto; margin-right:10rpx;">张文浩</view>
+		<view>{{poems[currentItemId].storyTitle}}</view>
+		<view style="font-size:24rpx; margin-left:auto; margin-right:10rpx;">{{poems[currentItemId].storyAuther}}</view>
 	</view>
 	<view style="font-size:22rpx; padding:40rpx 60rpx; text-align:justify; line-height:40rpx; height:370rpx; overflow:hidden;">
-		掉色的时候他一直在琢磨，掉色的时候他一直在琢磨，掉色的时候他一直在琢磨，掉色的时候他一直在琢磨，
-		掉色的时候他一直在琢磨，掉色的时候他一直在琢磨，掉色的时候他一直在琢磨，掉色的时候他一直在琢磨，
-		掉色的时候他一直在琢磨，掉色的时候他一直在琢磨，掉色的时候他一直在琢磨，掉色的时候他一直在琢磨，
-		掉色的时候他一直在琢磨，掉色的时候他一直在琢磨，掉色的时候他一直在琢磨，掉色的时候他一直在琢磨。
+		{{poems[currentItemId].storyContent}}
 	</view>
 	<view>
 		<image src="/img/xibuyangguangjijinhui.png" style="width:544rpx; height:64rpx;"/>

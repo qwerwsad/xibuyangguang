@@ -1,25 +1,84 @@
-.bg { width:100%; height:100vh; filter: brightness(0.5); }
+.bg {
+    width: 100%;
+    height: 100vh;
+    filter: brightness(0.5);
+}
 
-.home { position: absolute; top:62rpx; left:71rpx; width:61rpx; height:79rpx; }
+.home {
+    position: absolute;
+    top: 62rpx;
+    left: 71rpx;
+    width: 61rpx;
+    height: 79rpx;
+}
 
-.title { position: absolute; top:50rpx; width:200rpx; left:calc( 50vw - 100rpx); color:#ffffff; text-align: center; }
+.title {
+    position: absolute;
+    top: 50rpx;
+    width: 200rpx;
+    left: calc(50vw - 100rpx);
+    color: #ffffff;
+    text-align: center;
+}
+
+.stepBox {
+    width: 100%;
+    /* height: 100%; */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.step {
+    width: 79rpx;
+    height: 44rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.active {
+    width: 79rpx;
+    height: 20rpx;
+    border-radius: 10rpx;
+    background: #FFC837;
+}
+
+.normal {
+    width: 79rpx;
+    height: 20rpx;
+    border-radius: 10rpx;
+    background: #ffffff;
+}
+
+.steptext {
+    width: 79rpx;
+    height: 20rpx;
+    color: #ffffff;
+    font-size: 12rpx;
+    margin-top: 10rpx;
+}
 
 .swiper {
-	position: absolute;
-	width:750rpx;
-	height:724rpx;
-	top: 300rpx;
-	left: 0;
+    position: absolute;
+    width: 750rpx;
+    height: 724rpx;
+    top: 300rpx;
+    left: 0;
 }
+
 .row {
     width: 100%;
     height: 100%;
 }
+
 .title {
     font-size: 36rpx;
     text-align: center;
     margin: 20rpx 0;
 }
+
 .col {
     width: 480rpx;
     margin: 0 auto;
@@ -27,38 +86,66 @@
     transform: scale(0.9);
     border-radius: 10rpx;
 }
+
 .col image {
     width: 100%;
     height: 100%;
     border-radius: 10rpx;
 }
+
 .selected {
     transform: scale(1);
     /* box-shadow: 0px 0px 20rpx 5rpx #CCC; */
 }
 
-.comments { 
-	position: absolute;
-	width: 537rpx;
-	bottom:150rpx;
-	left: calc( ( 100vw - 537rpx ) / 2 );
+.comments {
+    position: absolute;
+    width: 537rpx;
+    bottom: 150rpx;
+    left: calc((100vw - 537rpx) / 2);
 
 }
-.comments view.comment { display:flex; align-items: center; margin-top:20rpx; }
-.comments view.comment image { width:100rpx; height:100rpx; border-radius: 50%; }
-.comments view.comment view { margin-left:10rpx; }
-.comments view.comment view view.nickname { color:#ffffff; font-size:24rpx; }
-.comments view.comment view view.text { color:#ffffff; font-size:24rpx; margin-top:20rpx; }
+
+.comments view.comment {
+    display: flex;
+    align-items: center;
+    margin-top: 20rpx;
+}
+
+.comments view.comment image {
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: 50%;
+}
+
+.comments view.comment view {
+    margin-left: 10rpx;
+}
+
+.comments view.comment view view.nickname {
+    color: #ffffff;
+    font-size: 24rpx;
+}
+
+.comments view.comment view view.text {
+    color: #ffffff;
+    font-size: 24rpx;
+    margin-top: 20rpx;
+}
 
 .action {
-	position: absolute;
-	width: 400rpx;
-	bottom:50rpx;
-	left: calc( ( 100vw - 400rpx ) / 2 );
-	display: flex;
-	justify-content: space-between;
+    position: absolute;
+    width: 400rpx;
+    bottom: 50rpx;
+    left: calc((100vw - 400rpx) / 2);
+    display: flex;
+    justify-content: space-between;
 }
-.action image { width:144rpx; height:60rpx; }
+
+.action image {
+    width: 144rpx;
+    height: 60rpx;
+}
 
 
 .sponsor {
@@ -70,14 +157,28 @@
     left: calc((100% - 517rpx) / 2);
     z-index: 1001;
     background: #ffffff;
-	border-radius: 30rpx;
-	display:flex;
-	flex-direction:column;
-	align-items:center;
-	justify-content:flex-start;
+    border-radius: 30rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 }
 
-.sponsor .sponsorCount { 
-	background-color:#FFC936; width:100%; height:74rpx; margin-top:61rpx; display: flex; align-items: center; justify-content: center; font-size:24rpx;
+.sponsor .sponsorCount {
+    background-color: #FFC936;
+    width: 100%;
+    height: 74rpx;
+    margin-top: 61rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24rpx;
 }
-.sponsor .sponsorCount input { width:150rpx; background-color: #ffffff; margin:0 20rpx; border-radius:30rpx; text-align: center; }
+
+.sponsor .sponsorCount input {
+    width: 150rpx;
+    background-color: #ffffff;
+    margin: 0 20rpx;
+    border-radius: 30rpx;
+    text-align: center;
+}
