@@ -6,23 +6,28 @@
 	"setting": {
 		"urlCheck": false,
 		"es6": true,
+		"enhance": false,
 		"postcss": true,
 		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
 		"coverView": true,
+		"nodeModules": false,
 		"autoAudits": false,
 		"showShadowRootInWxmlPanel": true,
 		"scopeDataCheck": false,
+		"uglifyFileName": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
+		"compileHotReLoad": false,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
 		},
-		"useCompilerModule": false,
+		"useIsolateContext": true,
+		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
@@ -60,10 +65,17 @@
 			"current": -1,
 			"list": [
 				{
-					"id": 0,
-					"name": "laquhaoyou",
-					"pathName": "pages/index/index",
-					"query": "shareUserId=1284296336682803200",
+					"id": -1,
+					"name": "pages/friend_home/friend_home",
+					"pathName": "pages/friend_home/friend_home",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "pages/work/work",
+					"pathName": "pages/work/work",
+					"query": "user_id=1283642307770343424",
 					"scene": null
 				}
 			]

@@ -1,0 +1,15 @@
+<!-- <image src="{{user.data.pictureUrl}}" mode="widthFix" class="bg" /> -->
+<image bindtap="gowork" src="{{worksList[3].pictureUrl}}" class="work0" />
+<image bindtap="gowork" src="{{worksList[2].pictureUrl}}" mode="aspectFill" class="work1" />
+<image bindtap="gowork" src="{{worksList[1].pictureUrl}}" mode="aspectFill" class="work2" />
+<image bindtap="gowork" src="{{worksList[0].pictureUrl}}" mode="aspectFill" class="work3" />
+<view class="friend">
+  <image class="acv" src="{{avatar}}" />
+  <view class="info">
+    <view class="name">{{nickname || '未知'}}</view>
+    <view class="level">
+      <view class="lev">Lv.{{level || '未知'}}</view>
+      <view class="send">已捐{{donate || '未知'}}</view>
+    </view>
+  </view>
+</view>

@@ -38,21 +38,21 @@
 
 .comments { 
 	position: absolute;
-	width: 537rpx;
-	bottom:150rpx;
-	left: calc( ( 100vw - 537rpx ) / 2 );
+	width: 420rpx;
+	bottom: 134rpx;
+	left: calc( ( 100vw - 440rpx ) / 2 );
 
 }
-.comments view.comment { display:flex; align-items: center; margin-top:20rpx; }
-.comments view.comment image { width:100rpx; height:100rpx; border-radius: 50%; }
-.comments view.comment view { margin-left:10rpx; }
+.comments view.comment { height: 60rpx; display:flex; align-items: center; }
+.comments view.comment image { width:50rpx; height:50rpx; border-radius: 50rpx; }
+.comments view.comment view { margin-left:10rpx; display: flex;flex-direction: column; justify-content: space-between; }
 .comments view.comment view view.nickname { color:#ffffff; font-size:24rpx; }
-.comments view.comment view view.text { color:#ffffff; font-size:24rpx; margin-top:20rpx; }
+.comments view.comment view view.text { color:#ffffff; font-size:24rpx;}
 
 .action {
 	position: absolute;
 	width: 400rpx;
-	bottom:50rpx;
+	bottom:80rpx;
 	left: calc( ( 100vw - 400rpx ) / 2 );
 	display: flex;
 	justify-content: space-between;
@@ -83,4 +83,9 @@
 
 .sponsor .submitComment {
 
+}
+.work_like{
+    position: absolute;
+    right: 190rpx;
+    bottom: 260rpx;
 }
