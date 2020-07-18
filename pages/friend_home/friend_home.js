@@ -71,7 +71,7 @@ Page({
   },
   gowork() {
     wx.navigateTo({
-      url: '/pages/work/work?user_id=' + this.data.user.data.id
+      url: '/pages/work/work?user_id=' + this.data.user.data.id + '&pageAttribution=others'
     })
   }
 })

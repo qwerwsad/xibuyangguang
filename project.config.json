@@ -68,6 +68,14 @@
 					"id": -1,
 					"name": "pages/friend_home/friend_home",
 					"pathName": "pages/friend_home/friend_home",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "pages/work/work",
+					"pathName": "pages/work/work",
+					"query": "user_id=1283642307770343424",
 					"scene": null
 				}
 			]
