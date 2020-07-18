@@ -36,12 +36,12 @@ Page({
 		that.getWorkBgs();
 	},
 	getWorkBgs() {
-
+		console.log(that.data,"that.data");
 		requestFunc.requestFunc({
 			url: '/multimedia/bg-pictures',
 			method: "GET",
 			data: {
-				userId: that.data.user.id
+				userId: that.data.user.data.id
 			}
 		}).then((data) => {
 				that.setData({
