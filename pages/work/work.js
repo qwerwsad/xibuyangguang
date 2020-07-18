@@ -87,7 +87,7 @@ Page({
 			method: "POST",
 			data: {
 				worksId: list.id,
-				authorId: list.userId,
+				authorId: '1283642307770343424' || list.userId,
 				pageSize: 30
 			}
 		}).then((data) => {
@@ -376,5 +376,65 @@ Page({
 	},
 	cancelReplayComment() {
 		this.setData({commentReplayShow: false});
+	},
+	async showForward() {
+		requestFunc.requestFunc({
+			url: '/user/count-creator',
+			method: "POST",
+			data: {
+				userId: that.data.user.data.id,
+			},
+			header: {
+				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+			}
+		}).then((data) => {
+			let countCreator = data.data
+			console.log(data, '获取用户为第几位创作者')
+			// console.log(`${util.svrUrl}/qrcode?path=/pages/index/index?userId=${that.data.user.data.id}&worksId=${this.data.curWork.id}&type=1`);
+			// wx.showLoading('图片生成中')
+			console.log(22);
+			const ctx = wx.createCanvasContext('myWorkCanvas');
+			wx.downloadFile({
+				url: that.data.works[ that.data.currentItemId ].pictureUrl,
+				success: function (res1) {
+					console.log(countCreator, "countCreator");
+					console.log(res1, "res1");
+					ctx.drawImage(res1.tempFilePath, 0, 0, 750, 1334);
+					ctx.save();
+					ctx.drawImage(res1.tempFilePath, 105, 237, 537, 724);
+
+					ctx.setFontSize(24);
+					ctx.setFillStyle('#F9C500');
+					ctx.setTextAlign('left');
+					ctx.fillText(that.data.user.data.nickName, 76, 1000);
+
+					ctx.setFontSize(18);
+					ctx.setFillStyle('#FFFFFF');
+					ctx.setTextAlign('left');
+					ctx.fillText('成为“诗里的童年”艺术馆第' + countCreator + '位创作者，用心演', 76, 1070);
+					ctx.setFontSize(18);
+					ctx.setFillStyle('#FFFFFF');
+					ctx.setTextAlign('left');
+					ctx.fillText('绎乡村孩子的诗画作品，用爱照亮他们的童年之路。', 76, 1100);
+
+					// 一个底部logo图
+					// 一个二维码图
+
+					ctx.draw()
+				},
+				fail: function (err) {
+					console.log(err, 'err');
+				}
+			})
+		})
+		// wx.downloadFile({
+		// 	url: '',
+		// 	success: function (res1) {
+				
+		// 	},
+		// 	fail: function (err) {
+				
+		// 	}
+		// })
 	}
 })
