@@ -37,11 +37,12 @@ Page({
 		userAllRank: 0,
 		taskData: [],
 		signInData: {
-			signInNumber: 1,
-			cuurentDay: 2,
-			isSignIn: false
+			times: 1,
+			state: false
 		},
-		showSignIn: false
+		showSignIn: false,
+		showsignmodel: false,
+		showCreateFriendmodel: false
 	},
 	gotoTask(e) {
 		const index = e.currentTarget.dataset.taskindex
@@ -119,7 +120,7 @@ Page({
 						ctx.setFontSize(16);
 						ctx.setFillStyle('#C56330');
 						ctx.setTextAlign('center');
-						ctx.fillText('证书编号：BWSF0120200603' + that.data.zhengshubianhao, 317, 373);
+						ctx.fillText('证书编号：' + that.data.zhengshubianhao, 317, 373);
 						ctx.setFontSize(16);
 						ctx.setFillStyle('#000000');
 						ctx.setTextAlign('left');
@@ -180,6 +181,7 @@ Page({
 	onReady: function () {
 	},
 	onShow: function () {
+		that.getTask();
 	},
 	onShareAppMessage: function (res) {
 		if (res.from === 'button') {
@@ -205,15 +207,63 @@ Page({
 		that.getUserPaiming();
 		that.getTask();
 		that.getFriendUpdates();
+		that.getSignData();
 		that.route(options)
+	},
+	onShow: function () {
+		util.loginSync().then(function (res2) {
+			that.setData({
+				user: app.globalData.user
+			});
+		});
+		that.getTask();
+		that.getFriendUpdates();
+	},
+	signFunction(e) {
+		if (e.currentTarget.dataset.issignin) {
+			return
+		}
+		requestFunc.requestFunc({
+			url: '/task/complete',
+			method: "POST",
+			header: {
+				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+			},
+			data: {
+				taskTypeEnum: 'SIGNIN',
+				userId: that.data.user.data.id
+			},
+		}).then((data) => {
+			if (data.result == 0) {
+				that.setData({
+					showsignmodel: true
+				})
+			}
+		})
+	},
+	getSignData() {
+		requestFunc.requestFunc({
+			url: '/task/check-sign',
+			method: "GET",
+			// header: {
+			// 	'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+			// },
+			data: {
+				userId: that.data.user.data.id
+			},
+		}).then((data) => {
+			that.setData({
+				signInData: data.data
+			})
+		})
 	},
 	getFriendUpdates() {
 		requestFunc.requestFunc({
 		url: '/friend/friend-dynamic',
 		method: "GET",
-		// header: {
-		// 	'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-		// },
+		header: {
+			'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+		},
 		data: {
 			userId: that.data.user.data.id
 		},
@@ -222,6 +272,15 @@ Page({
 				friendDynamic: data.data
 			})
 		})
+	},
+	hideSell () {
+		that.setData({
+			showsignmodel: false,
+			showSignIn: false,
+			showCreateFriendmodel: false
+		})
+		that.getSignData();
+		that.getTask();
 	},
 	route(options) {
 		if (options.shareUserId) {
@@ -236,7 +295,21 @@ Page({
 					throughPersonId: options.shareUserId
 				},
 			}).then((data) => {
-				console.log(data, '创建成功')
+				requestFunc.requestFunc({
+					url: '/task/complete',
+					method: "POST",
+					header: {
+						'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+					},
+					data: {
+						taskTypeEnum: 'INVITE',
+						userId: that.data.user.data.id
+					},
+				}).then((data) => {
+					that.setData({
+						showCreateFriendmodel: true
+					})
+				})
 			})
 		}
 	},
@@ -627,6 +700,11 @@ Page({
 						ifShowGoDonate: 0,
 						ifShowIDonate: 0,
 					});
+					util.loginSync().then(function (res2) {
+						that.setData({
+							user: app.globalData.user
+						});
+					});
 				})
 			}
 		})
@@ -649,7 +727,7 @@ Page({
 	},
 	toWork() {
 		wx.navigateTo({
-		  url: '/pages/work/work',
+			url: '/pages/work/work?user_id=' + that.data.user.data.id + '&pageAttribution=mine',
 		});
 	},
 	switchFriendRank() {

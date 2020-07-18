@@ -9,7 +9,8 @@ Page({
     nickname: '',
     level: '',
     donate: '',
-    worksList: []
+	worksList: [],
+	pictureUrl: ''
 	},
 	onLoad: function (options) {
 		that = this;
@@ -37,7 +38,8 @@ Page({
       avatar: options.avatar,
       nickname: options.nickname,
       level: options.level,
-      donate: options.donate
+	  donate: options.donate,
+	  pictureUrl: options.pictureUrl
     })
   },
 	onReady: function () {
@@ -54,8 +56,8 @@ Page({
 			url: '/works/list',
 			method: "POST",
 			data: {
-        visitId: this.data.user.data.id,
-        userId: "1283642307770343424" || that.data.visitId
+				visitId: that.data.user.data.id,
+        		userId: that.data.visitId
 			}
 		}).then((data) => {
       this.setData({worksList: data.data})
@@ -71,7 +73,7 @@ Page({
   },
   gowork() {
     wx.navigateTo({
-      url: '/pages/work/work?user_id=' + this.data.user.data.id + '&pageAttribution=others'
+      url: '/pages/work/work?user_id=' + that.data.visitId + '&pageAttribution=others'
     })
   }
 })

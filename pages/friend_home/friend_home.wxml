@@ -1,4 +1,4 @@
-<!-- <image src="{{user.data.pictureUrl}}" mode="widthFix" class="bg" /> -->
+<image src="{{user.data.pictureUrl}}" mode="widthFix" class="bg" />
 <image bindtap="gowork" src="{{worksList[3].pictureUrl}}" class="work0" />
 <image bindtap="gowork" src="{{worksList[2].pictureUrl}}" mode="aspectFill" class="work1" />
 <image bindtap="gowork" src="{{worksList[1].pictureUrl}}" mode="aspectFill" class="work2" />

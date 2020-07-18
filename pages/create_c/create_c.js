@@ -21,9 +21,15 @@ Page({
 		recordIcon: "/img/mic.png", //录音按钮图标：开始录音和停止录音
 		currentMusicIndex: -1,
 		mp3Url: '',
-		bgmId: ''
+		bgmId: '',
+		inCreate: false,
+		showCreatemodel: false
 	},
 	gotoCreateC: function() {
+		if(that.data.inCreate) return
+		that.setData({
+			inCreate: true
+		})
 		requestFunc.requestFunc({
 			url: '/works/create',
 			method: "POST",
@@ -35,7 +41,38 @@ Page({
 				"bgPoetryId": Number(that.data.poem_id),
 			}
 		}).then((data) => {
-			console.log(data, ' data.data. create')
+			that.setData({
+				inCreate: false
+			})
+			requestFunc.requestFunc({
+				url: '/task/complete',
+				method: "POST",
+				header: {
+					'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+				},
+				data: {
+					taskTypeEnum: 'CREATEWORKS',
+					userId: that.data.user.data.id
+				},
+			}).then((data) => {
+				wx.navigateTo({
+					url: '/pages/work/work?user_id=' + that.data.user.data.id + '&pageAttribution=mine',
+				})
+			})
+			
+		})
+	},
+	goHome() {
+		wx.navigateBack({
+			delta: 20
+		})
+	},
+	hideSell() {
+		that.setData({
+			showCreatemodel: false
+		})
+		wx.navigateTo({
+			url: '/pages/work/work?user_id=' + that.data.user.data.id + '&pageAttribution=mine',
 		})
 	},
 	onLoad: function (options) {

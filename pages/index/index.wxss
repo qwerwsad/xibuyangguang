@@ -361,8 +361,7 @@ view {
     position: fixed;
     left: 0;
     top: 0;
-    transform: scale(0.5);
-    translate: -2000px;
+    transform: translateY(-2000px);
 }
 
 .qiandaoBox {

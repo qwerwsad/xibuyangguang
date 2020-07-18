@@ -44,20 +44,21 @@
 <!--好友动态-->
 <view class="friend_update">
 	<image src="/img/friendupdatetitle.png" style="width:132rpx; height:31rpx; margin:36rpx 0 0 66rpx; " />
-	<view style="margin-top:69rpx;">
+	<view style="margin-top:69rpx; height:810rpx;overflow-y:scroll;">
 		<view wx:for="{{  friendDynamic }}" wx:for-item="friendEvent" wx:key="friendEvent" wx:for-index="index" style="width:626rpx; height:107rpx; margin:auto; margin-bottom:30rpx; background-color:#ffffff; border-radius:55rpx; display:flex; align-items:center;">
 			<image src="{{ friendEvent.avatar }}" style="width:74rpx; height:74rpx; border-radius:50%; margin-left:42rpx;" />
-			<view style="width:310rpx; font-size:24rpx; margin-left:30rpx;">
-				<view>{{ friendEvent.medalName }}</view>
+			<view style="width:420rpx; font-size:24rpx; margin-left:30rpx;">
+				<view>{{ friendEvent.medalName?  '你的好友' +  friendEvent.nickName + '获得了' +  friendEvent.medalName +  '证书': friendEvent.tags }}</view>
 				<view style="font-size:20rpx; margin-top:15rpx; color:#666666;">{{ friendEvent.createTime }}</view>
 			</view>
 			<!-- <navigator url="/pages/work/work?id={{ friendEvent.user_id }}">
 				<image src="/img/go_look.png" style="width:150rpx; height:64rpx;" />
 			</navigator> -->
 		</view>
+		<image src="/img/dot_hr.png" style="width:607rpx; height:2rpx; margin-top:20rpx; margin-left:46rpx;" />
+		<view style="font-size:28rpx; margin-top:50rpx; text-align:center;">暂无更多动态</view>
 	</view>
-	<image src="/img/dot_hr.png" style="width:607rpx; height:2rpx; margin-top:20rpx; margin-left:46rpx;" />
-	<view style="font-size:28rpx; margin-top:50rpx; text-align:center;">查看更多动态</view>
+	
 </view>
 
 <!--合作伙伴-->
@@ -105,7 +106,7 @@
 			<view style="margin-left:50rpx; font-size:24rpx; width:50rpx; text-align:center;">{{ showFriend?  userFriendRank:userAllRank }}</view>
 			<image src="{{ user.data.avatar }}" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
 			<view style="width:250rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">我</view>
-			<view style="margin-left:0rpx; color:#676767; font-size:24rpx;">{{ user.data.leftPoint }}</view>
+			<view style="margin-left:0rpx; color:#676767; font-size:24rpx;">{{ user.data.givePoint }}</view>
 		</view>
 		<view    wx:if="{{!showFriend}}" class="paihangbangBox">
 			<view wx:for="{{ totalRanks }}" wx:for-item="rank" wx:key="index" wx:for-index="index" style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
@@ -115,7 +116,7 @@
 				</view>
 				<image src="{{ rank.avatar }}" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
 				<view style="width:250rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">{{ rank.nickName }}</view>
-				<view style="margin-left:0rpx; color:#676767; font-size:24rpx;">{{ rank.leftPoint }} </view>
+				<view style="margin-left:0rpx; color:#676767; font-size:24rpx;">{{ rank.givePoint }} </view>
 			</view>
 		</view>
 		<view wx:if="{{showFriend}}"  class="paihangbangBox">
@@ -126,7 +127,7 @@
 				</view>
 				<image src="{{ friend.avatar }}" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
 				<view style="width:250rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">{{ friend.nickName }}</view>
-				<view style="margin-left:0rpx; color:#676767; font-size:24rpx;">{{ friend.leftPoint }} </view>
+				<view style="margin-left:0rpx; color:#676767; font-size:24rpx;">{{ friend.givePoint }} </view>
 			</view>
 		</view>
 	</view>
@@ -239,7 +240,7 @@
 					<view style="margin-left:20rpx; color:#606060;">已捐{{friend.givePoint}}</view>
 				</view>
 			</view>
-			<navigator url="/pages/work/work?id={{ friend.id }}">
+			<navigator url="/pages/friend_home/friend_home?pictureUrl={{friend.pictureUrl}}&visitId={{ friend.id }}&avatar={{friend.avatar}}&nickname={{friend.nickName}}&level={{friend.level}}&donate={{friend.givePoint}}">
 				<image src="/img/gotofriend.png" style="width:231rpx; height:72rpx;" />			
 			</navigator>
 		</view>
@@ -248,7 +249,7 @@
 
 <!-- 成就 -->
 <view wx:if="{{ ifShowAchievement }}" catchtouchmove="move" class="bg_black" style="z-index:101;" bindtap="showAchievement"></view>
-<view wx:if="{{ ifShowAchievement }}" style="z-index:102; background-color:#E7E7E7; width:700rpx; height:90%; position:fixed; top:50rpx; left:25rpx;">
+<view wx:if="{{ ifShowAchievement }}" style="z-index:102;  overflow:hidden; background-color:#E7E7E7; width:700rpx; height:90%; position:fixed; top:50rpx; left:25rpx;">
 	<view style="position:relative; display:flex; padding-top:0rpx; background-color:#ffffff;">
 		<view style="width:260rpx; overflow:hidden;">
 			<view style="display:flex; align-items:center; padding-left:50rpx; margin-top:20rpx; height:175rpx;">
@@ -266,7 +267,7 @@
 		</view>
 	</view>
 	<view style="background-color:#E7E7E7; width:100%; height:50rpx;"></view>
-	<view style="background-color:#E7E7E7; padding:90rpx 88rpx 90rpx 90rpx;">
+	<view style="background-color:#E7E7E7; overflow-y:scroll; height:100%; padding:90rpx 88rpx 315rpx 90rpx;">
 		<view class="medal" wx:for="{{medalsData}}" wx:for-item="medals" wx:key="index" wx:for-index="index">
 			<view style="display:flex; align-items:center;">
 				<image src="{{medals.medalUrl?medals.medalUrl:'http://westsunshine.sapet.cn/static/medal/medal1.png'}}" style="width:180rpx; height:203rpx;" />
@@ -274,27 +275,6 @@
 			</view>
 			<view style="text-align:center;">{{medals.name}}</view>
 		</view>
-		<!-- <view class="medal">
-			<view style="display:flex; align-items:center;">
-				<image src="http://westsunshine.sapet.cn/static/medal/medal2.png" style="width:180rpx; height:203rpx;" />
-				<view style="margin-top:30rpx;">X2</view>
-			</view>
-			<view>阳光童趣园勋章</view>
-		</view>
-		<view class="medal">
-			<view style="display:flex; align-items:center;">
-				<image src="http://westsunshine.sapet.cn/static/medal/medal3.png" style="width:180rpx; height:203rpx;" />
-				<view style="margin-top:30rpx;">X2</view>
-			</view>
-			<view>阳光童趣园勋章</view>
-		</view>
-		<view class="medal">
-			<view style="display:flex; align-items:center;">
-				<image src="http://westsunshine.sapet.cn/static/medal/medal4.png" style="width:180rpx; height:203rpx;" />
-				<view style="margin-top:30rpx;">X2</view>
-			</view>
-			<view>阳光童趣园勋章</view>
-		</view> -->
 	</view>
 </view>
 
@@ -330,7 +310,7 @@
 
 
 <!-- 我要捐赠 -->
-<!-- <view wx:if="{{ ifShowGoDonate }}" class="bg_black" style="z-index:103;" bindtap="hideGoDonate"></view> -->
+<view wx:if="{{ ifShowGoDonate }}" class="bg_black" style="z-index:103;" bindtap="hideGoDonate"></view>
 <view wx:if="{{ ifShowGoDonate }}" style="z-index:104; width:630rpx; height:1050rpx; position:fixed; top:50%; transform:translateY(-525rpx); left:60rpx;">
 	<view style="position:relative; display:flex; padding-top:0rpx;">
 		<view style="width:265rpx; height:265rpx;"></view>
@@ -394,7 +374,7 @@
 		你于{{currentDate}}给西部阳光捐赠了{{curRecipient.point}}阳光值，汇丰银行将给予项目同等价值的支持。因为有你，孩子们能在梦想中的教室中玩耍！
 	</view>
 	<view  catchtap="" style="margin-top:30rpx; padding:0 100rpx; font-size:22rpx; text-align:center; color:#DB6E37;">
-		证书编号：ABCDEFJDKSLJFKDLS{{zhengshubianhao}}
+		证书编号：{{zhengshubianhao}}
 	</view>
 	<view  catchtap="" style="margin-top:30rpx; padding:0 100rpx; font-size:22rpx; text-align:right; color:#666666;">
 		{{currentDate}}
@@ -433,42 +413,64 @@
 <view class="qiandaoBox" wx:if="{{showSignIn}}">
 	<view class="qiandaoContent">
 		<view class="qiandaoTitle">每日签到得阳光值</view>
-		<view class="currentNumber">连续签到{{signInData.signInNumber}}天</view>
+		<view class="currentNumber">连续签到{{signInData.times}}天</view>
 		<view class="qiandaoTaiyangBox">
 			<view class="qiandaoTaiyangItem">
-				<image class="taiyangimage" src="{{signInData.signInNumber == 1? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise1.png'}}"></image>
+				<image class="taiyangimage" src="{{signInData.times >= 1? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise1.png'}}"></image>
 				<view class="tianshu">第1天</view>
 			</view>
 			<view class="qiandaoTaiyangItem">
-				<image class="taiyangimage" src="{{signInData.signInNumber == 2? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise1.png'}}"></image>
+				<image class="taiyangimage" src="{{signInData.times >= 2? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise1.png'}}"></image>
 				<view class="tianshu">第2天</view>
 			</view>
 			<view class="qiandaoTaiyangItem">
-				<image class="taiyangimage" src="{{signInData.signInNumber == 3? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise1.png'}}"></image>
+				<image class="taiyangimage" src="{{signInData.times >= 3? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise1.png'}}"></image>
 				<view class="tianshu">第3天</view>
 			</view>
 			<view class="qiandaoTaiyangItem">
-				<image class="taiyangimage" src="{{signInData.signInNumber == 4? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise1.png'}}"></image>
+				<image class="taiyangimage" src="{{signInData.times >= 4? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise1.png'}}"></image>
 				<view class="tianshu">第4天</view>
 			</view>
 			<view class="qiandaoTaiyangItem">
-				<image class="taiyangimage" src="{{signInData.signInNumber == 5? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise1.png'}}"></image>
+				<image class="taiyangimage" src="{{signInData.times >= 5? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise1.png'}}"></image>
 				<view class="tianshu">第5天</view>
 			</view>
 			<view class="qiandaoTaiyangItem">
-				<image class="taiyangimage" src="{{signInData.signInNumber == 6? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise1.png'}}"></image>
+				<image class="taiyangimage" src="{{signInData.times >= 6? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise1.png'}}"></image>
 				<view class="tianshu">第6天</view>
 			</view>
 			<view class="qiandaoTaiyangItem">
-				<image class="taiyangimage" src="{{signInData.signInNumber == 7? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active10.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise10.png'}}"></image>
+				<image class="taiyangimage" src="{{signInData.times >= 7? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active10.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise10.png'}}"></image>
 				<view class="tianshu">第7天</view>
 			</view>
 		</view>
 		<image class="jijinlogo" src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/jijinlogo.png"></image>
 	</view>
 	<view class="qiandaoBtn">
-		<view class="qiandao" data-issignin="{{signInData.isSignIn}}">{{signInData.isSignIn? '已领取': '领取'}}</view>
+		<view class="qiandao" bindtap="signFunction" data-issignin="{{signInData.state}}">{{signInData.state? '已领取': '领取'}}</view>
 		<view class="fanhui" bindtap="closeSignin">返回</view>
 	</view>
 </view>
+<view wx:if="{{showsignmodel}}" style="position:fixed; z-index:2000;width:515rpx; height:559rpx; background-color:#ffffff; top:300rpx; left:117rpx; border-radius:30rpx; text-align:center;">
+		<image src="{{signInData.times == 6?'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active10.png':'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png'}}" style="width:217rpx; height:221rpx; margin-top:83rpx;" />
+		<view style="font-size:24rpx; padding:30rpx 50rpx; ">
+				<view>成功签到第<text style="color:#FFC400;font-size:48rpx;">{{signInData.state + 1}}</text>天</view>
+				<view>阳光值+{{signInData.times == 6? '10':'1'}}，连续签到7天得10分！</view>
+		</view>
+		<view style="display:flex; justify-content:space-around; margin-top:50rpx;">
+				<image src="/img/submit.png" bindtap="hideSell" style="width:145rpx; height:60rpx;" />
+				<image src="/img/cancel.png" bindtap="hideSell" style="width:145rpx; height:60rpx;" />
+		</view>
+</view>
+<!-- <view wx:if="{{showCreateFriendmodel}}" style="position:fixed; z-index:2000;width:515rpx; height:559rpx; background-color:#ffffff; top:300rpx; left:117rpx; border-radius:30rpx; text-align:center;">
+		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/taiyang.png"  style="width:217rpx; height:221rpx; margin-top:83rpx;"/>
+		<view style="font-size:24rpx; padding:30rpx 50rpx; ">
+				<view>成功邀请一位新人！</view>
+				<view>阳光值+50，继续加油！</view>
+		</view>
+		<view style="display:flex; justify-content:space-around; margin-top:50rpx;">
+				<image src="/img/submit.png" bindtap="hideSell" style="width:145rpx; height:60rpx;" />
+				<image src="/img/cancel.png" bindtap="hideSell" style="width:145rpx; height:60rpx;" />
+		</view>
+</view> -->
 <canvas canvas-id="ruleCanvas" style="width:634px; height:859px" class="ruleCanvas"  disable-scroll="false"></canvas>

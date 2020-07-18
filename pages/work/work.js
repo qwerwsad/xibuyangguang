@@ -19,7 +19,8 @@ Page({
 		commentData: [],
 		point: 0,
 		commentReplayShow: false,
-		commentReplay: ''
+		commentReplay: '',
+		showcengmodel: ''
 	},
 	onLoad: function (options) {
 		that = this;
@@ -77,7 +78,21 @@ Page({
 					curBg: that.data.currentItemId ? data.data[that.data.currentItemId].pictureUrl :data.data[ 0 ].pictureUrl,
 					curWork: that.data.currentItemId ? data.data[that.data.currentItemId] : data.data[0],
 				});
-				this.getComment(data.data[ 0 ])
+				that.getComment(data.data[ 0 ])
+				that.bgmBofangqi = wx.createInnerAudioContext()
+				that.shigeBofangqi = wx.createInnerAudioContext()
+				that.bgmBofangqi.autoplay = true
+				that.bgmBofangqi.src = data.data[that.data.currentItemId].bgmUrl;
+				console.log(data.data[that.data.currentItemId].bgmUrl)
+				that.shigeBofangqi.autoplay = true
+				that.shigeBofangqi.src = data.data[that.data.currentItemId].audioUrl;
+				that.bgmBofangqi.onPlay(() => {
+					console.log('开始播放')
+				})
+				that.bgmBofangqi.onError((res) => {
+					console.log(res.errMsg)
+					console.log(res.errCode)
+				})
 			}
 		})
 	},
@@ -87,7 +102,7 @@ Page({
 			method: "POST",
 			data: {
 				worksId: list.id,
-				authorId: '1283642307770343424' || list.userId,
+				authorId: list.userId,
 				pageSize: 30
 			}
 		}).then((data) => {
@@ -95,15 +110,6 @@ Page({
 			this.setData({
 				commentData: data && data.data
 			})
-			// that.setData({
-			// 	works: data.data,
-			// });
-			// if (data.data.length > 0 ) {
-			// 	that.setData({
-			// 		curBg: that.data.currentItemId ? data.data[that.data.currentItemId].pictureUrl :data.data[ 0 ].pictureUrl,
-			// 		curWork: that.data.currentItemId ? data.data[that.data.currentItemId] : data.data[0],
-			// 	});
-			// }
 		})
 	},
 	getCommentOthers() {
@@ -160,6 +166,24 @@ Page({
 				curWork: tempCurWork,
 				works: tempWork
 			})
+			requestFunc.requestFunc({
+				url: '/task/complete',
+				method: "POST",
+				header: {
+					'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+				},
+				data: {
+					taskTypeEnum: 'FRIENDINTERACT',
+					userId: that.data.user.data.id
+				},
+			}).then((data) => {
+				
+			})
+		})
+	},
+	goHome() {
+		wx.navigateBack({
+			delta: 20
 		})
 	},
 	receiveSun() {
@@ -176,11 +200,36 @@ Page({
 		}).then((data) => {
 			console.log(data)
 			if (data.result == 0) {
-				wx.showToast({
-					title: '蹭阳光成功了',
-					icon: 'none',
-					duration: 2000
-				})
+				if (data.data) {
+					wx.showToast({
+						title: '还不到时间，请过会再来吧',
+						icon: 'none',
+						duration: 2000
+					})
+				} else {
+					that.setData({
+						showcengmodel: 1
+					})
+					requestFunc.requestFunc({
+						url: '/task/complete',
+						method: "POST",
+						header: {
+							'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+						},
+						data: {
+							taskTypeEnum: 'STEAL',
+							userId: that.data.user.data.id
+						},
+					}).then((data) => {
+
+					})
+				}
+				// wx.showToast({
+				// 	title: '蹭阳光成功了',
+				// 	icon: 'none',
+				// 	duration: 2000
+				// })
+				
 			} else {
 				wx.showToast({
 					title: '蹭阳光失败，稍后再试',
@@ -195,10 +244,17 @@ Page({
 		this.setData({
 			currentItemId: currentItemId
 		});
+		that.getComment(that.data.works[currentItemId]);
 		that.setData({
 			curBg: that.data.works[ currentItemId ].pictureUrl,
 			curWork: that.data.works[ currentItemId ],
 		});
+		that.bgmBofangqi.src = that.data.works[currentItemId].bgmUrl;
+		that.shigeBofangqi.src = that.data.works[currentItemId].audioUrl;
+	},
+	onUnload() {
+		that.bgmBofangqi && that.bgmBofangqi.pause();
+		that.shigeBofangqi && that.shigeBofangqi.pause();
 	},
 	clickChange: function (e) {
 		var itemId = e.currentTarget.dataset.itemId;
@@ -299,6 +355,19 @@ Page({
 			}
 			that.getComment(that.data.curWork)
 			that.hideSell()
+			requestFunc.requestFunc({
+				url: '/task/complete',
+				method: "POST",
+				header: {
+					'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+				},
+				data: {
+					taskTypeEnum: 'FRIENDINTERACT',
+					userId: that.data.user.data.id
+				},
+			}).then((data) => {
+
+			})
 		})
 		// wx.showLoading({ mask: true, title: '上传中' });
 		// wx.request({ method: "POST", dataType: "json", header: { 'content-type': 'application/x-www-form-urlencoded' },
@@ -334,6 +403,7 @@ Page({
 	hideSell() {
 		that.setData({
 			ifShowSell: 0,
+			showcengmodel: 0
 		});
 	},
 	confirmSell() {
@@ -350,6 +420,13 @@ Page({
 		}).then((data) => {
 			console.log(data, '拍卖')
 			if (data.result == 0) {
+				const works = that.data.works
+				works[that.data.currentItemId].given = 1
+				console.log(works, that.data.currentItemId)
+				that.setData({
+					works,
+					curWork: works[that.data.currentItemId]
+				})
 				wx.showToast({
 					title: '恭喜你，拍卖成功',
 					icon: 'none',
@@ -403,7 +480,7 @@ Page({
 					ctx.save();
 					ctx.drawImage(res1.tempFilePath, 105, 237, 537, 724);
 
-					ctx.setFontSize(24);
+					ctx.setFontSize(36);
 					ctx.setFillStyle('#F9C500');
 					ctx.setTextAlign('left');
 					ctx.fillText(that.data.user.data.nickName, 76, 1000);
@@ -419,8 +496,39 @@ Page({
 
 					// 一个底部logo图
 					// 一个二维码图
-
-					ctx.draw()
+					wx.downloadFile({
+						url: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/sharelogo.png',
+						success: function (res2) {
+							ctx.drawImage(res2.tempFilePath, 76, 1185, 400, 45);
+							ctx.save();
+							wx.downloadFile({
+								url: util.svrUrl + '/qrcode?123',
+								success: function (res3) {
+									ctx.drawImage(res3.tempFilePath, 531, 1050, 180, 180);
+									ctx.save();
+									ctx.draw(true, function () {
+										wx.canvasToTempFilePath({
+											x: 0,
+											y: 0,
+											width: 750,
+											height: 1334,
+											destWidth: 750,
+											destHeight: 1334,
+											canvasId: 'myWorkCanvas',
+											success(res) {
+												console.log(res.tempFilePath)
+												wx.hideLoading()
+												wx.previewImage({
+													current: res.tempFilePath, // 当前显示图片的http链接
+													urls: [res.tempFilePath] // 需要预览的图片http链接列表
+												})
+											}
+										})
+									})
+								}
+							})
+						}
+					})
 				},
 				fail: function (err) {
 					console.log(err, 'err');

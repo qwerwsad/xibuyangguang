@@ -1,5 +1,5 @@
 <image src="{{ work_bg.pictureUrl }}" mode="aspectFill" class="bg" />
-<image src="/img/home.png" class="home" />
+<image src="/img/home.png" bindtap="goHome" class="home" />
 <image src="/img/share.png" class="home" style="left:150rpx;" />
 <view class="title">艺术馆大厅</view>
 <image src="/img/next.png" class="home" style="left:650rpx;" bindtap="gotoCreateC" />
@@ -70,7 +70,7 @@
 		<view class="g-modal-mask"></view>
 		<view class="g-modal-content">
 				<image class="g-modal-logo" src="/img/sunflower.png" />
-				<view class="g-modal-info">该作品可获得300阳光值</view>
+				<view class="g-modal-info">该作品需要300阳光值</view>
 				<view class="g-modal-btn">
 						<view bindtap="onConfirm" class="g-btn-40">确认</view>
 						<view bindtap="onCancal" class="g-btn-40">返回</view>

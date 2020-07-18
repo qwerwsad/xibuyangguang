@@ -114,6 +114,11 @@ Page({
 			currentItemId: currentItemId
 		});
 	},
+	goHome() {
+		wx.navigateBack({
+			delta: 20
+		})
+	},
 	gotoCreateC() {
 		requestFunc.requestFunc({
 			url: '/works/count',
@@ -125,12 +130,12 @@ Page({
 				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
 			}
 		}).then((data) => {
-			if (data.result == 0) {
+			if (data.data == 0) {
 				let id = that.data.poems[ that.data.currentItemId ].id;
 				wx.navigateTo({
 					url: '/pages/create_c/create_c?wobg_id=' + that.data.wobg_id + "&poem_id=" + id,
 				})
-			} else {
+			} else if(data.data > 0) {
 				if (that.data.poems[that.data.currentItemId].used == 0) {
 					let id = that.data.poems[ that.data.currentItemId ].id;
 					wx.navigateTo({

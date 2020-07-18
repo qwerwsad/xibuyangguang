@@ -96,4 +96,5 @@
     transform: scale(0.5);
     z-index: 9999;
     /* translate: -100px -100px; */
+    transform: translateY(-2000px);
 }
