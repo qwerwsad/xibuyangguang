@@ -134,7 +134,7 @@
 
 <!-- 任务 -->
 <view wx:if="{{ ifShowTask }}" catchtouchmove="move" class="bg_black" style="z-index:101;" bindtap="showTask"></view>
-<view wx:if="{{ ifShowTask }}" style="z-index:102; background-color:#E7E7E7; width:700rpx; height:1100rpx; position:absolute; top:200rpx; left:25rpx;">
+<view wx:if="{{ ifShowTask }}" style="z-index:102; background-color:#E7E7E7; width:700rpx;  height:90%; position:fixed; top:50rpx; left:25rpx;">
 	<view style="position:relative; display:flex; padding-top:0rpx; background-color:#ffffff;">
 		<view style="width:260rpx; overflow:hidden;">
 			<view style="display:flex; align-items:center; padding-left:50rpx; margin-top:20rpx; height:175rpx;">
@@ -153,15 +153,18 @@
 	</view>
 	<view style="background-color:#E7E7E7; width:100%; height:50rpx;"></view>
 	<view style="background-color:#E7E7E7; padding:30rpx 0; height:630rpx; overflow-y:scroll;">
-		<view style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
+		<view wx:for="{{taskData}}" wx:for-index="index" wx:key="index" wx:for-item="item" style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
 			<image src="http://westsunshine.sapet.cn/static/portrait.jpg" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
 			<view style="width:315rpx; margin-left:30rpx;">
-				<view style="font-size:22rpx;">每天都想见到你（0/7）</view>
-				<view style="font-size:18rpx; color:#606060; margin-top:10rpx;">每日签到得1阳光值。连续7天签到得10阳光值。</view>
+				<view style="font-size:22rpx;">{{item.taskName}}（{{item.completeTimes}}/{{item.limitTimes}}）</view>
+				<view style="font-size:18rpx; color:#606060; margin-top:10rpx;">{{item.description}}</view>
 			</view>
-			<image src="/img/gotofinish.png" style="width:181rpx; height:71rpx;" />
+			<button wx:if="{{index == 3}}" style="background-color: #fff; padding: 0; margin: 0; line-height: 1rpx; border: none; min-height: 0;width:181rpx; height:71rpx;"  open-type="share" >
+								<image src="/img/gotofinish.png" bindtap="gotoTask" data-taskindex="{{index + 1}}" style="width:181rpx; height:71rpx;" />
+			</button>
+			<image   wx:if="{{index != 3}}" src="/img/gotofinish.png" bindtap="gotoTask" data-taskindex="{{index + 1}}" style="width:181rpx; height:71rpx;" />
 		</view>
-		<view style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
+		<!-- <view style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
 			<image src="http://westsunshine.sapet.cn/static/portrait.jpg" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
 			<view style="width:315rpx; margin-left:30rpx;">
 				<view style="font-size:22rpx;">我要创作（0/1件）</view>
@@ -202,7 +205,7 @@
 				<view style="font-size:18rpx; color:#606060; margin-top:10rpx;">每天去5家艺术馆可蹭到5阳光值</view>
 			</view>
 			<image src="/img/gotofinish.png" style="width:181rpx; height:71rpx;" />
-		</view>
+		</view> -->
 	</view>
 </view>
 
@@ -379,25 +382,25 @@
 
 <!-- 捐赠证书 -->
 <view wx:if="{{ ifShowDonateCert }}" class="bg_black" style="z-index:105;" bindtap="hideCert"></view>
-<view wx:if="{{ ifShowDonateCert }}" style="z-index:106; width:634rpx;    height:90%; position:fixed; top:50rpx; left:60rpx; background:url('http://westsunshine.sapet.cn/static/cert/cert.png') no-repeat; background-size:634rpx 895rpx;">
-	<view style="display:flex; align-items:center; justify-content:center; margin-top:136rpx;">
+<view wx:if="{{ ifShowDonateCert }}"   bindtap="hideCert" style="z-index:106; width:634rpx;    height:90%; position:fixed; top:50rpx; left:60rpx; background:url('http://westsunshine.sapet.cn/static/cert/cert.png') no-repeat; background-size:634rpx 895rpx;">
+	<view catchtap="" style="display:flex; align-items:center; justify-content:center; margin-top:136rpx;">
 		<image src="{{user.data.avatar}}" style="width:88rpx; height:88rpx; border-radius:50%; margin-left:42rpx;" />
 		<view style="margin-left:15rpx;">
 			<view style="color:#FFC93C;">{{user.data.nickName}}，谢谢你</view>
 			<view style="font-size:18rpx; letter-spacing:0px;">THANK YOU FOR YOUR DONATION!</view>
 		</view>
 	</view>
-	<view style="margin-top:30rpx; padding:0 100rpx; font-size:24rpx; text-align:justify;">
+	<view  catchtap="" style="margin-top:30rpx; padding:0 100rpx; font-size:24rpx; text-align:justify;">
 		你于{{currentDate}}给西部阳光捐赠了{{curRecipient.point}}阳光值，汇丰银行将给予项目同等价值的支持。因为有你，孩子们能在梦想中的教室中玩耍！
 	</view>
-	<view style="margin-top:30rpx; padding:0 100rpx; font-size:22rpx; text-align:center; color:#DB6E37;">
+	<view  catchtap="" style="margin-top:30rpx; padding:0 100rpx; font-size:22rpx; text-align:center; color:#DB6E37;">
 		证书编号：ABCDEFJDKSLJFKDLS{{zhengshubianhao}}
 	</view>
-	<view style="margin-top:30rpx; padding:0 100rpx; font-size:22rpx; text-align:right; color:#666666;">
+	<view  catchtap="" style="margin-top:30rpx; padding:0 100rpx; font-size:22rpx; text-align:right; color:#666666;">
 		{{currentDate}}
 	</view>
-	<view style="margin-top:450rpx; text-align:center;">
-		<image src="/img/sharebig.png" style="width:193rpx; height:72rpx;" />
+	<view  catchtap="" style="margin-top:450rpx; text-align:center;">
+		<image  bindtap="huizhicanvas" src="/img/sharebig.png" style="width:193rpx; height:72rpx;" />
 	</view>
 </view>
 
@@ -427,3 +430,45 @@
         </view>
 	</view>
 </view>
+<view class="qiandaoBox" wx:if="{{showSignIn}}">
+	<view class="qiandaoContent">
+		<view class="qiandaoTitle">每日签到得阳光值</view>
+		<view class="currentNumber">连续签到{{signInData.signInNumber}}天</view>
+		<view class="qiandaoTaiyangBox">
+			<view class="qiandaoTaiyangItem">
+				<image class="taiyangimage" src="{{signInData.signInNumber == 1? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise1.png'}}"></image>
+				<view class="tianshu">第1天</view>
+			</view>
+			<view class="qiandaoTaiyangItem">
+				<image class="taiyangimage" src="{{signInData.signInNumber == 2? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise1.png'}}"></image>
+				<view class="tianshu">第2天</view>
+			</view>
+			<view class="qiandaoTaiyangItem">
+				<image class="taiyangimage" src="{{signInData.signInNumber == 3? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise1.png'}}"></image>
+				<view class="tianshu">第3天</view>
+			</view>
+			<view class="qiandaoTaiyangItem">
+				<image class="taiyangimage" src="{{signInData.signInNumber == 4? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise1.png'}}"></image>
+				<view class="tianshu">第4天</view>
+			</view>
+			<view class="qiandaoTaiyangItem">
+				<image class="taiyangimage" src="{{signInData.signInNumber == 5? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise1.png'}}"></image>
+				<view class="tianshu">第5天</view>
+			</view>
+			<view class="qiandaoTaiyangItem">
+				<image class="taiyangimage" src="{{signInData.signInNumber == 6? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise1.png'}}"></image>
+				<view class="tianshu">第6天</view>
+			</view>
+			<view class="qiandaoTaiyangItem">
+				<image class="taiyangimage" src="{{signInData.signInNumber == 7? 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active10.png': 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/huise10.png'}}"></image>
+				<view class="tianshu">第7天</view>
+			</view>
+		</view>
+		<image class="jijinlogo" src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/jijinlogo.png"></image>
+	</view>
+	<view class="qiandaoBtn">
+		<view class="qiandao" data-issignin="{{signInData.isSignIn}}">{{signInData.isSignIn? '已领取': '领取'}}</view>
+		<view class="fanhui" bindtap="closeSignin">返回</view>
+	</view>
+</view>
+<canvas canvas-id="ruleCanvas" style="width:634px; height:859px" class="ruleCanvas"  disable-scroll="false"></canvas>

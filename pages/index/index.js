@@ -33,7 +33,121 @@ Page({
 		friendAsync: [],
 		medalsData: [],
 		userFriendRank: 0,
-		userAllRank: 0
+		userAllRank: 0,
+		taskData: [],
+		signInData: {
+			signInNumber: 1,
+			cuurentDay: 2,
+			isSignIn: false
+		},
+		showSignIn: false
+	},
+	gotoTask(e) {
+		const index = e.currentTarget.dataset.taskindex
+		if (index == 1) {
+			that.setData({
+				showSignIn: true
+			})
+		} else if (index == 2) {
+			wx.navigateTo({
+				url: '/pages/create_a/create_a',
+			});
+		} else if (index == 3) {
+			that.setData({
+				ifShowFriend: 1,
+				ifShowTask: 0
+			})
+		} else if (index == 5) {
+			that.setData({
+				ifShowFriend: 1,
+				ifShowTask: 0
+			})
+		}
+	},
+	closeSignin() {
+		that.setData({
+			showSignIn: false
+		})
+	},
+	huizhicanvas() {
+		wx.showLoading('图片生成中')
+		const ctx = wx.createCanvasContext('ruleCanvas');
+		wx.downloadFile({
+			url: 'http://westsunshine.sapet.cn/static/cert/cert.png',
+			success: function (res) {
+				ctx.drawImage(res.tempFilePath, 0, 0, 634, 859);
+				ctx.save();
+				ctx.beginPath();
+				ctx.arc(217, 180, 44, 0, Math.PI * 2, false);
+				ctx.clip();
+				wx.downloadFile({
+					url: that.data.user.data.avatar,
+					success: function (res) {
+						ctx.drawImage(res.tempFilePath, 173, 136, 88, 88);
+						ctx.restore();
+						ctx.setFontSize(32);
+						ctx.setFillStyle('yellow');
+						ctx.setTextAlign('left');
+						ctx.fillText(that.data.user.data.nickName + '，谢谢你！', 280, 190);
+						ctx.setFontSize(12);
+						ctx.setFillStyle('black');
+						ctx.setTextAlign('left');
+						ctx.fillText('THANK YOU FOR YOUR DONATION!', 280, 210);
+						var date = new Date();
+						var currentDate = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日'
+						var lineWidth = 0;
+						var initHeight = 262
+						var str = '你于' + currentDate + '给西部阳光捐赠了' + that.data.curRecipient.point + '阳光值，汇丰银行将给予项目同等价值的支持。因为有你，孩子们能在梦想中的教室中玩耍！'
+						var lastSubStrIndex = 0; //每次开始截取的字符串的索引 
+						ctx.setFontSize(12);
+						ctx.setFillStyle('black');
+						ctx.setTextAlign('left');
+						for (let i = 0; i < str.length; i++) {
+							lineWidth += ctx.measureText(str[i]).width;
+							if (lineWidth > 429) {
+								ctx.fillText(str.substring(lastSubStrIndex, i), 112, initHeight); //绘制截取部分                
+								initHeight += 25; //16为字体的高度                
+								lineWidth = 0;
+								lastSubStrIndex = i;
+								// titleHeight += 30;
+							}
+							if (i == str.length - 1) { //绘制剩余部分                
+								ctx.fillText(str.substring(lastSubStrIndex, i + 1), 112, initHeight);
+							}
+						}
+						ctx.setFontSize(16);
+						ctx.setFillStyle('#C56330');
+						ctx.setTextAlign('center');
+						ctx.fillText('证书编号：BWSF0120200603' + that.data.zhengshubianhao, 317, 373);
+						ctx.setFontSize(16);
+						ctx.setFillStyle('#000000');
+						ctx.setTextAlign('left');
+						ctx.fillText(currentDate + that.data.zhengshubianhao, 433, 457);
+						ctx.draw(true, function() {
+							wx.canvasToTempFilePath({
+								x: 0,
+								y: 0,
+								width: 634,
+								height: 860,
+								destWidth: 634,
+								destHeight: 860,
+								canvasId: 'ruleCanvas',
+								success(res) {
+									console.log(res.tempFilePath)
+									wx.hideLoading()
+									wx.previewImage({
+										current: res.tempFilePath, // 当前显示图片的http链接
+										urls: [res.tempFilePath] // 需要预览的图片http链接列表
+									})
+								}
+							})
+						});
+					}
+				})
+			}, fail: function (fres) {
+
+			}
+		})
 	},
 	onLoad: function (options) {
 		that = this;
@@ -45,7 +159,7 @@ Page({
 			if ( that.data.user.user_if_geted_weixin_info == 0 ) {
 				that.shouQuan();
 			}
-			that.init();
+			that.init(options);
 		} else {
 			app.employIdCallback = res => {
 				let levelWid = 0
@@ -57,7 +171,7 @@ Page({
 				if (that.data.user.data.accessed == 0 ) {
 					that.shouQuan();
 				}
-				that.init();
+				that.init(options);
 			};
 		}
 		// that.ShowGetSunshineValue();
@@ -66,18 +180,76 @@ Page({
 	},
 	onShow: function () {
 	},
-	onShareAppMessage: function () {
+	onShareAppMessage: function (res) {
+		if (res.from === 'button') {
+			return {
+				title: '快来和我一起制作吧',
+				path: '/pages/index/index?shareUserId=' + that.data.user.data.id
+			}
+		}
+		return {
+			title: '自定义转发标题',
+			path: '/page/user?id=123'
+		}
 	},
 	move: function() {
 
 	},
-	init() {
+	init(options) {
 		that.getWorks();
 		that.getRanks();
 		that.getFriends();
 		that.getRecipients();
 		that.getMedals();
 		that.getUserPaiming();
+		that.getTask();
+		that.getFriendUpdates();
+		that.route(options)
+	},
+	getFriendUpdates() {
+		requestFunc.requestFunc({
+		url: '/friend/friend-dynamic',
+		method: "GET",
+		// header: {
+		// 	'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+		// },
+		data: {
+			userId: that.data.user.data.id
+		},
+		}).then((data) => {
+			console.log(data, 'huoquhaoyoudongtai')
+		})
+	},
+	route(options) {
+		if (options.shareUserId) {
+			requestFunc.requestFunc({
+				url: '/friend/create',
+				method: "POST",
+				header: {
+					'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+				},
+				data: {
+					applicantPersonId: that.data.user.data.id,
+					throughPersonId: options.shareUserId
+				},
+			}).then((data) => {
+				console.log(data, '创建成功')
+			})
+		}
+	},
+	getTask() {
+		requestFunc.requestFunc({
+			url: '/task/tasks',
+			method: "GET",
+			data: {
+				userId: that.data.user.data.id,
+			},
+		}).then((data) => {
+			console.log(data, 'task')
+			that.setData({
+				taskData: data.data
+			})
+		})
 	},
 	getUserPaiming() {
 		requestFunc.requestFunc({
@@ -225,7 +397,7 @@ Page({
 			data: {
 				id: that.data.user.data.id,
 				avatar: e.detail.userInfo.avatarUrl,
-				nickName: '111' || e.detail.userInfo.nickName,
+				nickName: e.detail.userInfo.nickName || '用户甲',
 				gender: e.detail.userInfo.gender,
 				country: e.detail.userInfo.country,
 				province: e.detail.userInfo.province,
