@@ -15,9 +15,8 @@
 </swiper>
 <view class="work_like" style="display:flex; color:#ffffff; font-size:24rpx; margin-left:auto">
 		<view style="display:flex; align-items:center;" bindtap="onLike">
-				<image src="/img/like.png" style="width:32rpx; height:32rpx; margin-right:5rpx;" />
-				<!-- <image wx:if="{{curWork.like == 0}}" src="/img/like.png" style="width:32rpx; height:32rpx; margin-right:5rpx;" /> -->
-				<!-- <image wx:else src="/img/like1.png" style="width:32rpx; height:32rpx; margin-right:5rpx;" /> -->
+				<image wx:if="{{curWork.like == 0}}" src="/img/like.png" style="width:32rpx; height:32rpx; margin-right:5rpx;" />
+				<image wx:else src="/img/like1.png" style="width:32rpx; height:32rpx; margin-right:5rpx;" />
 				{{curWork.likeCount || 0}}
 		</view>
 		<view style="display:flex; align-items:center; margin-left: 10rpx;">

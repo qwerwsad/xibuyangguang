@@ -87,7 +87,7 @@ Page({
 			method: "POST",
 			data: {
 				worksId: list.id,
-				authorId: list.userId,
+				authorId: '1283642307770343424' || list.userId,
 				pageSize: 30
 			}
 		}).then((data) => {
