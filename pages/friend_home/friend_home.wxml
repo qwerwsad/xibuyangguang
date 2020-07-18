@@ -1,15 +1,15 @@
 <!-- <image src="{{user.data.pictureUrl}}" mode="widthFix" class="bg" /> -->
-<image src="http://westsunshine.sapet.cn/static/work_bg/work_bg1.png" class="work0" bindtap="gotoCreate" />
-<image src="http://westsunshine.sapet.cn/static/work_bg/work_bg1.png" mode="aspectFill" class="work1" bindtap="toWork" />
-<image src="http://westsunshine.sapet.cn/static/work_bg/work_bg2.png" mode="aspectFill" class="work2" bindtap="toWork" />
-<image src="http://westsunshine.sapet.cn/static/work_bg/work_bg3.png" mode="aspectFill" class="work3" bindtap="toWork" />
+<image bindtap="gowork" src="{{worksList[3].pictureUrl}}" class="work0" />
+<image bindtap="gowork" src="{{worksList[2].pictureUrl}}" mode="aspectFill" class="work1" />
+<image bindtap="gowork" src="{{worksList[1].pictureUrl}}" mode="aspectFill" class="work2" />
+<image bindtap="gowork" src="{{worksList[0].pictureUrl}}" mode="aspectFill" class="work3" />
 <view class="friend">
-  <image class="acv" src="http://westsunshine.sapet.cn/static/work_bg/work_bg3.png" />
+  <image class="acv" src="{{avatar}}" />
   <view class="info">
-    <view class="name">小何</view>
+    <view class="name">{{nickname || '未知'}}</view>
     <view class="level">
-      <view class="lev">Lv.6</view>
-      <view class="send">已捐1000</view>
+      <view class="lev">Lv.{{level || '未知'}}</view>
+      <view class="send">已捐{{donate || '未知'}}</view>
     </view>
   </view>
 </view>
