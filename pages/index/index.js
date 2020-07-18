@@ -22,6 +22,7 @@ Page({
 		ifShowGetSunshineValue: 0, //领取阳光值窗口
 		// sponsorShow: 0,
 		// commentShow: 0,
+		friendDynamic: [],
 		friendRanks: [],
 		totalRanks: [],
 		ranks: [],
@@ -217,7 +218,9 @@ Page({
 			userId: that.data.user.data.id
 		},
 		}).then((data) => {
-			console.log(data, 'huoquhaoyoudongtai')
+			that.setData({
+				friendDynamic: data.data
+			})
 		})
 	},
 	route(options) {

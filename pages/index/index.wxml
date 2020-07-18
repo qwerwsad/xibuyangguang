@@ -12,7 +12,7 @@
 			<image src="/img/leveicon.png" style="width:27rpx; height:27rpx;" />
 			<view style=" display:flex; align-items:center;">
 				<view style="font-size:24rpx; margin-left:5rpx;">Lv.{{user.data.level}}</view>
-				<view style="font-size:18rpx; color:#808080; margin-left:5rpx; margin-top:5rpx;">{{user.data.givePoint}}/{{app.globalData.user.data.point}}</view>
+				<view style="font-size:18rpx; color:#808080; margin-left:5rpx; margin-top:5rpx;">{{user.data.givePoint}}/{{user.data.point}}</view>
 			</view>
 		</view>
 	</view>
@@ -45,15 +45,15 @@
 <view class="friend_update">
 	<image src="/img/friendupdatetitle.png" style="width:132rpx; height:31rpx; margin:36rpx 0 0 66rpx; " />
 	<view style="margin-top:69rpx;">
-		<view wx:for="{{ friendEvents }}" wx:for-item="friendEvent" wx:key="friendEvent" wx:for-index="index" style="width:626rpx; height:107rpx; margin:auto; margin-bottom:30rpx; background-color:#ffffff; border-radius:55rpx; display:flex; align-items:center;">
-			<image src="{{ friendEvent.user_portrait }}" style="width:74rpx; height:74rpx; border-radius:50%; margin-left:42rpx;" />
+		<view wx:for="{{  friendDynamic }}" wx:for-item="friendEvent" wx:key="friendEvent" wx:for-index="index" style="width:626rpx; height:107rpx; margin:auto; margin-bottom:30rpx; background-color:#ffffff; border-radius:55rpx; display:flex; align-items:center;">
+			<image src="{{ friendEvent.avatar }}" style="width:74rpx; height:74rpx; border-radius:50%; margin-left:42rpx;" />
 			<view style="width:310rpx; font-size:24rpx; margin-left:30rpx;">
-				<view>{{ friendEvent.desc }}</view>
-				<view style="font-size:20rpx; margin-top:15rpx; color:#666666;">{{ friendEvent.date }}</view>
+				<view>{{ friendEvent.medalName }}</view>
+				<view style="font-size:20rpx; margin-top:15rpx; color:#666666;">{{ friendEvent.createTime }}</view>
 			</view>
-			<navigator url="/pages/work/work?id={{ friendEvent.user_id }}">
+			<!-- <navigator url="/pages/work/work?id={{ friendEvent.user_id }}">
 				<image src="/img/go_look.png" style="width:150rpx; height:64rpx;" />
-			</navigator>
+			</navigator> -->
 		</view>
 	</view>
 	<image src="/img/dot_hr.png" style="width:607rpx; height:2rpx; margin-top:20rpx; margin-left:46rpx;" />
