@@ -109,3 +109,5 @@
 				<image src="/img/cancel.png" bindtap="hideSell" style="width:145rpx; height:60rpx;" />
 		</view>
 </view>
+<!-- 海报 -->
+<canvas canvas-id="myWorkCanvas" style="width:750px; height:1334px" class="myWorkCanvas" disable-scroll="false" />
