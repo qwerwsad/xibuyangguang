@@ -4,9 +4,11 @@ const app = getApp();
 let that;
 Page({
 	data: {
+		zhengshubianhao: '',
 		currentDate: '',
 		levelWid: 0,
 		user: {},
+		showFriend: true,
 		getWechatInfoViewShow: 0,
 		currentItemId: 0,
 		ifShowRank: 0, //排行榜
@@ -29,7 +31,9 @@ Page({
 		recipients: [],
 		curRecipient: {},
 		friendAsync: [],
-		medalsData: []
+		medalsData: [],
+		userFriendRank: 0,
+		userAllRank: 0
 	},
 	onLoad: function (options) {
 		that = this;
@@ -73,6 +77,31 @@ Page({
 		that.getFriends();
 		that.getRecipients();
 		that.getMedals();
+		that.getUserPaiming();
+	},
+	getUserPaiming() {
+		requestFunc.requestFunc({
+			url: '/friend/user-friend-rank',
+			method: "GET",
+			data: {
+				userId: that.data.user.data.id,
+			},
+		}).then((data) => {
+			that.setData({
+				userFriendRank: data.data.rownum > 99 ? '99+' : 'No.' + data.data.rownum
+			})
+		})
+		requestFunc.requestFunc({
+			url: '/friend/user-all-rank',
+			method: "GET",
+			data: {
+				userId: that.data.user.data.id,
+			},
+		}).then((data) => {
+			that.setData({
+				userAllRank: data.data.rownum > 99 ? '99+' : 'No.' + data.data.rownum
+			})
+		})
 	},
 	getMedals() {
 		console.log(12111)
@@ -108,7 +137,7 @@ Page({
 	},
 	getRanks() {
 		requestFunc.requestFunc({
-			url: '/friend/alluser',
+			url: '/friend/users',
 			method: "GET",
 			data: {
 			}
@@ -387,10 +416,13 @@ Page({
 			data: {
 				userId: that.data.user.data.id,
 				receiveId: that.data.curRecipient.id
+			},
+			header: {
+				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
 			}
 		}).then((data) => {
 			var date = new Date();
-			var currentDate = date.getFullYear() + '年' + date.getMonth() + '月' + date.getDate() + '日'
+			var currentDate = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日'
 			if (data.result == 1) {
 				wx.showToast({
 					title: '捐赠失败',
@@ -404,12 +436,23 @@ Page({
 					ifShowIDonate: 0,
 				});
 			} else {
-				that.setData({
-					currentDate: currentDate,
-					ifShowDonateCert:1,
-					ifShowGoDonate: 0,
-					ifShowIDonate: 0,
-				});
+				requestFunc.requestFunc({
+					url: '/medal/count-donation',
+					method: "GET",
+					data: {
+					},
+					// header: {
+					// 	'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+					// }
+				}).then((data) => {
+					that.setData({
+						zhengshubianhao: data.data,
+						currentDate: currentDate,
+						ifShowDonateCert: 1,
+						ifShowGoDonate: 0,
+						ifShowIDonate: 0,
+					});
+				})
 			}
 		})
 		// that.setData({
@@ -436,14 +479,16 @@ Page({
 	},
 	switchFriendRank() {
 		that.setData({
-			ranks: that.data.friendRanks,
-			myRank: that.data.myFriendRank,
+			showFriend: true,
+			// ranks: that.data.friendRanks,
+			// myRank: that.data.myFriendRank,
 		});
 	},
 	switchTotalRank() {
 		that.setData({
-			ranks: that.data.totalRanks,
-			myRank: that.data.myFriendRank,
+			showFriend: false,
+			// ranks: that.data.totalRanks,
+			// myRank: that.data.myFriendRank,
 		});
 	},
 })
