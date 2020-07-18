@@ -4,6 +4,7 @@ const app = getApp();
 let that;
 Page({
 	data: {
+		currentDate: '',
 		levelWid: 0,
 		user: {},
 		getWechatInfoViewShow: 0,
@@ -27,7 +28,8 @@ Page({
 		myRank: "",
 		recipients: [],
 		curRecipient: {},
-		friendAsync: []
+		friendAsync: [],
+		medalsData: []
 	},
 	onLoad: function (options) {
 		that = this;
@@ -70,13 +72,26 @@ Page({
 		that.getRanks();
 		that.getFriends();
 		that.getRecipients();
+		that.getMedals();
+	},
+	getMedals() {
+		console.log(12111)
+		requestFunc.requestFunc({
+			url: '/medal/medals',
+			method: "GET",
+			data: {
+				userId: that.data.user.data.id,
+			},
+		}).then((data) => {
+			that.setData({
+				medalsData: data.data
+			});
+		})
 	},
 	getWorks() {
 		wx.request({
 			url: util.svrUrl + '/works.php',
 			data: {
-				auth_key: util.authKey,
-				user_id: that.data.user.user_id,
 			},
 			success: function (res) {
 				console.log(res);
@@ -96,7 +111,6 @@ Page({
 			url: '/friend/alluser',
 			method: "GET",
 			data: {
-				
 			}
 		}).then((data) => {
 			that.setData({
@@ -105,34 +119,62 @@ Page({
 		})
 	},
 	getFriends() {
-		wx.request({ method: "GET", dataType: "json",
-			url: util.svrUrl + '/get_friends.php',
+		requestFunc.requestFunc({
+			url: '/friend/friends',
+			method: "POST",
 			data: {
-				auth_key: util.authKey,
-				user_id: that.data.user.user_id,
+				userId: that.data.user.data.id,
 			},
-			success: function (res) {
-				// console.log( res );
-				that.setData({
-					friends: res.data,
-				});
+			header: {
+				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
 			}
-		});
+		}).then((data) => {
+			that.setData({
+				friends: data.data
+			});
+		})
+		// wx.request({ method: "GET", dataType: "json",
+		// 	url: util.svrUrl + '/get_friends.php',
+		// 	data: {
+		// 		auth_key: util.authKey,
+		// 		user_id: that.data.user.user_id,
+		// 	},
+		// 	success: function (res) {
+		// 		// console.log( res );
+		// 		that.setData({
+		// 			friends: res.data,
+		// 		});
+		// 	}
+		// });
 	},
 	getRecipients() {
-		wx.request({ method: "GET", dataType: "json",
-			url: util.svrUrl + '/recipients.php',
+		requestFunc.requestFunc({
+			url: '/medal/receives',
+			method: "GET",
 			data: {
-				auth_key: util.authKey,
-				user_id: that.data.user.user_id,
+				userId: that.data.user.data.id,
 			},
-			success: function (res) {
-				console.log( res );
-				that.setData({
-					recipients: res.data,
-				});
+			header: {
+				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
 			}
-		});
+		}).then((data) => {
+			that.setData({
+				recipients: data.data,
+			});
+		})
+		// wx.request({ method: "GET", dataType: "json",
+		// 	url: util.svrUrl + '/recipients.php',
+		// 	data: {
+		// 		auth_key: util.authKey,
+		// 		user_id: that.data.user.user_id,
+		// 	},
+		// 	success: function (res) {
+		// 		console.log( res );
+		// 		that.setData({
+		// 			recipients: res.data,
+		// 		});
+		// 	}
+		// });
 	},
 	shouQuan() {
 		this.setData({
@@ -339,11 +381,42 @@ Page({
 		});
 	},
 	confirmGoDonate() {
-		that.setData({
-			ifShowDonateCert:1,
-			ifShowGoDonate: 0,
-			ifShowIDonate: 0,
-		});
+		requestFunc.requestFunc({
+			url: '/medal/receive-point',
+			method: "POST",
+			data: {
+				userId: that.data.user.data.id,
+				receiveId: that.data.curRecipient.id
+			}
+		}).then((data) => {
+			var date = new Date();
+			var currentDate = date.getFullYear() + '年' + date.getMonth() + '月' + date.getDate() + '日'
+			if (data.result == 1) {
+				wx.showToast({
+					title: '捐赠失败',
+					icon: 'none',
+					duration: 2000
+				})
+				that.setData({
+					currentDate: currentDate,
+					ifShowDonateCert: 1,
+					ifShowGoDonate: 0,
+					ifShowIDonate: 0,
+				});
+			} else {
+				that.setData({
+					currentDate: currentDate,
+					ifShowDonateCert:1,
+					ifShowGoDonate: 0,
+					ifShowIDonate: 0,
+				});
+			}
+		})
+		// that.setData({
+		// 	ifShowDonateCert:1,
+		// 	ifShowGoDonate: 0,
+		// 	ifShowIDonate: 0,
+		// });
 	},
 	hideGoDonate() {
 		that.setData({
