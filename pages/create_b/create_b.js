@@ -12,6 +12,7 @@ Page({
 		ifShowPoemStory: 0,
 		sponsorShow: 0,
 		commentShow: 0,
+		showBuyModal: false
 	},
 	onLoad: function (options) {
 		that = this;
@@ -114,9 +115,36 @@ Page({
 		});
 	},
 	gotoCreateC() {
-		let id = that.data.poems[ that.data.currentItemId ].id;
-		wx.navigateTo({
-			url: '/pages/create_c/create_c?wobg_id=' + that.data.wobg_id + "&poem_id=" + id,
+		requestFunc.requestFunc({
+			url: '/works/count',
+			method: "POST",
+			data: {
+				userId: this.data.user.data.id
+			},
+			header: {
+				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+			}
+		}).then((data) => {
+			if (data.result == 0) {
+				let id = that.data.poems[ that.data.currentItemId ].id;
+				wx.navigateTo({
+					url: '/pages/create_c/create_c?wobg_id=' + that.data.wobg_id + "&poem_id=" + id,
+				})
+			} else {
+				if (that.data.poems[that.data.currentItemId].used == 0) {
+					let id = that.data.poems[ that.data.currentItemId ].id;
+					wx.navigateTo({
+						url: '/pages/create_c/create_c?wobg_id=' + that.data.wobg_id + "&poem_id=" + id,
+					})
+				} else {
+					wx.showToast({
+						title: '请先购买诗歌',
+						icon: 'none',
+						duration: 2000
+					})
+				}
+			}
+			this.setData({showBuyModal: false})
 		})
 	},
 	clickChange: function (e) {
@@ -137,5 +165,42 @@ Page({
 	},
 	sharePoemStory() {
 		
+	},
+	buyPoemStory() {
+		this.setData({showBuyModal: true})
+	},
+	onCancal() {
+		this.setData({showBuyModal: false})
+	},
+	onConfirm() {
+		console.log("购买诗歌");
+		requestFunc.requestFunc({
+			url: '/works/buy-bg-poetry',
+			method: "POST",
+			data: {
+				userId: this.data.user.data.id,
+				poetryId: this.data.poems[this.data.currentItemId].id
+			},
+			header: {
+				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+			}
+		}).then((data) => {
+			if (data.result == 0) {
+				let poems = this.data.poems
+				poems[this.data.currentItemId].used = 0
+				this.setData({poems})
+				let id = that.data.poems[ that.data.currentItemId ].id;
+				wx.navigateTo({
+					url: '/pages/create_c/create_c?wobg_id=' + that.data.wobg_id + "&poem_id=" + id,
+				})
+			} else {
+				wx.showToast({
+					title: '购买失败，请重试',
+					icon: 'none',
+					duration: 2000
+				})
+			}
+			this.setData({showBuyModal: false})
+		})
 	},
 })

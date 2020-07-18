@@ -182,3 +182,15 @@
     border-radius: 30rpx;
     text-align: center;
 }
+.active_btn{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 153rpx;
+    padding: 0 230rpx;
+    box-sizing: border-box;
+    justify-content: space-between;
+}

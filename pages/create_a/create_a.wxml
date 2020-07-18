@@ -30,9 +30,12 @@
 				</swiper-item>
 		</block>
 </swiper>
-<view bindtap="showPicStory" style="position:absolute; bottom:200rpx; width:100%; text-align:center;">
-		<view class="buy_status">{{work_bgs[currentItemId].used == 0 ? '已购买' : '购买'}}</view>
-		<image src="/img/huazuogushi.png" style="width:144rpx; height:61rpx;" />
+<view class="active_btn">
+		<view bindtap="buyPicStory" class="g-buy_status">
+				{{work_bgs[currentItemId].used == 0 ? '已购买' : '购买'}}
+		</view>
+		<view bindtap="showPicStory" class="g-buy_status">画作故事</view>
+		<!-- <image bindtap="showPicStory" src="/img/huazuogushi.png" style="width:144rpx; height:61rpx;" /> -->
 </view>
 <view style="position:absolute; bottom:100rpx; width:100%; text-align:center; color:#ffffff;">
 		Step1：请选择画作
@@ -55,5 +58,16 @@
 		<view style="display:flex; justify-content:space-around; margin-top:60rpx;">
 				<image src="/img/share2.png" bindtap="sharePicStory" style="width:145rpx; height:60rpx;" />
 				<image src="/img/cancel.png" bindtap="hidePicStory" style="width:145rpx; height:60rpx;" />
+		</view>
+</view>
+<view class="g-modal" wx:if="{{showBuyModal}}">
+		<view class="g-modal-mask"></view>
+		<view class="g-modal-content">
+				<image class="g-modal-logo" src="/img/sunflower.png" />
+				<view class="g-modal-info">该作品可获得300阳光值</view>
+				<view class="g-modal-btn">
+						<view bindtap="onConfirm" class="g-btn-40">确认</view>
+						<view bindtap="onCancal" class="g-btn-40">返回</view>
+				</view>
 		</view>
 </view>

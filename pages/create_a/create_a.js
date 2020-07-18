@@ -11,7 +11,8 @@ Page({
 		sponsorShow: 0,
 		commentShow: 0,
 		ifShowPicStory: 0,
-		curContent: {}
+		curContent: {},
+		showBuyModal: false
 	},
 	onLoad: function (options) {
 		that = this;
@@ -81,10 +82,37 @@ Page({
 		});
 	},
 	gotoCreateB() {
-		let id = that.data.work_bgs[that.data.currentItemId].id;
-		wx.navigateTo({
-			url: '/pages/create_b/create_b?wobg_id=' + id,
-		});
+		requestFunc.requestFunc({
+			url: '/works/count',
+			method: "POST",
+			data: {
+				userId: this.data.user.data.id
+			},
+			header: {
+				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+			}
+		}).then((data) => {
+			if (data.result == 0) {
+				let id = that.data.work_bgs[that.data.currentItemId].id;
+				wx.navigateTo({
+					url: '/pages/create_b/create_b?wobg_id=' + id,
+				});
+			} else {
+				if (that.data.work_bgs[that.data.currentItemId].used == 0) {
+					let id = that.data.work_bgs[that.data.currentItemId].id;
+					wx.navigateTo({
+						url: '/pages/create_b/create_b?wobg_id=' + id,
+					});
+				} else {
+					wx.showToast({
+						title: '请先购买背景画作',
+						icon: 'none',
+						duration: 2000
+					})
+				}
+			}
+			this.setData({showBuyModal: false})
+		})
 	},
 	clickChange: function (e) {
 		var itemId = e.currentTarget.dataset.itemId;
@@ -107,5 +135,41 @@ Page({
 	sharePicStory() {
 		
 	},
-	
+	buyPicStory() {
+		this.setData({showBuyModal: true})
+	},
+	onConfirm() {
+		console.log("购买画作");
+		requestFunc.requestFunc({
+			url: '/works/buy-bg-picture',
+			method: "POST",
+			data: {
+				userId: this.data.user.data.id,
+				pictureId: this.data.work_bgs[this.data.currentItemId].id
+			},
+			header: {
+				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+			}
+		}).then((data) => {
+			if (data.result == 0) {
+				let work_bgs = this.data.work_bgs
+				work_bgs[this.data.currentItemId].used = 0
+				this.setData({work_bgs})
+				let id = this.data.work_bgs[this.data.currentItemId].id;
+				wx.navigateTo({
+					url: '/pages/create_b/create_b?wobg_id=' + id,
+				});
+			} else {
+				wx.showToast({
+					title: '购买失败，请重试',
+					icon: 'none',
+					duration: 2000
+				})
+			}
+			this.setData({showBuyModal: false})
+		})
+	},
+	onCancal() {
+		this.setData({showBuyModal: false})
+	}
 })
