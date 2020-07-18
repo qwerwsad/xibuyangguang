@@ -83,18 +83,18 @@
 		<view style="width:217.5rpx;">
 			<view style="display:flex; align-items:center; justify-content:center; margin-top:20rpx;">
 				<image src="/img/portraiticon.png" style="width:28rpx; height:28rpx;" />
-				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.user_nickname }}</view>
+				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
 			</view>
 			<view bindtap="switchFriendRank" style="text-align:center; margin-top:150rpx; font-size:28rpx;">好友排行榜</view>
 		</view>
 		<view style="width:265rpx; height:265rpx;"></view>
 		<view style="position:absolute; top:0; left:217.5rpx;">
-			<image src="{{ user.user_portrait }}" style="width:265rpx; height:265rpx; border-radius:50%;" />
+			<image src="{{ user.data.avatar }}" style="width:265rpx; height:265rpx; border-radius:50%;" />
 		</view>
 		<view style="width:217.5rpx;">
 			<view style="margin-top:20rpx; display:flex; align-items:center; justify-content:center;">
 				<image src="/img/sunflower.png" style="width:28rpx; height:28rpx;" />
-				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.user_sunshine_value }}</view>
+				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.leftPoint }}</view>
 			</view>
 			<view bindtap="switchTotalRank" style="text-align:center; margin-top:150rpx; font-size:28rpx;">总排行榜</view>
 		</view>
@@ -102,12 +102,12 @@
 	<view style="background-color:#FFC936; padding:30rpx 0;">
 		<view 
 			style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
-			<view style="margin-left:50rpx; font-size:24rpx; width:50rpx; text-align:center;">{{ myRank }}</view>
-			<image src="http://westsunshine.sapet.cn/static/portrait.jpg" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
+			<view style="margin-left:50rpx; font-size:24rpx; width:50rpx; text-align:center;">{{ showFriend?  userFriendRank:userAllRank }}</view>
+			<image src="{{ user.data.avatar }}" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
 			<view style="width:250rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">我</view>
-			<view style="margin-left:0rpx; color:#676767; font-size:24rpx;">{{ user.user_sunshine_value }}</view>
+			<view style="margin-left:0rpx; color:#676767; font-size:24rpx;">{{ user.data.leftPoint }}</view>
 		</view>
-		<view   class="paihangbangBox">
+		<view    wx:if="{{!showFriend}}" class="paihangbangBox">
 			<view wx:for="{{ totalRanks }}" wx:for-item="rank" wx:key="index" wx:for-index="index" style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
 				<view style="margin-left:50rpx; width:50rpx; padding-top:5rpx;">
 					<view wx:if="{{index>=3}}">NO.{{index + 1}}</view>
@@ -116,6 +116,17 @@
 				<image src="{{ rank.avatar }}" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
 				<view style="width:250rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">{{ rank.nickName }}</view>
 				<view style="margin-left:0rpx; color:#676767; font-size:24rpx;">{{ rank.leftPoint }} </view>
+			</view>
+		</view>
+		<view wx:if="{{showFriend}}"  class="paihangbangBox">
+			<view wx:for="{{  friends }}" wx:for-item="friend" wx:key="index" wx:for-index="index" style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
+				<view style="margin-left:50rpx; width:50rpx; padding-top:5rpx;">
+					<view wx:if="{{index>=3}}">NO.{{index + 1}}</view>
+					<image wx:if="{{index<3}}" src="/img/no{{index + 1}}.png" style="width:50rpx; height:50rpx; border-radius:50%;" />
+				</view>
+				<image src="{{ friend.avatar }}" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
+				<view style="width:250rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">{{ friend.nickName }}</view>
+				<view style="margin-left:0rpx; color:#676767; font-size:24rpx;">{{ friend.leftPoint }} </view>
 			</view>
 		</view>
 	</view>
@@ -128,12 +139,12 @@
 		<view style="width:260rpx; overflow:hidden;">
 			<view style="display:flex; align-items:center; padding-left:50rpx; margin-top:20rpx; height:175rpx;">
 				<image src="/img/portraiticon.png" style="width:28rpx; height:28rpx;" />
-				<view style="font-size:28rpx; margin-left:20rpx;">{{ user.user_nickname }}</view>
+				<view style="font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
 			</view>
 			<view style="padding-left:50rpx; font-size:28rpx; height:80rpx; padding-top:28rpx; background-color:#FFC936;">任务中心</view>
 		</view>
 		<view style="position:absolute; top:50rpx;; left:217rpx;">
-			<image src="{{ user.user_portrait }}" style="width:265rpx; height:265rpx; border-radius:50%;" />
+			<image src="{{ user.data.avatar }}" style="width:265rpx; height:265rpx; border-radius:50%;" />
 		</view>
 		<view style="width:217rpx;">
 			<view style="text-align:center; padding-top:20rpx; "></view>
@@ -202,12 +213,12 @@
 		<view style="width:260rpx; overflow:hidden;">
 			<view style="display:flex; align-items:center; padding-left:50rpx; margin-top:20rpx; height:175rpx;">
 				<image src="/img/portraiticon.png" style="width:28rpx; height:28rpx;" />
-				<view style="font-size:28rpx; margin-left:20rpx;">{{ user.user_nickname }}</view>
+				<view style="font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
 			</view>
 			<view style="padding-left:50rpx; font-size:28rpx; height:80rpx; padding-top:28rpx; background-color:#FFC936;">好友</view>
 		</view>
 		<view style="position:absolute; top:50rpx;; left:217.5rpx;">
-			<image src="{{ user.user_portrait }}" style="width:265rpx; height:265rpx; border-radius:50%;" />
+			<image src="{{ user.data.avatar }}" style="width:265rpx; height:265rpx; border-radius:50%;" />
 		</view>
 		<view style="width:217.5rpx;">
 			<view style="text-align:center; padding-top:20rpx; "></view>
@@ -239,12 +250,12 @@
 		<view style="width:260rpx; overflow:hidden;">
 			<view style="display:flex; align-items:center; padding-left:50rpx; margin-top:20rpx; height:175rpx;">
 				<image src="/img/portraiticon.png" style="width:28rpx; height:28rpx;" />
-				<view style="font-size:28rpx; margin-left:20rpx;">{{ user.user_nickname }}</view>
+				<view style="font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
 			</view>
 			<view style="padding-left:50rpx; font-size:28rpx; height:80rpx; padding-top:28rpx; background-color:#FFC936;">成就</view>
 		</view>
 		<view style="position:absolute; top:50rpx;; left:217.5rpx;">
-			<image src="{{ user.user_portrait }}" style="width:265rpx; height:265rpx; border-radius:50%;" />
+			<image src="{{ user.data.avatar }}" style="width:265rpx; height:265rpx; border-radius:50%;" />
 		</view>
 		<view style="width:217.5rpx;">
 			<view style="text-align:center; padding-top:20rpx; "></view>
@@ -255,10 +266,10 @@
 	<view style="background-color:#E7E7E7; padding:90rpx 88rpx 90rpx 90rpx;">
 		<view class="medal" wx:for="{{medalsData}}" wx:for-item="medals" wx:key="index" wx:for-index="index">
 			<view style="display:flex; align-items:center;">
-				<image src="{{medalsData.medalUrl?medalsData.medalUrl:'http://westsunshine.sapet.cn/static/medal/medal1.png'}}" style="width:180rpx; height:203rpx;" />
-				<view style="margin-top:30rpx;">X{{medalsData.medalCount}}</view>
+				<image src="{{medals.medalUrl?medals.medalUrl:'http://westsunshine.sapet.cn/static/medal/medal1.png'}}" style="width:180rpx; height:203rpx;" />
+				<view style="margin-top:30rpx;">X{{medals.medalCount}}</view>
 			</view>
-			<view>{{medalsData.certText}}</view>
+			<view style="text-align:center;">{{medals.name}}</view>
 		</view>
 		<!-- <view class="medal">
 			<view style="display:flex; align-items:center;">
@@ -291,12 +302,12 @@
 		<view style="width:260rpx; overflow:hidden;">
 			<view style="display:flex; align-items:center; padding-left:50rpx; margin-top:20rpx; height:175rpx;">
 				<image src="/img/portraiticon.png" style="width:28rpx; height:28rpx;" />
-				<view style="font-size:28rpx; margin-left:20rpx;">{{ user.user_nickname }}</view>
+				<view style="font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
 			</view>
 			<view style="padding-left:50rpx; font-size:28rpx; height:80rpx; padding-top:28rpx; background-color:#FFC936;">我要捐赠</view>
 		</view>
 		<view style="position:absolute; top:50rpx;; left:217.5rpx;">
-			<image src="{{ user.user_portrait }}" style="width:265rpx; height:265rpx; border-radius:50%;" />
+			<image src="{{ user.data.avatar }}" style="width:265rpx; height:265rpx; border-radius:50%;" />
 		</view>
 		<view style="width:217.5rpx;">
 			<view style="text-align:center; padding-top:20rpx; "></view>
@@ -321,7 +332,7 @@
 	<view style="position:relative; display:flex; padding-top:0rpx;">
 		<view style="width:265rpx; height:265rpx;"></view>
 		<view style="position:absolute; top:120rpx;; left:182.5rpx;">
-			<image src="{{ user.user_portrait }}" style="width:265rpx; height:265rpx; border-radius:50%;" />
+			<image src="{{ user.data.avatar }}" style="width:265rpx; height:265rpx; border-radius:50%;" />
 		</view>
 	</view>
 	<view style="background-color:#E7E7E7; width:100%; height:50rpx; border-top-left-radius:50rpx; border-top-right-radius:50rpx;"></view>
@@ -380,7 +391,7 @@
 		你于{{currentDate}}给西部阳光捐赠了{{curRecipient.point}}阳光值，汇丰银行将给予项目同等价值的支持。因为有你，孩子们能在梦想中的教室中玩耍！
 	</view>
 	<view style="margin-top:30rpx; padding:0 100rpx; font-size:22rpx; text-align:center; color:#DB6E37;">
-		证书编号：ABCDEFJDKSLJFKDLS
+		证书编号：ABCDEFJDKSLJFKDLS{{zhengshubianhao}}
 	</view>
 	<view style="margin-top:30rpx; padding:0 100rpx; font-size:22rpx; text-align:right; color:#666666;">
 		{{currentDate}}
