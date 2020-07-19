@@ -41,8 +41,9 @@
 
 <view wx:if="{{ ifShowRecord }}" class="bg_black" style="z-index:101;" bindtap="hideCert"></view>
 <view wx:if="{{ ifShowRecord }}" style="z-index:102; position:absolute; top:300rpx; width:660rpx; height:689rpx; left:45rpx; background-color:#ffffff; border-radius:50rpx; overflow:hidden;">
-	<view style="text-align:center; font-size:24rpx; height:485rpx;">
-		<text style="">
+	<view style="text-align:center; font-size:24rpx; height:485rpx;overflow-y:scroll;">
+		<view style="width:100%;text-align:center;line-hieght:30rpx"></view>
+		<text style="line-height: 36rpx">
 			{{ poem.content }}
 		</text>
 	</view>

@@ -55,14 +55,14 @@
 						{{poems[currentItemId].storyAuther}}
 				</view>
 		</view>
-		<view style="font-size:22rpx; padding:40rpx 60rpx; text-align:justify; line-height:40rpx; height:370rpx; overflow:hidden;">
+		<view style="font-size:22rpx; padding:40rpx 60rpx; text-align:justify; line-height:40rpx; height:370rpx;  overflow-y:scroll;">
 				{{poems[currentItemId].storyContent}}
 		</view>
 		<view>
 				<image src="/img/xibuyangguangjijinhui.png" style="width:544rpx; height:64rpx;" />
 		</view>
 		<view style="display:flex; justify-content:space-around; margin-top:60rpx;">
-				<image src="/img/share2.png" bindtap="sharePoemStory" style="width:145rpx; height:60rpx;" />
+				<!-- <image src="/img/share2.png" bindtap="sharePoemStory" style="width:145rpx; height:60rpx;" /> -->
 				<image src="/img/cancel.png" bindtap="hidePoemStory" style="width:145rpx; height:60rpx;" />
 		</view>
 </view>

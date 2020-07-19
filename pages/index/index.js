@@ -42,7 +42,8 @@ Page({
 		},
 		showSignIn: false,
 		showsignmodel: false,
-		showCreateFriendmodel: false
+		showCreateFriendmodel: false,
+		worksList: []
 	},
 	gotoTask(e) {
 		const index = e.currentTarget.dataset.taskindex
@@ -70,6 +71,12 @@ Page({
 		that.setData({
 			showSignIn: false
 		})
+	},
+	toFriendHome(e) {
+		const friend = e.currentTarget.dataset.frienddata
+		wx.navigateTo({
+			url: `/pages/friend_home/friend_home?pictureUrl=${friend.pictureUrl}&visitId=${friend.id}&avatar=${friend.avatar}}&nickname=${friend.nickName}&level=${friend.level}&donate=${friend.givePoint}`,
+		});
 	},
 	huizhicanvas() {
 		wx.showLoading('图片生成中')
@@ -124,7 +131,7 @@ Page({
 						ctx.setFontSize(16);
 						ctx.setFillStyle('#000000');
 						ctx.setTextAlign('left');
-						ctx.fillText(currentDate + that.data.zhengshubianhao, 433, 457);
+						ctx.fillText(currentDate, 433, 457);
 						ctx.draw(true, function() {
 							wx.canvasToTempFilePath({
 								x: 0,
@@ -156,7 +163,7 @@ Page({
 		console.log(app.globalData.user, 'app.globalData.user')
 		if ( app.globalData.user != null ) {
 			let levelWid = 0
-			levelWid = app.globalData.user.data.givePoint / app.globalData.user.data.point
+			levelWid = (app.globalData.user.data.givePoint / app.globalData.user.data.point) * 100
 			that.setData({ user: app.globalData.user, levelWid }); 
 			if ( that.data.user.user_if_geted_weixin_info == 0 ) {
 				that.shouQuan();
@@ -166,7 +173,7 @@ Page({
 			app.employIdCallback = res => {
 				let levelWid = 0
 				if (res) {
-					levelWid = res.data.givePoint / app.globalData.user.data.point
+					levelWid = (app.globalData.user.data.givePoint / app.globalData.user.data.point) * 100
 				}
 				that.setData({ user: res, levelWid});
 				console.log(that.data.user, 'that.data.user')
@@ -179,9 +186,6 @@ Page({
 		// that.ShowGetSunshineValue();
 	},
 	onReady: function () {
-	},
-	onShow: function () {
-		that.getTask();
 	},
 	onShareAppMessage: function (res) {
 		if (res.from === 'button') {
@@ -208,7 +212,20 @@ Page({
 		that.getTask();
 		that.getFriendUpdates();
 		that.getSignData();
+		that.getWorkss();
 		that.route(options)
+	},
+	getWorkss() {
+		requestFunc.requestFunc({
+			url: '/works/list',
+			method: "POST",
+			data: {
+				visitId: '',
+				userId: that.data.user.data.id
+			}
+		}).then((data) => {
+			this.setData({ worksList: data.data })
+		})
 	},
 	onShow: function () {
 		util.loginSync().then(function (res2) {
@@ -216,8 +233,8 @@ Page({
 				user: app.globalData.user
 			});
 		});
-		that.getTask();
-		that.getFriendUpdates();
+		app.globalData.user && that.getTask();
+		app.globalData.user && that.getFriendUpdates();
 	},
 	signFunction(e) {
 		if (e.currentTarget.dataset.issignin) {
@@ -284,6 +301,7 @@ Page({
 	},
 	route(options) {
 		if (options.shareUserId) {
+			if (options.shareUserId == that.data.user.data.id) return
 			requestFunc.requestFunc({
 				url: '/friend/create',
 				method: "POST",
@@ -314,6 +332,7 @@ Page({
 		}
 	},
 	getTask() {
+		console.log(that.data.user.data.id, 'that.data.user.data.id')
 		requestFunc.requestFunc({
 			url: '/task/tasks',
 			method: "GET",

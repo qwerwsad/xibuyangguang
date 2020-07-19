@@ -88,7 +88,7 @@ Page({
 	},
 	goHome() {
 		wx.navigateBack({
-			delta: 20
+			delta: 10
 		})
 	},
 	gotoCreateB() {

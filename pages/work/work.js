@@ -118,14 +118,13 @@ Page({
 			method: "POST",
 			data: {
 				worksId: that.data.item.worksId,
-				authorId: that.data.item.authorId,
- 				"commentatorId": that.data.item.commentatorId,   // todo 这个是评论人
+				authorId: that.data.item.commentatorId,
+ 				"commentatorId": that.data.user.data.id,   // todo 这个是评论人
 				"content": that.data.commentReplay,
 				"parentCommentId": that.data.item.id,    // todo 这个是父亲评论id ，也就是你在回复那条评论。(不传说明你在单纯的评论作品) 
 				"conversationId": that.data.item.conversationId 
 			}
 		}).then((data) => {
-			console.log(data, "回复评论")
 			that.cancelReplayComment()
 			that.getComment(that.data.curWork)
 			// this.setData({

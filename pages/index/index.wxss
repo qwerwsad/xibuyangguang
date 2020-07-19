@@ -16,7 +16,7 @@ view {
 }
 
 .levelContent {
-    width: 166rpx;
+    width: 224rpx;
     height: 52rpx;
     border: 1rpx solid #FFC836;
     background: #ffffff;
@@ -27,7 +27,7 @@ view {
 }
 
 .levelContentItem {
-    width: 154rpx;
+    width: 212rpx;
     height: 40rpx;
     border-radius: 20rpx;
     background: #ffffff;
@@ -98,6 +98,28 @@ view {
     width: 414rpx;
     height: 549rpx;
     left: 20rpx;
+    color: #ffffff;
+    text-align: center;
+}
+
+.work4 {
+    position: absolute;
+    top: 380rpx;
+    width: 414rpx;
+    height: 549rpx;
+    left: 20rpx;
+    color: #ffffff;
+    text-align: center;
+    background: url(https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijing1.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+.start_create4 {
+    position: absolute;
+    top: 217rpx;
+    width: 107rpx;
+    height: 141rpx;
+    left: 150rpx;
     color: #ffffff;
     text-align: center;
 }

@@ -27,10 +27,11 @@
 
 <image src="/img/blank.png" mode="aspectFill" class="blank" />
 <image src="/img/start_create.png" class="start_create" bindtap="gotoCreate" />
-<image src="http://westsunshine.sapet.cn/static/work_bg/work_bg1.png" mode="aspectFill" class="work1" bindtap="toWork" />
-<image src="http://westsunshine.sapet.cn/static/work_bg/work_bg2.png" mode="aspectFill" class="work2" bindtap="toWork" />
-<image src="http://westsunshine.sapet.cn/static/work_bg/work_bg3.png" mode="aspectFill" class="work3" bindtap="toWork" />
-
+<image wx:if ="{{worksList && worksList.length > 0}}" src="{{worksList.length >2 ?  worksList[2].pictureUrl: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijing3.png'}}"  class="work1" bindtap="toWork" />
+<image wx:if ="{{worksList && worksList.length > 0}}" src="{{worksList.length >1 ?  worksList[1].pictureUrl: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijign2.png'}}" class="work2" bindtap="toWork" />
+<image  wx:if ="{{worksList && worksList.length > 0}}" src="{{worksList.length >0 ?  worksList[0].pictureUrl: ''}}" mode="aspectFill" class="work3" bindtap="toWork" />
+<view wx:if ="{{worksList && worksList.length == 0}}" class="work4"><image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/start_create1.png" class="start_create4" bindtap="gotoCreate" /> </view>
+<!-- <image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/start_create1.png" class="start_create4" bindtap="gotoCreate" /> -->
 <image src="/img/name.png" class="name" />
 
 <view class="buttons" style="top:1220rpx; z-index:100;">
@@ -108,8 +109,8 @@
 			<view style="width:250rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">我</view>
 			<view style="margin-left:0rpx; color:#676767; font-size:24rpx;">{{ user.data.givePoint }}</view>
 		</view>
-		<view    wx:if="{{!showFriend}}" class="paihangbangBox">
-			<view wx:for="{{ totalRanks }}" wx:for-item="rank" wx:key="index" wx:for-index="index" style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
+		<view wx:if="{{!showFriend}}" class="paihangbangBox">
+			<view wx:for="{{ totalRanks }}" bindtap="toFriendHome" data-frienddata="{{rank}}" wx:for-item="rank" wx:key="index" wx:for-index="index" style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
 				<view style="margin-left:50rpx; width:50rpx; padding-top:5rpx;">
 					<view wx:if="{{index>=3}}">NO.{{index + 1}}</view>
 					<image wx:if="{{index<3}}" src="/img/no{{index + 1}}.png" style="width:50rpx; height:50rpx; border-radius:50%;" />
@@ -120,7 +121,7 @@
 			</view>
 		</view>
 		<view wx:if="{{showFriend}}"  class="paihangbangBox">
-			<view wx:for="{{  friends }}" wx:for-item="friend" wx:key="index" wx:for-index="index" style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
+			<view wx:for="{{  friends }}" data-frienddata="{{friend}}" bindtap="toFriendHome" wx:for-item="friend" wx:key="index" wx:for-index="index" style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
 				<view style="margin-left:50rpx; width:50rpx; padding-top:5rpx;">
 					<view wx:if="{{index>=3}}">NO.{{index + 1}}</view>
 					<image wx:if="{{index<3}}" src="/img/no{{index + 1}}.png" style="width:50rpx; height:50rpx; border-radius:50%;" />
@@ -165,48 +166,6 @@
 			</button>
 			<image   wx:if="{{index != 3}}" src="/img/gotofinish.png" bindtap="gotoTask" data-taskindex="{{index + 1}}" style="width:181rpx; height:71rpx;" />
 		</view>
-		<!-- <view style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
-			<image src="http://westsunshine.sapet.cn/static/portrait.jpg" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
-			<view style="width:315rpx; margin-left:30rpx;">
-				<view style="font-size:22rpx;">我要创作（0/1件）</view>
-				<view style="font-size:18rpx; color:#606060; margin-top:10rpx;">创作并分享1件作品可得30阳光值。</view>
-			</view>
-			<navigator url="/pages/create_a/create_a">
-				<image src="/img/gotofinish.png" style="width:181rpx; height:71rpx;" />
-			</navigator>
-		</view>
-		<view style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
-			<image src="http://westsunshine.sapet.cn/static/portrait.jpg" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
-			<view style="width:315rpx; margin-left:30rpx;">
-				<view style="font-size:22rpx;">我要分享孩子的作品（0/3次）</view>
-				<view style="font-size:18rpx; color:#606060; margin-top:10rpx;">分享儿童诗歌或画作1次可得10阳光值。</view>
-			</view>
-			<image src="/img/gotofinish.png" style="width:181rpx; height:71rpx;" />
-		</view>
-		<view style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
-			<image src="http://westsunshine.sapet.cn/static/portrait.jpg" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
-			<view style="width:315rpx; margin-left:30rpx;">
-				<view style="font-size:22rpx;">和好友互动一下（0/5次）</view>
-				<view style="font-size:18rpx; color:#606060; margin-top:10rpx;">点赞或评论其他作品1次可得1阳光值</view>
-			</view>
-			<image src="/img/gotofinish.png" style="width:181rpx; height:71rpx;" bindtap="showFriend" />
-		</view>
-		<view style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
-			<image src="http://westsunshine.sapet.cn/static/portrait.jpg" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
-			<view style="width:315rpx; margin-left:30rpx;">
-				<view style="font-size:22rpx;">邀请朋友入驻艺术馆（0/5位）</view>
-				<view style="font-size:18rpx; color:#606060; margin-top:10rpx;">每邀请一位好友并成功注册可得50阳光值。</view>
-			</view>
-			<image src="/img/gotofinish.png" style="width:181rpx; height:71rpx;" />
-		</view>
-		<view style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
-			<image src="http://westsunshine.sapet.cn/static/portrait.jpg" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
-			<view style="width:315rpx; margin-left:30rpx;">
-				<view style="font-size:22rpx;">蹭点阳光值（0/5家）</view>
-				<view style="font-size:18rpx; color:#606060; margin-top:10rpx;">每天去5家艺术馆可蹭到5阳光值</view>
-			</view>
-			<image src="/img/gotofinish.png" style="width:181rpx; height:71rpx;" />
-		</view> -->
 	</view>
 </view>
 
