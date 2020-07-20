@@ -3,7 +3,7 @@
 <image src="/img/home.png" bindtap="goHome" class="home" />
 <!-- <image src="/img/share.png" class="home" style="left:150rpx;" /> -->
 <view class="title">艺术馆大厅</view>
-<image src="/img/next.png" class="home" style="left:650rpx;" bindtap="gotoCreateC" />
+<!-- <image src="/img/next.png" class="home" style="left:650rpx;" bindtap="gotoCreateC" /> -->
 
 <!-- <view style="position:absolute; top:200rpx; width:750rpx; text-align:center;">
 	<image src="/img/step1-active.png" style="width:79rpx; height:44rpx;" />

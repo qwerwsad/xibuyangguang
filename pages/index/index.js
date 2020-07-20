@@ -108,14 +108,14 @@ Page({
 						var initHeight = 262
 						var str = '你于' + currentDate + '给西部阳光捐赠了' + that.data.curRecipient.point + '阳光值，汇丰银行将给予项目同等价值的支持。因为有你，孩子们能在梦想中的教室中玩耍！'
 						var lastSubStrIndex = 0; //每次开始截取的字符串的索引 
-						ctx.setFontSize(12);
+						ctx.setFontSize(16);
 						ctx.setFillStyle('black');
 						ctx.setTextAlign('left');
 						for (let i = 0; i < str.length; i++) {
 							lineWidth += ctx.measureText(str[i]).width;
 							if (lineWidth > 429) {
 								ctx.fillText(str.substring(lastSubStrIndex, i), 112, initHeight); //绘制截取部分                
-								initHeight += 25; //16为字体的高度                
+								initHeight += 32; //16为字体的高度                
 								lineWidth = 0;
 								lastSubStrIndex = i;
 								// titleHeight += 30;

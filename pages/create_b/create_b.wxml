@@ -37,9 +37,9 @@
 		</block>
 </swiper>
 <view class="btnPoemStory">
-		<view class="g-buy_status" bindtap="buyPoemStory">
+		<!-- <view class="g-buy_status" bindtap="buyPoemStory">
 				{{poems[currentItemId].used == 0 ? '已购买' : '购买'}}
-		</view>
+		</view> -->
 		<view class="g-buy_status" bindtap="showPoemStory">诗歌故事</view>
 		<!-- <image src="/img/poemstory.png" style="width:144rpx; height:61rpx;" /> -->
 </view>

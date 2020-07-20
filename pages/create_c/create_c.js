@@ -327,6 +327,7 @@ Page({
 						mp3Url: data.data.fileUrl,
 						ifShowRecord: false
 					})
+					that.gotoCreateC()
 				}
 			},
 			fail: function(err) {

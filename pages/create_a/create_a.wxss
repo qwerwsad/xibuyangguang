@@ -192,5 +192,5 @@
     bottom: 153rpx;
     padding: 0 230rpx;
     box-sizing: border-box;
-    justify-content: space-between;
+    justify-content: center;
 }

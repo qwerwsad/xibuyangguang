@@ -87,6 +87,17 @@ Page({
 				console.log(data.data[that.data.currentItemId].bgmUrl)
 				that.shigeBofangqi.autoplay = true
 				that.shigeBofangqi.src = data.data[that.data.currentItemId].audioUrl;
+				that.shigeBofangqi.onEnded(() => {
+					that.pauseTimeOut && clearTimeout(that.pauseTimeOut)
+					that.pauseTimeOut = setTimeout(() => {
+						// that.bgmBofangqi.pause()
+						console.log(123123123123123)
+						that.shigeBofangqi.play()
+						that.bgmBofangqi.play()
+						that.shigeBofangqi.seek(0)
+						that.bgmBofangqi.seek(0)
+					}, 5000);
+				})
 				that.bgmBofangqi.onPlay(() => {
 					console.log('开始播放')
 				})
@@ -252,6 +263,8 @@ Page({
 		});
 		that.bgmBofangqi.src = that.data.works[currentItemId].bgmUrl;
 		console.log(that.data.works[currentItemId].audioUrl, 'that.data.works[currentItemId].audioUrl')
+
+		that.pauseTimeOut && clearTimeout(that.pauseTimeOut)
 		if (that.data.works[currentItemId].audioUrl) {
 			that.shigeBofangqi.src = that.data.works[currentItemId].audioUrl;
 			that.shigeBofangqi.play();
@@ -261,6 +274,7 @@ Page({
 		}
 	},
 	onUnload() {
+		that.pauseTimeOut && clearTimeout(that.pauseTimeOut)
 		that.bgmBofangqi && that.bgmBofangqi.pause();
 		that.shigeBofangqi && that.shigeBofangqi.pause();
 	},
@@ -524,6 +538,7 @@ Page({
 													height: 1334,
 													destWidth: 750,
 													destHeight: 1334,
+													fileType: 'png',
 													canvasId: 'myWorkCanvas',
 													success(res) {
 														console.log(res.tempFilePath)

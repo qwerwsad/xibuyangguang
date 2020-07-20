@@ -142,14 +142,15 @@ Page({
 						url: '/pages/create_c/create_c?wobg_id=' + that.data.wobg_id + "&poem_id=" + id,
 					})
 				} else {
-					wx.showToast({
-						title: '请先购买诗歌',
-						icon: 'none',
-						duration: 2000
-					})
+					// wx.showToast({
+					// 	title: '请先购买诗歌',
+					// 	icon: 'none',
+					// 	duration: 2000
+					// })
+					that.buyPoemStory()
 				}
 			}
-			this.setData({showBuyModal: false})
+			// this.setData({showBuyModal: false})
 		})
 	},
 	clickChange: function (e) {

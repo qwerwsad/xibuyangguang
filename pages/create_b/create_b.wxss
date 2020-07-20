@@ -192,5 +192,5 @@
     flex-direction: row;
     align-items: center;
     padding: 0 200rpx;
-    justify-content: space-between;
+    justify-content: center;
 }

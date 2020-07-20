@@ -31,9 +31,9 @@
 		</block>
 </swiper>
 <view class="active_btn">
-		<view bindtap="buyPicStory" class="g-buy_status">
+		<!-- <view bindtap="buyPicStory" class="g-buy_status">
 				{{work_bgs[currentItemId].used == 0 ? '已购买' : '购买'}}
-		</view>
+		</view> -->
 		<view bindtap="showPicStory" class="g-buy_status">画作故事</view>
 		<!-- <image bindtap="showPicStory" src="/img/huazuogushi.png" style="width:144rpx; height:61rpx;" /> -->
 </view>

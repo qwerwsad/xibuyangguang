@@ -112,7 +112,7 @@
 <view wx:if="{{showcengmodel}}" style="position:fixed; z-index:2000;width:515rpx; height:559rpx; background-color:#ffffff; top:300rpx; left:117rpx; border-radius:30rpx; text-align:center;">
 		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/taiyang.png"  style="width:217rpx; height:221rpx; margin-top:83rpx;"/>
 		<view style="font-size:24rpx; padding:30rpx 50rpx; ">
-				<view><text style="color:#FFC400;font-size:48rpx;">+1</text>阳光值</view>
+				<view><text style="color:#FFC400;font-size:32rpx;">+</text><text style="color:#FFC400;font-size:48rpx;">1</text>阳光值</view>
 				<view>访问好友艺术馆，蹭到1个阳光值</view>
 		</view>
 		<view style="display:flex; justify-content:space-around; margin-top:50rpx;">

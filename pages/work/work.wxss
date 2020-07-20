@@ -1,25 +1,59 @@
-.bg { width:100%; height:100vh; filter: brightness(0.5); }
+.bg {
+    width: 100%;
+    height: 100vh;
+    filter: brightness(0.5);
+}
 
-.home { position: absolute; top:62rpx; left:71rpx; width:61rpx; height:79rpx; }
+.home {
+    position: absolute;
+    top: 62rpx;
+    left: 71rpx;
+    width: 61rpx;
+    height: 79rpx;
+}
 
-.title { position: absolute; top:50rpx; width:200rpx; left:calc( 50vw - 100rpx); color:#ffffff; text-align: center; }
+.title {
+    position: absolute;
+    top: 50rpx;
+    width: 200rpx;
+    left: calc(50vw - 100rpx);
+    color: #ffffff;
+    text-align: center;
+}
 
 .swiper {
-	position: absolute;
-	width:750rpx;
-	height:724rpx;
-	top: 200rpx;
-	left: 0;
+    position: absolute;
+    width: 750rpx;
+    height: 724rpx;
+    top: 200rpx;
+    left: 0;
 }
+
+.comments {
+    position: absolute;
+    width: 420rpx;
+    top: 1000rpx;
+    left: calc((100vw - 440rpx) / 2);
+
+}
+
+.work_like {
+    position: absolute;
+    right: 190rpx;
+    top: 950rpx;
+}
+
 .row {
     width: 100%;
     height: 100%;
 }
+
 .title {
     font-size: 36rpx;
     text-align: center;
     margin: 20rpx 0;
 }
+
 .col {
     width: 480rpx;
     margin: 0 auto;
@@ -27,37 +61,61 @@
     transform: scale(0.9);
     border-radius: 10rpx;
 }
+
 .col image {
     width: 100%;
     height: 100%;
     border-radius: 10rpx;
 }
+
 .selected {
     transform: scale(1);
 }
 
-.comments { 
-	position: absolute;
-	width: 420rpx;
-	bottom: 134rpx;
-	left: calc( ( 100vw - 440rpx ) / 2 );
-
+.comments view.comment {
+    height: 60rpx;
+    display: flex;
+    align-items: center;
 }
-.comments view.comment { height: 60rpx; display:flex; align-items: center; }
-.comments view.comment image { width:50rpx; height:50rpx; border-radius: 50rpx; }
-.comments view.comment view { margin-left:10rpx; display: flex;flex-direction: column; justify-content: space-between; }
-.comments view.comment view view.nickname { color:#ffffff; font-size:24rpx; }
-.comments view.comment view view.text { color:#ffffff; font-size:24rpx;}
+
+.comments view.comment image {
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 50rpx;
+}
+
+.comments view.comment view {
+    margin-left: 10rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.comments view.comment view view.nickname {
+    color: #ffffff;
+    font-size: 24rpx;
+    line-height: 32rpx;
+}
+
+.comments view.comment view view.text {
+    color: #ffffff;
+    font-size: 24rpx;
+    margin-top: 10rpx;
+}
 
 .action {
-	position: absolute;
-	width: 400rpx;
-	bottom:80rpx;
-	left: calc( ( 100vw - 400rpx ) / 2 );
-	display: flex;
-	justify-content: space-between;
+    position: absolute;
+    width: 400rpx;
+    bottom: 80rpx;
+    left: calc((100vw - 400rpx) / 2);
+    display: flex;
+    justify-content: space-between;
 }
-.action image { width:144rpx; height:60rpx; }
+
+.action image {
+    width: 144rpx;
+    height: 60rpx;
+}
 
 
 .sponsor {
@@ -69,26 +127,35 @@
     left: calc((100% - 517rpx) / 2);
     z-index: 1001;
     background: #ffffff;
-	border-radius: 30rpx;
-	display:flex;
-	flex-direction:column;
-	align-items:center;
-    justify-content:flex-start;
+    border-radius: 30rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 }
 
-.sponsor .sponsorCount { 
-	background-color:#FFC936; width:100%; height:74rpx; margin-top:61rpx; display: flex; align-items: center; justify-content: center; font-size:24rpx;
+.sponsor .sponsorCount {
+    background-color: #FFC936;
+    width: 100%;
+    height: 74rpx;
+    margin-top: 61rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24rpx;
 }
-.sponsor .sponsorCount input { width:150rpx; background-color: #ffffff; margin:0 20rpx; border-radius:30rpx; text-align: center; }
 
-.sponsor .submitComment {
+.sponsor .sponsorCount input {
+    width: 150rpx;
+    background-color: #ffffff;
+    margin: 0 20rpx;
+    border-radius: 30rpx;
+    text-align: center;
+}
 
-}
-.work_like{
-    position: absolute;
-    right: 190rpx;
-    bottom: 260rpx;
-}
+.sponsor .submitComment {}
+
+
 .myWorkCanvas {
     position: fixed;
     left: -50%;

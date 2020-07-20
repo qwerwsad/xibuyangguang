@@ -292,7 +292,7 @@
 			</view>
 		</view>
 		<view style="background-color:#ffffff; border-radius:30rpx; padding:30rpx; font-size:24rpx; margin-top:40rpx;">
-			<view style="width:490rpx; height:158rpx; overflow-y:scroll; text-align:justify;">
+			<view style="width:490rpx; line-height: 32rpx; height:158rpx; overflow-y:scroll; text-align:justify;">
 				{{ curRecipient.intro }}
 			</view>
 		</view>
@@ -331,13 +331,13 @@
 			<view style="font-size:18rpx; letter-spacing:0px;">THANK YOU FOR YOUR DONATION!</view>
 		</view>
 	</view>
-	<view  catchtap="" style="margin-top:30rpx; padding:0 100rpx; font-size:24rpx; text-align:justify;">
+	<view  catchtap="" style="margin-top:30rpx; padding:0 100rpx; line-height:32rpx; font-size:24rpx; text-align:justify;">
 		你于{{currentDate}}给西部阳光捐赠了{{curRecipient.point}}阳光值，汇丰银行将给予项目同等价值的支持。因为有你，孩子们能在梦想中的教室中玩耍！
 	</view>
 	<view  catchtap="" style="margin-top:30rpx; padding:0 100rpx; font-size:22rpx; text-align:center; color:#DB6E37;">
 		证书编号：{{zhengshubianhao}}
 	</view>
-	<view  catchtap="" style="margin-top:30rpx; padding:0 100rpx; font-size:22rpx; text-align:right; color:#666666;">
+	<view  catchtap="" style="margin-top:30rpx; padding:0 80rpx; font-size:22rpx; text-align:right; color:#666666;">
 		{{currentDate}}
 	</view>
 	<view  catchtap="" style="margin-top:450rpx; text-align:center;">

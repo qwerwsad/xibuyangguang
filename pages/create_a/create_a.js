@@ -114,14 +114,15 @@ Page({
 						url: '/pages/create_b/create_b?wobg_id=' + id,
 					});
 				} else {
-					wx.showToast({
-						title: '请先购买背景画作',
-						icon: 'none',
-						duration: 2000
-					})
+					// wx.showToast({
+					// 	title: '请先购买背景画作',
+					// 	icon: 'none',
+					// 	duration: 2000
+					// })
+					that.buyPicStory()
 				}
 			}
-			this.setData({showBuyModal: false})
+			// this.setData({showBuyModal: false})
 		})
 	},
 	clickChange: function (e) {
