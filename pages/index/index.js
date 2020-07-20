@@ -310,8 +310,8 @@ Page({
 					'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
 				},
 				data: {
-					applicantPersonId: options.shareUserId,
-					throughPersonId: that.data.user.data.id,
+					applicantPersonId: options.shareUserId, // 分享气泡人的id
+					throughPersonId: that.data.user.data.id, // 点击气泡进来的人的id
 				},
 			}).then((data) => {
 				if (data.result == 0) {
@@ -323,7 +323,7 @@ Page({
 						},
 						data: {
 							taskTypeEnum: 'INVITE',
-							userId: that.data.user.data.id
+							userId: options.shareUserId
 						},
 					}).then((data) => {
 						that.setData({
