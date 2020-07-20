@@ -166,6 +166,91 @@ view {
     box-shadow: 10rpx 10rpx 6px #000;
 }
 
+.headerBox {
+    width: 700rpx;
+    height: 230rpx;
+    padding-top: 30rpx;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.infoBox {
+    width: 100%;
+    height: 105rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nameBox {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 12rpx;
+    color: #fff;
+}
+
+.sunNumberBox {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 44rpx;
+    color: #fff;
+}
+
+.tabBox {
+    width: 100%;
+    height: 95rpx;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.tab1 {
+    width: 50%;
+    text-align: left;
+    line-height: 95rpx;
+    padding-left: 73rpx;
+    color: #000;
+    font-size: 28rpx;
+    border-top-left-radius: 30rpx;
+    background: #E9E6EA;
+}
+
+.tab2 {
+    width: 50%;
+    text-align: right;
+    line-height: 95rpx;
+    padding-right: 73rpx;
+    color: #000;
+    font-size: 28rpx;
+    border-top-right-radius: 30rpx;
+    background: #E9E6EA;
+}
+
+.activeTab {
+    background: #FDCA35;
+}
+
+.headerImageBox {
+    width: 264rpx;
+    height: 264rpx;
+    border: 2rpx solid #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.headerImageBox image {
+    width: 260rpx;
+    height: 260rpx;
+}
+
 .rankBg {
     background: url(https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/allrank.png) no-repeat;
     background-size: 98% 86%;

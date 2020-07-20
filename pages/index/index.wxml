@@ -77,33 +77,29 @@
 		<image src="http://westsunshine.sapet.cn/static/aixinqiye/aixinqiye1.png" mode="aspectFit" style="display:block; width:100rpx; height:100rpx; margin:auto;" />
 	</view>
 </view>
-
 <!-- 排行榜 -->
 <view wx:if="{{ ifShowRank }}" catchtouchmove="move" class="bg_black" style="z-index:101;" bindtap="showRank"></view>
-<view wx:if="{{ ifShowRank }}"  style="z-index:101; background:#fff; width:700rpx; height:90%; position:fixed; top:50rpx; left:25rpx;">
-</view>
-<view wx:if="{{ ifShowRank }}" class="" style="z-index:102; width:700rpx;background:#FFC936; height:90%; position:fixed; top:50rpx; left:25rpx;">
-	<view style="position:relative; display:flex; padding-top:0rpx;background:#fff;">
-		<view style="width:400rpx;">
-			<view style="padding-left: 50rpx;display:flex; align-items:center; margin-top:20rpx;">
+<view wx:if="{{ ifShowRank }}" class="" style="z-index:102; width:700rpx;position:fixed; top:50rpx; left:25rpx;">
+	<view class="headerBox">
+		<view class="infoBox">
+			<view class="nameBox">
 				<image src="/img/portraiticon.png" style="width:28rpx; height:28rpx;" />
 				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
 			</view>
-			<view bindtap="switchFriendRank" style="background-color: {{showFriend?'#FFC936':''}};padding-left: 50rpx;font-size: 28rpx;height: 80rpx;padding-top: 14px; margin-top:150rpx; font-size:28rpx;">好友排行榜</view>
-		</view>
-		<view style="width:265rpx; height:265rpx;"></view>
-		<view style="position:absolute; top:30rpx; left:217.5rpx;z-index:99;">
-			<image src="{{ user.data.avatar }}" style="width:265rpx; height:265rpx; border-radius:50%;" />
-		</view>
-		<view style="width:400rpx;position:absolute;right:0;">
-			<view style="padding-left: 150rpx;margin-top:20rpx; display:flex; align-items:center; justify-content:center;">
+			<view class="sunNumberBox">
 				<image src="/img/sunflower.png" style="width:28rpx; height:28rpx;" />
 				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.leftPoint }}</view>
 			</view>
-			<view bindtap="switchTotalRank" style="background-color: {{!showFriend?'#FFC936':''}};padding-left: 160rpx;font-size: 28rpx;height: 80rpx;padding-top: 14px;text-align:center; margin-top:150rpx; font-size:28rpx;">总排行榜</view>
+		</view>
+		<view class="tabBox">
+			<view bindtap="switchFriendRank" class="{{showFriend?'activeTab  tab1':'tab1'}}" style="padding-left:45rpx">好友排行榜</view>
+			<view bindtap="switchTotalRank" class="{{!showFriend?'activeTab  tab2':'tab2'}}">总排行榜</view>
+		</view>
+		<view class="headerImageBox">
+			<image  src="{{ user.data.avatar }}"></image>
 		</view>
 	</view>
-	<view style=" padding:30rpx 0;">
+	<view style="background-color:#E7E7E7; padding:30rpx 0; height:800rpx; overflow-y:scroll;">
 		<view 
 			style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
 			<view style="margin-left:50rpx; font-size:24rpx; width:50rpx; text-align:center;">{{ showFriend?  userFriendRank:userAllRank }}</view>
@@ -138,25 +134,26 @@
 
 <!-- 任务 -->
 <view wx:if="{{ ifShowTask }}" catchtouchmove="move" class="bg_black" style="z-index:101;" bindtap="showTask"></view>
-<view wx:if="{{ ifShowTask }}" style="z-index:102; background-color:#E7E7E7; width:700rpx;  height:90%; position:fixed; top:50rpx; left:25rpx;">
-	<view style="position:relative; display:flex; padding-top:0rpx; background-color:#ffffff;">
-		<view style="width:260rpx; overflow:hidden;">
-			<view style="display:flex; align-items:center; padding-left:50rpx; margin-top:20rpx; height:175rpx;">
+<view wx:if="{{ ifShowTask }}" style="z-index:102;  width:700rpx;  height:90%; position:fixed; top:50rpx; left:25rpx;">
+	<view class="headerBox">
+		<view class="infoBox">
+			<view class="nameBox">
 				<image src="/img/portraiticon.png" style="width:28rpx; height:28rpx;" />
-				<view style="font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
+				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
 			</view>
-			<view style="padding-left:50rpx; font-size:28rpx; height:80rpx; padding-top:28rpx; background-color:#FFC936;">任务中心</view>
+			<view class="sunNumberBox">
+				<image src="/img/sunflower.png" style="width:28rpx; height:28rpx;" />
+				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.leftPoint }}</view>
+			</view>
 		</view>
-		<view style="position:absolute; top:50rpx;; left:217rpx;">
-			<image src="{{ user.data.avatar }}" style="width:265rpx; height:265rpx; border-radius:50%;" />
+		<view class="tabBox">
+			<view class="tab1">任务中心</view>
 		</view>
-		<view style="width:217rpx;">
-			<view style="text-align:center; padding-top:20rpx; "></view>
-			<view style="text-align:center; margin-top:150rpx;"></view>
+		<view class="headerImageBox">
+			<image  src="{{ user.data.avatar }}"></image>
 		</view>
 	</view>
-	<view style="background-color:#E7E7E7; width:100%; height:50rpx;"></view>
-	<view style="background-color:#E7E7E7; padding:30rpx 0; height:630rpx; overflow-y:scroll;">
+	<view style="background-color:#E7E7E7; padding:30rpx 0; height:800rpx; overflow-y:scroll;">
 		<view wx:for="{{taskData}}" wx:for-index="index" wx:key="index" wx:for-item="item" style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
 			<image src="http://westsunshine.sapet.cn/static/portrait.jpg" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
 			<view style="width:315rpx; margin-left:30rpx;">
@@ -173,25 +170,26 @@
 
 <!-- 好友 -->
 <view wx:if="{{ ifShowFriend }}" catchtouchmove="move" class="bg_black" style="z-index:101;" bindtap="showFriend"></view>
-<view wx:if="{{ ifShowFriend }}" style="z-index:102; background-color:#E7E7E7; width:700rpx;  height:90%; position:fixed; top:50rpx; left:25rpx;">
-	<view style="position:relative; display:flex; padding-top:0rpx; background-color:#ffffff;">
-		<view style="width:260rpx; overflow:hidden;">
-			<view style="display:flex; align-items:center; padding-left:50rpx; margin-top:20rpx; height:175rpx;">
+<view wx:if="{{ ifShowFriend }}" style="z-index:102;  width:700rpx; position:fixed; top:50rpx; left:25rpx;">
+	<view class="headerBox">
+		<view class="infoBox">
+			<view class="nameBox">
 				<image src="/img/portraiticon.png" style="width:28rpx; height:28rpx;" />
-				<view style="font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
+				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
 			</view>
-			<view style="padding-left:50rpx; font-size:28rpx; height:80rpx; padding-top:28rpx; background-color:#FFC936;">好友</view>
+			<view class="sunNumberBox">
+				<image src="/img/sunflower.png" style="width:28rpx; height:28rpx;" />
+				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.leftPoint }}</view>
+			</view>
 		</view>
-		<view style="position:absolute; top:50rpx;; left:217.5rpx;">
-			<image src="{{ user.data.avatar }}" style="width:265rpx; height:265rpx; border-radius:50%;" />
+		<view class="tabBox">
+			<view class="tab1">好友</view>
 		</view>
-		<view style="width:217.5rpx;">
-			<view style="text-align:center; padding-top:20rpx; "></view>
-			<view style="text-align:center; margin-top:150rpx;"></view>
+		<view class="headerImageBox">
+			<image  src="{{ user.data.avatar }}"></image>
 		</view>
 	</view>
-	<view style="background-color:#E7E7E7; width:100%; height:50rpx;"></view>
-	<view style="background-color:#E7E7E7; padding:30rpx 0;">
+	<view style="background-color:#E7E7E7; padding:30rpx 0; height:800rpx; overflow-y:scroll;">
 		<view wx:for="{{ friends }}" wx:for-item="friend" wx:key="friend" wx:for-index="index" style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
 			<image src="{{ friend.avatar }}" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
 			<view style="width:315rpx; margin-left:30rpx;">
@@ -210,25 +208,26 @@
 
 <!-- 成就 -->
 <view wx:if="{{ ifShowAchievement }}" catchtouchmove="move" class="bg_black" style="z-index:101;" bindtap="showAchievement"></view>
-<view wx:if="{{ ifShowAchievement }}" style="z-index:102;  overflow:hidden; background-color:#E7E7E7; width:700rpx; height:90%; position:fixed; top:50rpx; left:25rpx;">
-	<view style="position:relative; display:flex; padding-top:0rpx; background-color:#ffffff;">
-		<view style="width:260rpx; overflow:hidden;">
-			<view style="display:flex; align-items:center; padding-left:50rpx; margin-top:20rpx; height:175rpx;">
+<view wx:if="{{ ifShowAchievement }}" style="z-index:102;  overflow:hidden; width:700rpx;  position:fixed; top:50rpx; left:25rpx;">
+	<view class="headerBox">
+		<view class="infoBox">
+			<view class="nameBox">
 				<image src="/img/portraiticon.png" style="width:28rpx; height:28rpx;" />
-				<view style="font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
+				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
 			</view>
-			<view style="padding-left:50rpx; font-size:28rpx; height:80rpx; padding-top:28rpx; background-color:#FFC936;">成就</view>
+			<view class="sunNumberBox">
+				<image src="/img/sunflower.png" style="width:28rpx; height:28rpx;" />
+				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.leftPoint }}</view>
+			</view>
 		</view>
-		<view style="position:absolute; top:50rpx;; left:217.5rpx;">
-			<image src="{{ user.data.avatar }}" style="width:265rpx; height:265rpx; border-radius:50%;" />
+		<view class="tabBox">
+			<view class="tab1">我的成就</view>
 		</view>
-		<view style="width:217.5rpx;">
-			<view style="text-align:center; padding-top:20rpx; "></view>
-			<view style="text-align:center; margin-top:150rpx;"></view>
+		<view class="headerImageBox">
+			<image  src="{{ user.data.avatar }}"></image>
 		</view>
 	</view>
-	<view style="background-color:#E7E7E7; width:100%; height:50rpx;"></view>
-	<view style="background-color:#E7E7E7; overflow-y:scroll; height:100%; padding:90rpx 88rpx 315rpx 90rpx;">
+	<view style="background-color:#E7E7E7; padding:30rpx 0; height:800rpx; overflow-y:scroll;">
 		<view class="medal" wx:for="{{medalsData}}" wx:for-item="medals" wx:key="index" wx:for-index="index">
 			<view style="display:flex; align-items:center;">
 				<image src="{{medals.medalUrl?medals.medalUrl:'http://westsunshine.sapet.cn/static/medal/medal1.png'}}" style="width:180rpx; height:203rpx;" />
@@ -241,25 +240,26 @@
 
 <!-- 捐赠 -->
 <view wx:if="{{ ifShowDonate }}" catchtouchmove="move" class="bg_black" style="z-index:101;" bindtap="hideDonate"></view>
-<view wx:if="{{ ifShowDonate }}" style="z-index:102; background-color:#E7E7E7; width:700rpx; height:90%; position:fixed; top:50rpx; left:25rpx;">
-	<view style="position:relative; display:flex; padding-top:0rpx; background-color:#ffffff;">
-		<view style="width:260rpx; overflow:hidden;">
-			<view style="display:flex; align-items:center; padding-left:50rpx; margin-top:20rpx; height:175rpx;">
+<view wx:if="{{ ifShowDonate }}" style="z-index:102;  width:700rpx; position:fixed; top:50rpx; left:25rpx;">
+	<view class="headerBox">
+		<view class="infoBox">
+			<view class="nameBox">
 				<image src="/img/portraiticon.png" style="width:28rpx; height:28rpx;" />
-				<view style="font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
+				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
 			</view>
-			<view style="padding-left:50rpx; font-size:28rpx; height:80rpx; padding-top:28rpx; background-color:#FFC936;">我要捐赠</view>
+			<view class="sunNumberBox">
+				<image src="/img/sunflower.png" style="width:28rpx; height:28rpx;" />
+				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.leftPoint }}</view>
+			</view>
 		</view>
-		<view style="position:absolute; top:50rpx;; left:217.5rpx;">
-			<image src="{{ user.data.avatar }}" style="width:265rpx; height:265rpx; border-radius:50%;" />
+		<view class="tabBox">
+			<view class="tab1">我要捐赠</view>
 		</view>
-		<view style="width:217.5rpx;">
-			<view style="text-align:center; padding-top:20rpx; "></view>
-			<view style="text-align:center; margin-top:150rpx;"></view>
+		<view class="headerImageBox">
+			<image  src="{{ user.data.avatar }}"></image>
 		</view>
 	</view>
-	<view style="background-color:#E7E7E7; width:100%; height:50rpx;"></view>
-	<view style="background-color:#E7E7E7; padding:90rpx 88rpx; height: 670rpx; overflow-y:scroll;">
+	<view style="background-color:#E7E7E7; padding:30rpx 0; height:800rpx; overflow-y:scroll;">
 		<view wx:for="{{ recipients }}" wx:for-item="recipient" wx:key="index" wx:for-index="index" class="donateIcon">
 			<view style="display:flex; align-items:center;">
 				<image src="{{ recipient.logo }}" mode="aspectFit" style="width:200rpx; height:200rpx;" />
@@ -347,7 +347,7 @@
 
 <!-- 新用户领取阳光值 -->
 <view wx:if="{{ ifShowGetSunshineValue }}" class="bg_black" style="z-index:101;" bindtap="hideCert"></view>
-<view wx:if="{{ ifShowGetSunshineValue }}" style="z-index:102; position:absolute; width:515rpx; height:559rpx; background-color:#ffffff; top:300rpx; left:117rpx; border-radius:30rpx; text-align:center;">
+<view wx:if="{{ ifShowGetSunshineValue }}" style="z-index:102; position:absolute; width:515rpx; height:559rpx;  top:300rpx; left:117rpx; border-radius:30rpx; text-align:center;">
 	<image src="/img/sunflower.png" style="width:217rpx; height:221rpx; margin-top:83rpx;"/>
 	<view style="font-size:24rpx; padding:30rpx 50rpx; background-color:#FFC836;">
 		<view>请领取 <text style="font-size:24rpx; color:#67655E; background-color:#ffffff; border-radius:30rpx; width:200rpx; padding:0 20rpx;">1510</text> 阳光值</view>
@@ -412,7 +412,7 @@
 		<view class="fanhui" bindtap="closeSignin">返回</view>
 	</view>
 </view>
-<view wx:if="{{showsignmodel}}" style="position:fixed; z-index:2000;width:515rpx; height:559rpx; background-color:#ffffff; top:300rpx; left:117rpx; border-radius:30rpx; text-align:center;">
+<view wx:if="{{showsignmodel}}" style="position:fixed; z-index:2000;width:515rpx; height:559rpx;  top:300rpx; left:117rpx; border-radius:30rpx; text-align:center;">
 		<image src="{{signInData.times == 6?'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active10.png':'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/active1.png'}}" style="width:217rpx; height:221rpx; margin-top:83rpx;" />
 		<view style="font-size:24rpx; padding:30rpx 50rpx; ">
 				<view>成功签到第<text style="color:#FFC400;font-size:48rpx;">{{signInData.state + 1}}</text>天</view>
@@ -434,5 +434,5 @@
 				<image src="/img/cancel.png" bindtap="hideSell" style="width:145rpx; height:60rpx;" />
 		</view>
 </view> -->
-<view bindtap="closeModel" wx:if="{{ifShowRank ||  ifShowTask || ifShowGoDonate ||  ifShowDonateCert ||  ifShowFriend || ifShowAchievement ||  ifShowDonate}}" class="closeModel" >返回</view>
+<!-- <view bindtap="closeModel" wx:if="{{ifShowRank ||  ifShowTask || ifShowGoDonate ||  ifShowDonateCert ||  ifShowFriend || ifShowAchievement ||  ifShowDonate}}" class="closeModel" >返回</view> -->
 <canvas canvas-id="ruleCanvas" style="width:634px; height:859px" class="ruleCanvas"  disable-scroll="false"></canvas>

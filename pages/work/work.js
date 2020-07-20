@@ -127,7 +127,7 @@ Page({
 			}
 		}).then((data) => {
 			that.cancelReplayComment()
-			that.getWorks();
+			// that.getWorks();
 			that.getComment(that.data.curWork)
 			// this.setData({
 				// commentData: data && data.data

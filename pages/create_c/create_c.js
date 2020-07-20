@@ -58,6 +58,9 @@ Page({
 				wx.navigateTo({
 					url: '/pages/work/work?user_id=' + that.data.user.data.id + '&pageAttribution=mine',
 				})
+
+				this.innerAudioContext && this.innerAudioContext.pause()
+				this.innerAudioContext = ''
 			})
 			
 		})
@@ -74,6 +77,8 @@ Page({
 		wx.navigateTo({
 			url: '/pages/work/work?user_id=' + that.data.user.data.id + '&pageAttribution=mine',
 		})
+		this.innerAudioContext && this.innerAudioContext.pause()
+		this.innerAudioContext = ''
 	},
 	onLoad: function (options) {
 		that = this;
