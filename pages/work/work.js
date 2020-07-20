@@ -66,7 +66,8 @@ Page({
 			url: '/works/list',
 			method: "POST",
 			data: {
-				userId: that.data.user_id
+				userId: that.data.user_id,
+				visitId: that.data.user.data.id
 			}
 		}).then((data) => {
 			console.log(data)
@@ -126,6 +127,7 @@ Page({
 			}
 		}).then((data) => {
 			that.cancelReplayComment()
+			that.getWorks();
 			that.getComment(that.data.curWork)
 			// this.setData({
 				// commentData: data && data.data
@@ -249,7 +251,14 @@ Page({
 			curWork: that.data.works[ currentItemId ],
 		});
 		that.bgmBofangqi.src = that.data.works[currentItemId].bgmUrl;
-		that.shigeBofangqi.src = that.data.works[currentItemId].audioUrl;
+		console.log(that.data.works[currentItemId].audioUrl, 'that.data.works[currentItemId].audioUrl')
+		if (that.data.works[currentItemId].audioUrl) {
+			that.shigeBofangqi.src = that.data.works[currentItemId].audioUrl;
+			that.shigeBofangqi.play();
+		} else {
+			that.shigeBofangqi.src = that.data.works[currentItemId].audioUrl;
+			that.shigeBofangqi.pause();
+		}
 	},
 	onUnload() {
 		that.bgmBofangqi && that.bgmBofangqi.pause();
@@ -352,7 +361,8 @@ Page({
 					duration: 2000
 				})
 			}
-			that.getComment(that.data.curWork)
+			that.getWorks();
+			that.getComment(that.data.works[currentItemId]);
 			that.hideSell()
 			requestFunc.requestFunc({
 				url: '/task/complete',
@@ -473,56 +483,59 @@ Page({
 			wx.downloadFile({
 				url: that.data.works[ that.data.currentItemId ].pictureUrl,
 				success: function (res1) {
-					console.log(countCreator, "countCreator");
-					console.log(res1, "res1");
 					ctx.drawImage(res1.tempFilePath, 0, 0, 750, 1334);
 					ctx.save();
 					ctx.drawImage(res1.tempFilePath, 105, 237, 537, 724);
-
-					ctx.setFontSize(36);
-					ctx.setFillStyle('#F9C500');
-					ctx.setTextAlign('left');
-					ctx.fillText(that.data.user.data.nickName, 76, 1000);
-
-					ctx.setFontSize(18);
-					ctx.setFillStyle('#FFFFFF');
-					ctx.setTextAlign('left');
-					ctx.fillText('成为“诗里的童年”艺术馆第' + countCreator + '位创作者，用心演', 76, 1070);
-					ctx.setFontSize(18);
-					ctx.setFillStyle('#FFFFFF');
-					ctx.setTextAlign('left');
-					ctx.fillText('绎乡村孩子的诗画作品，用爱照亮他们的童年之路。', 76, 1100);
-
-					// 一个底部logo图
-					// 一个二维码图
 					wx.downloadFile({
-						url: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/sharelogo.png',
+						url: that.data.works[that.data.currentItemId].poetryPictureUrl,
 						success: function (res2) {
-							ctx.drawImage(res2.tempFilePath, 76, 1185, 400, 45);
-							ctx.save();
+							ctx.drawImage(res2.tempFilePath, 105, 237, 537, 724);
+							ctx.setFontSize(36);
+							ctx.setFillStyle('#F9C500');
+							ctx.setTextAlign('left');
+							ctx.fillText(that.data.user.data.nickName, 76, 1000);
+
+							ctx.setFontSize(18);
+							ctx.setFillStyle('#FFFFFF');
+							ctx.setTextAlign('left');
+							ctx.fillText('成为“诗里的童年”艺术馆第' + countCreator + '位创作者，用心演', 76, 1070);
+							ctx.setFontSize(18);
+							ctx.setFillStyle('#FFFFFF');
+							ctx.setTextAlign('left');
+							ctx.fillText('绎乡村孩子的诗画作品，用爱照亮他们的童年之路。', 76, 1100);
+
+							// 一个底部logo图
+							// 一个二维码图
 							wx.downloadFile({
-								url: util.svrUrl + '/qrcode?123',
-								success: function (res3) {
-									ctx.drawImage(res3.tempFilePath, 531, 1050, 180, 180);
+								url: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/sharelogo.png',
+								success: function (res2) {
+									ctx.drawImage(res2.tempFilePath, 76, 1185, 400, 45);
 									ctx.save();
-									ctx.draw(true, function () {
-										wx.canvasToTempFilePath({
-											x: 0,
-											y: 0,
-											width: 750,
-											height: 1334,
-											destWidth: 750,
-											destHeight: 1334,
-											canvasId: 'myWorkCanvas',
-											success(res) {
-												console.log(res.tempFilePath)
-												wx.hideLoading()
-												wx.previewImage({
-													current: res.tempFilePath, // 当前显示图片的http链接
-													urls: [res.tempFilePath] // 需要预览的图片http链接列表
+									wx.downloadFile({
+										url: util.svrUrl + '/qrcode?scene=A-' + that.data.user.data.id,
+										success: function (res3) {
+											ctx.drawImage(res3.tempFilePath, 531, 1050, 180, 180);
+											ctx.save();
+											ctx.draw(true, function () {
+												wx.canvasToTempFilePath({
+													x: 0,
+													y: 0,
+													width: 750,
+													height: 1334,
+													destWidth: 750,
+													destHeight: 1334,
+													canvasId: 'myWorkCanvas',
+													success(res) {
+														console.log(res.tempFilePath)
+														wx.hideLoading()
+														wx.previewImage({
+															current: res.tempFilePath, // 当前显示图片的http链接
+															urls: [res.tempFilePath] // 需要预览的图片http链接列表
+														})
+													}
 												})
-											}
-										})
+											})
+										}
 									})
 								}
 							})

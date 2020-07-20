@@ -160,7 +160,7 @@ Page({
 	},
 	onLoad: function (options) {
 		that = this;
-		console.log(app.globalData.user, 'app.globalData.user')
+		console.log(options, app.globalData.user, 'app.globalData.user')
 		if ( app.globalData.user != null ) {
 			let levelWid = 0
 			levelWid = (app.globalData.user.data.givePoint / app.globalData.user.data.point) * 100
@@ -203,7 +203,7 @@ Page({
 
 	},
 	init(options) {
-		that.getWorks();
+		// that.getWorks();
 		that.getRanks();
 		that.getFriends();
 		that.getRecipients();
@@ -213,7 +213,7 @@ Page({
 		that.getFriendUpdates();
 		that.getSignData();
 		that.getWorkss();
-		that.route(options)
+		that.data.user.data.accessed !=0 && that.route(options)
 	},
 	getWorkss() {
 		requestFunc.requestFunc({
@@ -235,6 +235,7 @@ Page({
 		});
 		app.globalData.user && that.getTask();
 		app.globalData.user && that.getFriendUpdates();
+		app.globalData.user && that.getWorkss();
 	},
 	signFunction(e) {
 		if (e.currentTarget.dataset.issignin) {
@@ -309,26 +310,36 @@ Page({
 					'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
 				},
 				data: {
-					applicantPersonId: that.data.user.data.id,
-					throughPersonId: options.shareUserId
+					applicantPersonId: options.shareUserId,
+					throughPersonId: that.data.user.data.id,
 				},
 			}).then((data) => {
-				requestFunc.requestFunc({
-					url: '/task/complete',
-					method: "POST",
-					header: {
-						'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-					},
-					data: {
-						taskTypeEnum: 'INVITE',
-						userId: that.data.user.data.id
-					},
-				}).then((data) => {
-					that.setData({
-						showCreateFriendmodel: true
+				if (data.result == 0) {
+					requestFunc.requestFunc({
+						url: '/task/complete',
+						method: "POST",
+						header: {
+							'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+						},
+						data: {
+							taskTypeEnum: 'INVITE',
+							userId: that.data.user.data.id
+						},
+					}).then((data) => {
+						that.setData({
+							showCreateFriendmodel: true
+						})
 					})
-				})
+				}
 			})
+		}
+		if (options.scene) {
+			if (options.scene.indexOf('A-') >= 0) {
+				console.log(options.scene.slice(2))
+				wx.navigateTo({
+					url: '/pages/work/work?user_id=' + options.scene.slice(2),
+				});
+			}
 		}
 	},
 	getTask() {
@@ -478,13 +489,18 @@ Page({
 		});
 	},
 	hideShouQuan() {
-		this.setData({
-			getWechatInfoViewShow: false
-		});
+		// this.setData({
+		// 	getWechatInfoViewShow: false
+		// });
+		wx.showToast({
+			title: '授权用户信息才能开启创作之路',
+			icon: 'none',
+			duration: 2000
+		})
 	},
 	saveWechatUserInfo: function (e) {
 		var that = this
-		wx.showLoading({ mask: true, title: '加载中' });
+		// wx.showLoading({ mask: true, title: '加载中' });
 		console.log(e.detail.userInfo)
 		requestFunc.requestFunc({
 			url: '/system/add-user-basic',
@@ -520,6 +536,7 @@ Page({
 						user: app.globalData.user,
 						getWechatInfoViewShow: false
 					});
+					that.init()
 					wx.hideLoading();
 				});
 			} else {
@@ -565,6 +582,12 @@ Page({
 		// 	}
 		// });
 	},
+	closeModel() {
+		that.setData({
+			ifShowRank: 0, ifShowTask: 0, ifShowFriend: 0, ifShowAchievement: 0, ifShowDonate: 0,
+			ifShowGoDonate: 0, ifShowDonateCert: 0
+		})
+	},
 	ShowGetSunshineValue() {
 		that.setData({
 			ifShowGetSunshineValue: 1,
@@ -599,6 +622,8 @@ Page({
 				ifShowDonate: 0,
 			});
 		}
+		that.getRanks();
+		that.getFriends();
 	},
 	showTask() {
 		if ( that.data.ifShowTask == 1 ) {
@@ -613,6 +638,7 @@ Page({
 				ifShowAchievement: 0,
 				ifShowDonate: 0,
 			});
+			that.getTask()
 		}
 	},
 	showFriend() {
@@ -628,6 +654,7 @@ Page({
 				ifShowAchievement: 0,
 				ifShowDonate: 0,
 			});
+			that.getFriends()
 		}
 	},
 	showAchievement() {
@@ -643,6 +670,7 @@ Page({
 				ifShowAchievement: 1,
 				ifShowDonate: 0,
 			});
+			that.getMedals()
 		}
 	},
 	showDonate() {
@@ -698,11 +726,12 @@ Page({
 				})
 				that.setData({
 					currentDate: currentDate,
-					ifShowDonateCert: 1,
+					ifShowDonateCert: 0,
 					ifShowGoDonate: 0,
 					ifShowIDonate: 0,
 				});
 			} else {
+				that.getMedals();
 				requestFunc.requestFunc({
 					url: '/medal/count-donation',
 					method: "GET",

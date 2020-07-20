@@ -1,7 +1,7 @@
 <image src="{{ work_bg.pictureUrl }}" mode="aspectFill" class="bg" />
 
 <image src="/img/home.png" bindtap="goHome" class="home" />
-<image src="/img/share.png" class="home" style="left:150rpx;" />
+<!-- <image src="/img/share.png" class="home" style="left:150rpx;" /> -->
 <view class="title">艺术馆大厅</view>
 <image src="/img/next.png" class="home" style="left:650rpx;" bindtap="gotoCreateC" />
 
@@ -35,7 +35,7 @@
 	</view>
 </scroll-view>
 
-<view style="position:absolute; bottom:100rpx; width:100%; text-align:center; color:#ffffff;">
+<view style="position:absolute; bottom:70rpx; width:100%; text-align:center; color:#ffffff;">
 	Step3：请选择音乐
 </view>
 
@@ -44,7 +44,7 @@
 	<view style="text-align:center; font-size:24rpx; height:485rpx;overflow-y:scroll;">
 		<view style="width:100%;text-align:center;line-hieght:30rpx"></view>
 		<text style="line-height: 36rpx">
-			{{ poem.content }}
+			{{ poem.content || '暂无故事' }}
 		</text>
 	</view>
 	<view style="text-align:center; margin-top:20rpx;"><image src="/img/wave.png" style="width:303rpx; height:65rpx;" /></view>

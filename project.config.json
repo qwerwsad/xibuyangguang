@@ -77,6 +77,13 @@
 					"pathName": "pages/work/work",
 					"query": "user_id=1284296336682803200&pageAttribution=mine",
 					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "fenxiang",
+					"pathName": "pages/index/index",
+					"query": "scene=A-1284496457185910784",
+					"scene": null
 				}
 			]
 		}

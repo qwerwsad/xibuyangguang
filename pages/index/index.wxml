@@ -27,8 +27,8 @@
 
 <image src="/img/blank.png" mode="aspectFill" class="blank" />
 <image src="/img/start_create.png" class="start_create" bindtap="gotoCreate" />
-<image wx:if ="{{worksList && worksList.length > 0}}" src="{{worksList.length >2 ?  worksList[2].pictureUrl: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijing3.png'}}"  class="work1" bindtap="toWork" />
-<image wx:if ="{{worksList && worksList.length > 0}}" src="{{worksList.length >1 ?  worksList[1].pictureUrl: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijign2.png'}}" class="work2" bindtap="toWork" />
+<image wx:if ="{{worksList }}" src="{{worksList.length >2 ?  worksList[2].pictureUrl: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijing3.png'}}"  class="work1" bindtap="toWork" />
+<image wx:if ="{{worksList }}" src="{{worksList.length >1 ?  worksList[1].pictureUrl: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijign2.png'}}" class="work2" bindtap="toWork" />
 <image  wx:if ="{{worksList && worksList.length > 0}}" src="{{worksList.length >0 ?  worksList[0].pictureUrl: ''}}" mode="aspectFill" class="work3" bindtap="toWork" />
 <view wx:if ="{{worksList && worksList.length == 0}}" class="work4"><image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/start_create1.png" class="start_create4" bindtap="gotoCreate" /> </view>
 <!-- <image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/start_create1.png" class="start_create4" bindtap="gotoCreate" /> -->
@@ -80,28 +80,30 @@
 
 <!-- 排行榜 -->
 <view wx:if="{{ ifShowRank }}" catchtouchmove="move" class="bg_black" style="z-index:101;" bindtap="showRank"></view>
-<view wx:if="{{ ifShowRank }}" style="z-index:102; background-color:#FFC936; width:700rpx; height:90%; position:fixed; top:50rpx; left:25rpx;">
-	<view style="position:relative; display:flex; padding-top:0rpx; background-color:#ffffff;">
-		<view style="width:217.5rpx;">
-			<view style="display:flex; align-items:center; justify-content:center; margin-top:20rpx;">
+<view wx:if="{{ ifShowRank }}"  style="z-index:101; background:#fff; width:700rpx; height:90%; position:fixed; top:50rpx; left:25rpx;">
+</view>
+<view wx:if="{{ ifShowRank }}" class="" style="z-index:102; width:700rpx;background:#FFC936; height:90%; position:fixed; top:50rpx; left:25rpx;">
+	<view style="position:relative; display:flex; padding-top:0rpx;background:#fff;">
+		<view style="width:400rpx;">
+			<view style="padding-left: 50rpx;display:flex; align-items:center; margin-top:20rpx;">
 				<image src="/img/portraiticon.png" style="width:28rpx; height:28rpx;" />
 				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
 			</view>
-			<view bindtap="switchFriendRank" style="text-align:center; margin-top:150rpx; font-size:28rpx;">好友排行榜</view>
+			<view bindtap="switchFriendRank" style="background-color: {{showFriend?'#FFC936':''}};padding-left: 50rpx;font-size: 28rpx;height: 80rpx;padding-top: 14px; margin-top:150rpx; font-size:28rpx;">好友排行榜</view>
 		</view>
 		<view style="width:265rpx; height:265rpx;"></view>
-		<view style="position:absolute; top:0; left:217.5rpx;">
+		<view style="position:absolute; top:30rpx; left:217.5rpx;z-index:99;">
 			<image src="{{ user.data.avatar }}" style="width:265rpx; height:265rpx; border-radius:50%;" />
 		</view>
-		<view style="width:217.5rpx;">
-			<view style="margin-top:20rpx; display:flex; align-items:center; justify-content:center;">
+		<view style="width:400rpx;position:absolute;right:0;">
+			<view style="padding-left: 150rpx;margin-top:20rpx; display:flex; align-items:center; justify-content:center;">
 				<image src="/img/sunflower.png" style="width:28rpx; height:28rpx;" />
 				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.leftPoint }}</view>
 			</view>
-			<view bindtap="switchTotalRank" style="text-align:center; margin-top:150rpx; font-size:28rpx;">总排行榜</view>
+			<view bindtap="switchTotalRank" style="background-color: {{!showFriend?'#FFC936':''}};padding-left: 160rpx;font-size: 28rpx;height: 80rpx;padding-top: 14px;text-align:center; margin-top:150rpx; font-size:28rpx;">总排行榜</view>
 		</view>
 	</view>
-	<view style="background-color:#FFC936; padding:30rpx 0;">
+	<view style=" padding:30rpx 0;">
 		<view 
 			style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
 			<view style="margin-left:50rpx; font-size:24rpx; width:50rpx; text-align:center;">{{ showFriend?  userFriendRank:userAllRank }}</view>
@@ -116,7 +118,7 @@
 					<image wx:if="{{index<3}}" src="/img/no{{index + 1}}.png" style="width:50rpx; height:50rpx; border-radius:50%;" />
 				</view>
 				<image src="{{ rank.avatar }}" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
-				<view style="width:250rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">{{ rank.nickName }}</view>
+				<view style="width:250rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">{{ rank.nickName || '--' }}</view>
 				<view style="margin-left:0rpx; color:#676767; font-size:24rpx;">{{ rank.givePoint }} </view>
 			</view>
 		</view>
@@ -127,7 +129,7 @@
 					<image wx:if="{{index<3}}" src="/img/no{{index + 1}}.png" style="width:50rpx; height:50rpx; border-radius:50%;" />
 				</view>
 				<image src="{{ friend.avatar }}" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
-				<view style="width:250rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">{{ friend.nickName }}</view>
+				<view style="width:250rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">{{ friend.nickName || '--' }}</view>
 				<view style="margin-left:0rpx; color:#676767; font-size:24rpx;">{{ friend.givePoint }} </view>
 			</view>
 		</view>
@@ -358,7 +360,7 @@
 </view>
 
 <!-- 授权 -->
-<view wx:if="{{ ifShowGetSunshineValue }}" class="bg_black" style="z-index:101;" bindtap="hideCert"></view>
+<view wx:if="{{  getWechatInfoViewShow }}" class="bg_black" style="z-index:101;" bindtap="hideCert"></view>
 <view class="drawer_box" wx:if="{{ getWechatInfoViewShow }}">
 	<view class="drawer_title">请您授权</view>
 	<view class="drawer_content">
@@ -432,4 +434,5 @@
 				<image src="/img/cancel.png" bindtap="hideSell" style="width:145rpx; height:60rpx;" />
 		</view>
 </view> -->
+<view bindtap="closeModel" wx:if="{{ifShowRank ||  ifShowTask || ifShowGoDonate ||  ifShowDonateCert ||  ifShowFriend || ifShowAchievement ||  ifShowDonate}}" class="closeModel" >返回</view>
 <canvas canvas-id="ruleCanvas" style="width:634px; height:859px" class="ruleCanvas"  disable-scroll="false"></canvas>

@@ -166,6 +166,29 @@ view {
     box-shadow: 10rpx 10rpx 6px #000;
 }
 
+.rankBg {
+    background: url(https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/allrank.png) no-repeat;
+    background-size: 98% 86%;
+    background-position: bottom center;
+}
+
+.closeModel {
+    width: 150rpx;
+    height: 60rpx;
+    text-align: center;
+    line-height: 40rpx;
+    background: url(https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/anniu.png) no-repeat;
+    background-size: 100% 100%;
+    font-size: 18rpx;
+    font-family: FZZhengHeiS-M-GB;
+    font-weight: 400;
+    color: rgba(25, 25, 25, 1);
+    position: fixed;
+    left: 300rpx;
+    bottom: 0;
+    z-index: 111111;
+}
+
 .friend_update {
     position: absolute;
     top: 1300rpx;

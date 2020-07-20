@@ -1,6 +1,6 @@
 <image src="{{ curBg }}" mode="aspectFill" class="bg" />
 <image src="/img/home.png" bindtap="goHome" class="home" />
-<image src="/img/share.png" class="home" style="left:150rpx;" />
+<!-- <image src="/img/share.png" class="home" style="left:150rpx;" /> -->
 <view class="title">艺术馆大厅</view>
 <image src="/img/next.png" class="home" style="left:650rpx;" bindtap="gotoCreateB" />
 <view class="stepBox" style="position:absolute; top:200rpx; width:750rpx; text-align:center;">

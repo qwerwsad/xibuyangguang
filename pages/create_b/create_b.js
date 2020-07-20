@@ -63,7 +63,7 @@ Page({
 			url: '/multimedia/bg-pictures',
 			method: "GET",
 			data: {
-				userId: that.data.user.id
+				userId: that.data.user.data.id
 			}
 		}).then((data) => {
 			for (let index = 0; index < data.data.length; index++) {
@@ -80,7 +80,7 @@ Page({
 			url: '/multimedia/bg-poetry',
 			method: "GET",
 			data: {
-				userId: that.data.user.id
+				userId: that.data.user.data.id
 			}
 		}).then((data) => {
 			for (let index = 0; index < data.data.length; index++) {
