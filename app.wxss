@@ -78,20 +78,20 @@ text {
 }
 
 .g-buy_status{
-    width: 100rpx;
-    height: 30rpx;
-    line-height: 30rpx;
+    width: 130rpx;
+    height: 50rpx;
+    line-height: 50rpx;
     text-align: center;
-    border-radius: 15rpx;
-    font-size: 18rpx;
-    background-color: #FFC937;    
+    border-radius: 25rpx;
+    font-size: 24rpx;
+    background-color: #FFC937;
 }
 .g-btn-white{
-    width:100rpx; 
-    height:30rpx; 
-    font-size: 18rpx;
-    line-height: 30rpx;
-    border-radius: 30rpx;
+    width:150rpx; 
+    height:45rpx; 
+    font-size: 26rpx;
+    line-height: 45rpx;
+    border-radius: 23rpx;
     background-color: #FFF;
     text-align: center;
 }
@@ -102,6 +102,7 @@ text {
     left: 0;
     height: 100%;
     width: 100%;
+    z-index: 20;
 }
 .g-modal-mask{
     position: fixed;

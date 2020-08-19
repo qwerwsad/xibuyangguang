@@ -2,14 +2,69 @@
     width: 100%;
     height: 100vh;
     filter: brightness(0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+}
+
+.cotentBox {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-top: 60rpx;
+}
+
+page {
+    overflow: hidden;
 }
 
 .home {
     position: absolute;
     top: 62rpx;
     left: 71rpx;
-    width: 61rpx;
-    height: 79rpx;
+    width: 82rpx;
+    height: 102rpx;
+    z-index: 9;
+}
+
+.homes {
+    position: absolute;
+    top: 62rpx;
+    right: 71rpx;
+    width: 82rpx;
+    height: 82rpx;
+    z-index: 9;
+}
+
+.playing {
+    animation: turn 4s linear infinite;
+}
+
+@keyframes turn {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    25% {
+        -webkit-transform: rotate(90deg);
+    }
+
+    50% {
+        -webkit-transform: rotate(180deg);
+    }
+
+    75% {
+        -webkit-transform: rotate(270deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
 }
 
 .title {
@@ -19,53 +74,72 @@
     left: calc(50vw - 100rpx);
     color: #ffffff;
     text-align: center;
+    z-index: 9;
 }
 
 .swiper {
-    position: absolute;
-    width: 750rpx;
-    height: 724rpx;
-    top: 200rpx;
-    left: 0;
+    /* position: absolute; */
+    width: 100%;
+    height: 752rpx;
+    /* top: 160rpx; */
+    /* left: 0; */
+}
+
+.swiperItem {
+    width: 100%;
+    height: 100%;
 }
 
 .comments {
-    position: absolute;
+    /* position: absolute; */
     width: 420rpx;
-    top: 1000rpx;
-    left: calc((100vw - 440rpx) / 2);
+    min-height: 80rpx;
+    max-height: 160rpx;
+    /* top: 930rpx; */
+    /* left: calc((100vw - 440rpx) / 2); */
+    margin: 10rpx auto 0;
 
 }
 
 .work_like {
-    position: absolute;
-    right: 190rpx;
-    top: 950rpx;
+    /* position: absolute; */
+    /* right: 190rpx; */
+    /* top: 875rpx; */
+    margin: 20rpx auto 0;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 150rpx;
 }
 
 .row {
     width: 100%;
     height: 100%;
+    position: relative;
 }
 
 .title {
     font-size: 36rpx;
     text-align: center;
-    margin: 20rpx 0;
+    margin: 35rpx 0;
 }
 
 .col {
-    width: 480rpx;
+    width: 100%;
     margin: 0 auto;
     height: 100%;
     transform: scale(0.9);
     border-radius: 10rpx;
+    filter: brightness(0.7);
 }
 
-.col image {
+.row image {
     width: 100%;
     height: 100%;
     border-radius: 10rpx;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .selected {
@@ -73,7 +147,7 @@
 }
 
 .comments view.comment {
-    height: 60rpx;
+    height: 80rpx;
     display: flex;
     align-items: center;
 }
@@ -104,12 +178,13 @@
 }
 
 .action {
-    position: absolute;
-    width: 400rpx;
-    bottom: 80rpx;
-    left: calc((100vw - 400rpx) / 2);
+    /* position: absolute; */
+    width: 500rpx;
+    margin: 30rpx auto 0;
+    /* top: 1110rpx; */
+    /* left: calc((100vw - 500rpx) / 2); */
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .action image {

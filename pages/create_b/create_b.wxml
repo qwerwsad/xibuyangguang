@@ -1,61 +1,64 @@
 <image src="{{ work_bg.pictureUrl }}" mode="aspectFill" class="bg" />
-<image src="/img/home.png" bindtap="goHome" class="home" />
+<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/gohomes.png" bindtap="goHome" class="home" />
 <!-- <image src="/img/share.png" class="home" style="left:150rpx;" /> -->
 <view class="title">艺术馆大厅</view>
-<image src="/img/next.png" class="home" style="left:650rpx;" bindtap="gotoCreateC" />
+<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/nextyibu.png" class="homes" bindtap="gotoCreateC" />
 <!-- <view style="position:absolute; top:200rpx; width:750rpx; text-align:center;">
 	<image src="/img/step1-active.png" style="width:79rpx; height:44rpx;" />
 	<image src="/img/step2.png" style="width:79rpx; height:44rpx; margin-left:30rpx;" />
 	<image src="/img/step3.png" style="width:79rpx; height:44rpx; margin-left:30rpx;" />
 	
 </view> -->
-<view class="stepBox" style="position:absolute; top:200rpx; width:750rpx; text-align:center;">
-		<!-- <image src="/img/step1-active.png" style="width:79rpx; height:44rpx;" /> -->
-		<view class="step">
-				<view class="normal"></view>
-				<view class="steptext">Step1</view>
-		</view>
-		<view class="step" style="margin:0 16rpx;">
-				<view class="active"></view>
-				<view class="steptext">Step2</view>
-		</view>
-		<view class="step">
-				<view class="normal"></view>
-				<view class="steptext">Step3</view>
-		</view>
-</view>
-<swiper class="swiper" next-margin="120rpx" previous-margin="120rpx" current="{{currentItemId}}" bindchange="swiperChange" indicator-dots="{{false}}" indicator-active-color="#0C6D4A" circular>
-		<block wx:for="{{ poems }}" wx:for-item="item" wx:for-index="index" wx:key="index">
-				<swiper-item item-id="{{index}}" data-item-id="{{index}}" bindtap='clickChange'>
-						<view class='row' style="">
-								<view class="title">{{item.name}}</view>
-								<view class='col {{currentItemId == index ? "selected" : ""}}'>
-										<image src="{{item.pictureUrl}}"></image>
-								</view>
-						</view>
-				</swiper-item>
-		</block>
-</swiper>
-<view class="btnPoemStory">
-		<!-- <view class="g-buy_status" bindtap="buyPoemStory">
+<view class="cotentBox">
+		<view class="stepBox" style="width:750rpx; text-align:center;">
+					<!-- <image src="/img/step1-active.png" style="width:79rpx; height:44rpx;" /> -->
+					<view class="step">
+									<view class="normal"></view>
+									<view class="steptext">Step1</view>
+					</view>
+					<view class="step" style="margin:0 16rpx;">
+									<view class="active"></view>
+									<view class="steptext">Step2</view>
+					</view>
+					<view class="step">
+									<view class="normal"></view>
+									<view class="steptext">Step3</view>
+					</view>
+	</view>
+	<swiper class="swiper" next-margin="90rpx" previous-margin="90rpx" current="{{currentItemId}}" bindchange="swiperChange" indicator-dots="{{false}}" indicator-active-color="#0C6D4A" circular>
+					<block wx:for="{{ poems }}" wx:for-item="item" wx:for-index="index" wx:key="index">
+									<swiper-item item-id="{{index}}" data-item-id="{{index}}" bindtap='clickChange'>
+													<view class='row' style="">
+																	<view class="title">{{item.name}}</view>
+																	<view class='col {{currentItemId == index ? "selected" : ""}}'>
+																					<image src="{{item.pictureUrl}}"></image>
+																	</view>
+													</view>
+									</swiper-item>
+					</block>
+	</swiper>
+	<view class="btnPoemStory">
+					<!-- <view class="g-buy_status" bindtap="buyPoemStory">
 				{{poems[currentItemId].used == 0 ? '已购买' : '购买'}}
 		</view> -->
-		<view class="g-buy_status" bindtap="showPoemStory">诗歌故事</view>
-		<!-- <image src="/img/poemstory.png" style="width:144rpx; height:61rpx;" /> -->
+					<view class="g-buy_status" bindtap="showPoemStory">诗歌故事</view>
+					<!-- <image src="/img/poemstory.png" style="width:144rpx; height:61rpx;" /> -->
+	</view>
+	<view style="width:100%; text-align:center; color:#ffffff;">
+					Step2：请选择诗歌
+	</view>
 </view>
-<view style="position:absolute; bottom:100rpx; width:100%; text-align:center; color:#ffffff;">
-		Step2：请选择诗歌
-</view>
+
 <!-- 诗歌故事 -->
 <view wx:if="{{ ifShowPoemStory }}" class="bg_black" style="z-index:101;" bindtap="hideCert"></view>
 <view wx:if="{{ ifShowPoemStory }}" style="z-index:102; position:absolute; width:628rpx; height:670rpx; background-color:#ffffff; top:300rpx; left:61rpx; text-align:center; border-radius:50rpx;">
 		<view style="display:flex; align-items:flex-end; background-color:#FFC836; font-size:28rpx; padding:50rpx; border-top-left-radius:50rpx; border-top-right-radius:50rpx;">
 				<view>{{poems[currentItemId].storyTitle}}</view>
 				<view style="font-size:24rpx; margin-left:auto; margin-right:10rpx;">
-						{{poems[currentItemId].storyAuther}}
+						{{poems[currentItemId].storyAuther}} {{poems[currentItemId].autherAge?poems[currentItemId].autherAge + '岁': ''}} {{poems[currentItemId].autherProvince || ''}}
 				</view>
 		</view>
-		<view style="font-size:22rpx; padding:40rpx 60rpx; text-align:justify; line-height:40rpx; height:370rpx;  overflow-y:scroll;">
+		<view style="font-size:24rpx; padding:40rpx 60rpx; text-align:justify; line-height:40rpx; height:370rpx;  overflow-y:scroll;">
 				{{poems[currentItemId].storyContent}}
 		</view>
 		<view>
@@ -63,7 +66,7 @@
 		</view>
 		<view style="display:flex; justify-content:space-around; margin-top:60rpx;">
 				<!-- <image src="/img/share2.png" bindtap="sharePoemStory" style="width:145rpx; height:60rpx;" /> -->
-				<image src="/img/cancel.png" bindtap="hidePoemStory" style="width:145rpx; height:60rpx;" />
+				<image src="/img/cancel.png" bindtap="hidePoemStory" style="width:210rpx; height:90rpx;" />
 		</view>
 </view>
 <view class="g-modal" wx:if="{{showBuyModal}}">

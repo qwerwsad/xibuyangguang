@@ -1,9 +1,9 @@
 <image src="{{ work_bg.pictureUrl }}" mode="aspectFill" class="bg" />
 
-<image src="/img/home.png" bindtap="goHome" class="home" />
+<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/gohomes.png" bindtap="goHome" class="home" />
 <!-- <image src="/img/share.png" class="home" style="left:150rpx;" /> -->
 <view class="title">艺术馆大厅</view>
-<!-- <image src="/img/next.png" class="home" style="left:650rpx;" bindtap="gotoCreateC" /> -->
+<!-- <image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/nextyibu.png" class="homes" style="left:650rpx;" bindtap="gotoCreateC" /> -->
 
 <!-- <view style="position:absolute; top:200rpx; width:750rpx; text-align:center;">
 	<image src="/img/step1-active.png" style="width:79rpx; height:44rpx;" />
@@ -42,8 +42,8 @@
 <view wx:if="{{ ifShowRecord }}" class="bg_black" style="z-index:101;" bindtap="hideCert"></view>
 <view wx:if="{{ ifShowRecord }}" style="z-index:102; position:absolute; top:300rpx; width:660rpx; height:689rpx; left:45rpx; background-color:#ffffff; border-radius:50rpx; overflow:hidden;">
 	<view style="text-align:center; font-size:24rpx; height:485rpx;overflow-y:scroll;">
-		<view style="width:100%;text-align:center;line-hieght:30rpx"></view>
-		<text style="line-height: 36rpx">
+		<view style="width:100%;text-align:center;line-hieght:50rpx;font-size: 32rpx;"></view>
+		<text style="line-height: 50rpx;font-size: 32rpx;">
 			{{ poem.content || '暂无故事' }}
 		</text>
 	</view>
@@ -53,9 +53,9 @@
 	</view>
 </view>
 <view wx:if="{{ ifShowRecord }}" style="z-index:102; position:absolute; top:1030rpx; left:45rpx; width:660rpx; text-align:center;">
-	<image src="/img/playrecordfile.png" bindtap="playRecordFile" style="width:146rpx; height:61rpx;" />
-	<image src="/img/stopplay.png" bindtap="stopPlayRecordFile" style="width:146rpx; height:61rpx; margin-left:40rpx;" />
-	<image src="/img/upload.png" bindtap="uploadRecordFile" style="width:146rpx; height:61rpx; margin-left:40rpx;" />
+	<image src="{{playRecording?'/img/stopplay.png':'/img/playrecordfile.png'}}" bindtap="playRecord" style="width:210rpx; height:90rpx;" />
+	<!-- <image src="/img/stopplay.png" bindtap="stopPlayRecordFile" style="width:210rpx; height:90rpx;" /> -->
+	<image src="/img/upload.png" bindtap="uploadRecordFile" style="width:210rpx; height:90rpx;" />
 </view>
 <!-- <view wx:if="{{showCreatemodel}}" style="position:fixed; z-index:2000;width:515rpx; height:559rpx; background-color:#ffffff; top:300rpx; left:117rpx; border-radius:30rpx; text-align:center;">
 		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/taiyang.png"  style="width:217rpx; height:221rpx; margin-top:83rpx;"/>

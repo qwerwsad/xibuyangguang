@@ -1,7 +1,9 @@
 let util = require('../../utils/util.js');
 let requestFunc = require('../../utils/request.js');
+// const { threadId } = require('worker_threads');
 const app = getApp();
 let that;
+let shigeTimeout = null;
 Page({
 	data: {
 		user: {},
@@ -20,7 +22,8 @@ Page({
 		point: 0,
 		commentReplayShow: false,
 		commentReplay: '',
-		showcengmodel: ''
+		showcengmodel: '',
+		isPlay: true
 	},
 	onLoad: function (options) {
 		that = this;
@@ -57,6 +60,10 @@ Page({
 	onShow: function () {
 	},
 	onShareAppMessage: function () {
+		return {
+			title: '诗里的童年',
+			path: '/pages/index/index?scene=A-' + that.data.user.data.id
+		}
 	},
 	init() {
 		that.getWorks();
@@ -81,23 +88,27 @@ Page({
 				});
 				that.getComment(data.data[ 0 ])
 				that.bgmBofangqi = wx.createInnerAudioContext()
-				that.shigeBofangqi = wx.createInnerAudioContext()
 				that.bgmBofangqi.autoplay = true
 				that.bgmBofangqi.src = data.data[that.data.currentItemId].bgmUrl;
-				console.log(data.data[that.data.currentItemId].bgmUrl)
-				that.shigeBofangqi.autoplay = true
-				that.shigeBofangqi.src = data.data[that.data.currentItemId].audioUrl;
-				that.shigeBofangqi.onEnded(() => {
-					that.pauseTimeOut && clearTimeout(that.pauseTimeOut)
-					that.pauseTimeOut = setTimeout(() => {
-						// that.bgmBofangqi.pause()
-						console.log(123123123123123)
-						that.shigeBofangqi.play()
-						that.bgmBofangqi.play()
-						that.shigeBofangqi.seek(0)
-						that.bgmBofangqi.seek(0)
-					}, 5000);
-				})
+				shigeTimeout && clearTimeout(shigeTimeout)
+				shigeTimeout = setTimeout(() => {
+					that.shigeBofangqi = wx.createInnerAudioContext()
+					that.shigeBofangqi.autoplay = true
+					that.shigeBofangqi.src = data.data[that.data.currentItemId].audioUrl;
+					that.shigeBofangqi.onEnded(() => {
+						that.pauseTimeOut && clearTimeout(that.pauseTimeOut)
+						that.pauseTimeOut = setTimeout(() => {
+							that.bgmBofangqi.play()
+							that.bgmBofangqi.seek(0)
+							that.chongzhishige && clearTimeout(that.chongzhishige)
+							that.chongzhishige = setTimeout(() => {
+								that.shigeBofangqi.play()
+								that.shigeBofangqi.seek(0)
+							}, 5000);
+						}, 5000);
+					})
+				}, 5000);
+				
 				that.bgmBofangqi.onPlay(() => {
 					console.log('开始播放')
 				})
@@ -252,6 +263,10 @@ Page({
 		})
 	},
 	swiperChange: function (e) {
+		that.shigeBofangqi && that.shigeBofangqi.pause();
+		that.chongzhishige && clearTimeout(that.chongzhishige)
+		that.pauseTimeOut && clearTimeout(that.pauseTimeOut)
+		shigeTimeout && clearTimeout(shigeTimeout)
 		var currentItemId = e.detail.currentItemId;
 		this.setData({
 			currentItemId: currentItemId
@@ -261,22 +276,95 @@ Page({
 			curBg: that.data.works[ currentItemId ].pictureUrl,
 			curWork: that.data.works[ currentItemId ],
 		});
+		if (!that.data.isPlay) return
 		that.bgmBofangqi.src = that.data.works[currentItemId].bgmUrl;
-		console.log(that.data.works[currentItemId].audioUrl, 'that.data.works[currentItemId].audioUrl')
-
-		that.pauseTimeOut && clearTimeout(that.pauseTimeOut)
 		if (that.data.works[currentItemId].audioUrl) {
-			that.shigeBofangqi.src = that.data.works[currentItemId].audioUrl;
-			that.shigeBofangqi.play();
+			shigeTimeout = setTimeout(() => {
+				that.shigeBofangqi.src = that.data.works[currentItemId].audioUrl;
+				that.shigeBofangqi.play();
+				that.shigeBofangqi.onEnded(() => {
+					that.pauseTimeOut && clearTimeout(that.pauseTimeOut)
+					that.pauseTimeOut = setTimeout(() => {
+						that.bgmBofangqi.play()
+						that.bgmBofangqi.seek(0)
+						that.chongzhishige && clearTimeout(that.chongzhishige)
+						that.chongzhishige = setTimeout(() => {
+							that.shigeBofangqi.play()
+							that.shigeBofangqi.seek(0)
+						}, 5000);
+					}, 5000);
+				})
+			}, 5000);
 		} else {
 			that.shigeBofangqi.src = that.data.works[currentItemId].audioUrl;
 			that.shigeBofangqi.pause();
 		}
+		
+		
 	},
-	onUnload() {
+	toggleMusic() {
+		if (that.data.isPlay) {
+			that.setData({
+				isPlay: false
+			})
+
+			that.chongzhishige && clearTimeout(that.chongzhishige)
+			that.pauseTimeOut && clearTimeout(that.pauseTimeOut)
+			shigeTimeout && clearTimeout(shigeTimeout)
+			that.bgmBofangqi && that.bgmBofangqi.pause();
+			that.shigeBofangqi && that.shigeBofangqi.pause();
+			that.bgmBofangqi.src = ''
+			that.shigeBofangqi.src = ''
+		} else {
+			that.setData({
+				isPlay: true
+			})
+			// that.bgmBofangqi.play();
+			// that.shigeBofangqi.play();
+			that.bgmBofangqi = wx.createInnerAudioContext()
+			that.bgmBofangqi.autoplay = true
+			that.bgmBofangqi.src = that.data.works[that.data.currentItemId].bgmUrl;
+			shigeTimeout && clearTimeout(shigeTimeout)
+			shigeTimeout = setTimeout(() => {
+				that.shigeBofangqi = wx.createInnerAudioContext()
+				that.shigeBofangqi.autoplay = true
+				that.shigeBofangqi.src = that.data.works[that.data.currentItemId].audioUrl;
+				that.shigeBofangqi.onEnded(() => {
+					that.pauseTimeOut && clearTimeout(that.pauseTimeOut)
+					that.pauseTimeOut = setTimeout(() => {
+						that.bgmBofangqi.play()
+						that.bgmBofangqi.seek(0)
+						that.chongzhishige && clearTimeout(that.chongzhishige)
+						that.chongzhishige = setTimeout(() => {
+							that.shigeBofangqi.play()
+							that.shigeBofangqi.seek(0)
+						}, 5000);
+					}, 5000);
+				})
+			}, 5000);
+		}
+	},
+	onHide() {
+		that.chongzhishige && clearTimeout(that.chongzhishige)
 		that.pauseTimeOut && clearTimeout(that.pauseTimeOut)
+		shigeTimeout && clearTimeout(shigeTimeout)
 		that.bgmBofangqi && that.bgmBofangqi.pause();
 		that.shigeBofangqi && that.shigeBofangqi.pause();
+		that.bgmBofangqi = ''
+		that.shigeBofangqi = ''
+		that.setData({
+			isPlay: false
+		})
+	},
+	onUnload() {
+
+		that.chongzhishige && clearTimeout(that.chongzhishige)
+		that.pauseTimeOut && clearTimeout(that.pauseTimeOut)
+		shigeTimeout && clearTimeout(shigeTimeout)
+		that.bgmBofangqi && that.bgmBofangqi.pause();
+		that.shigeBofangqi && that.shigeBofangqi.pause();
+		that.bgmBofangqi = ''
+		that.shigeBofangqi = ''
 	},
 	clickChange: function (e) {
 		var itemId = e.currentTarget.dataset.itemId;
@@ -478,6 +566,7 @@ Page({
 		this.setData({commentReplayShow: false});
 	},
 	async showForward() {
+
 		requestFunc.requestFunc({
 			url: '/user/count-creator',
 			method: "POST",
@@ -491,76 +580,99 @@ Page({
 			let countCreator = data.data
 			console.log(data, '获取用户为第几位创作者')
 			// console.log(`${util.svrUrl}/qrcode?path=/pages/index/index?userId=${that.data.user.data.id}&worksId=${this.data.curWork.id}&type=1`);
-			// wx.showLoading('图片生成中')
+			wx.showLoading({
+				title: '图片生成中',
+			})
 			console.log(22);
 			const ctx = wx.createCanvasContext('myWorkCanvas');
-			wx.downloadFile({
-				url: that.data.works[ that.data.currentItemId ].pictureUrl,
-				success: function (res1) {
-					ctx.drawImage(res1.tempFilePath, 0, 0, 750, 1334);
-					ctx.save();
-					ctx.drawImage(res1.tempFilePath, 105, 237, 537, 724);
-					wx.downloadFile({
-						url: that.data.works[that.data.currentItemId].poetryPictureUrl,
-						success: function (res2) {
-							ctx.drawImage(res2.tempFilePath, 105, 237, 537, 724);
-							ctx.setFontSize(36);
-							ctx.setFillStyle('#F9C500');
-							ctx.setTextAlign('left');
-							ctx.fillText(that.data.user.data.nickName, 76, 1000);
+			try {
+				wx.downloadFile({
+					url: that.data.works[that.data.currentItemId].pictureUrl,
+					success: function (res1) {
+						ctx.drawImage(res1.tempFilePath, -375, -667, 1500, 2674);
+						ctx.save();
+						wx.downloadFile({
+							url: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/changpian.png',
+							success: function(res3) {
+								ctx.drawImage(res3.tempFilePath, 0, 60, 750, 658);
+								ctx.setGlobalAlpha(0.4)
+								ctx.setFillStyle('black')
+								ctx.fillRect(0, 0, 750, 1334)
+								ctx.setGlobalAlpha(1)
+								ctx.drawImage(res1.tempFilePath, 95, 295, 571, 770);
+								wx.downloadFile({
+									url: that.data.works[that.data.currentItemId].poetryPictureUrl,
+									success: function (res2) {
+										ctx.drawImage(res2.tempFilePath, 95, 295, 571, 770);
+										ctx.setFontSize(24);
+										ctx.setFillStyle('#F9C500');
+										ctx.setTextAlign('left');
+										ctx.fillText(that.data.user.data.nickName, 76, 1100);
 
-							ctx.setFontSize(18);
-							ctx.setFillStyle('#FFFFFF');
-							ctx.setTextAlign('left');
-							ctx.fillText('成为“诗里的童年”艺术馆第' + countCreator + '位创作者，用心演', 76, 1070);
-							ctx.setFontSize(18);
-							ctx.setFillStyle('#FFFFFF');
-							ctx.setTextAlign('left');
-							ctx.fillText('绎乡村孩子的诗画作品，用爱照亮他们的童年之路。', 76, 1100);
+										ctx.setFontSize(18);
+										ctx.setFillStyle('#FFFFFF');
+										ctx.setTextAlign('left');
+										ctx.fillText('成为“诗里的童年”艺术馆第' + countCreator + '位创作者，用心演', 76, 1154);
+										ctx.setFontSize(18);
+										ctx.setFillStyle('#FFFFFF');
+										ctx.setTextAlign('left');
+										ctx.fillText('绎乡村孩子的诗画作品，用爱照亮他们的童年之路。', 76, 1184);
 
-							// 一个底部logo图
-							// 一个二维码图
-							wx.downloadFile({
-								url: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/sharelogo.png',
-								success: function (res2) {
-									ctx.drawImage(res2.tempFilePath, 76, 1185, 400, 45);
-									ctx.save();
-									wx.downloadFile({
-										url: util.svrUrl + '/qrcode?scene=A-' + that.data.user.data.id,
-										success: function (res3) {
-											ctx.drawImage(res3.tempFilePath, 531, 1050, 180, 180);
-											ctx.save();
-											ctx.draw(true, function () {
-												wx.canvasToTempFilePath({
-													x: 0,
-													y: 0,
-													width: 750,
-													height: 1334,
-													destWidth: 750,
-													destHeight: 1334,
-													fileType: 'png',
-													canvasId: 'myWorkCanvas',
-													success(res) {
-														console.log(res.tempFilePath)
-														wx.hideLoading()
-														wx.previewImage({
-															current: res.tempFilePath, // 当前显示图片的http链接
-															urls: [res.tempFilePath] // 需要预览的图片http链接列表
+										// 一个底部logo图
+										// 一个二维码图
+										wx.downloadFile({
+											url: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/sharelogo.png',
+											success: function (res2) {
+												ctx.drawImage(res2.tempFilePath, 76, 1235, 400, 45);
+												ctx.save();
+												wx.downloadFile({
+													url: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/qrcodebg.png',
+													success: function (res4) {
+														ctx.drawImage(res4.tempFilePath, 521, 1065, 180, 216);
+														wx.downloadFile({
+															url: util.svrUrl + '/qrcode?scene=A-' + that.data.user.data.id,
+															success: function (res3) {
+																ctx.drawImage(res3.tempFilePath, 526, 1110, 170, 170);
+																ctx.save();
+																ctx.draw(true, function () {
+																	wx.canvasToTempFilePath({
+																		x: 0,
+																		y: 0,
+																		width: 750,
+																		height: 1334,
+																		destWidth: 750,
+																		destHeight: 1334,
+																		fileType: 'png',
+																		canvasId: 'myWorkCanvas',
+																		success(res) {
+																			console.log(res.tempFilePath)
+																			wx.hideLoading()
+																			wx.previewImage({
+																				current: res.tempFilePath, // 当前显示图片的http链接
+																				urls: [res.tempFilePath] // 需要预览的图片http链接列表
+																			})
+																		}
+																	})
+																})
+															}
 														})
 													}
 												})
-											})
-										}
-									})
-								}
-							})
-						}
-					})
-				},
-				fail: function (err) {
-					console.log(err, 'err');
-				}
-			})
+											}
+										})
+									}
+								})
+							}
+						})
+					},
+					fail: function (err) {
+						console.log(err, 'err');
+					}
+				})
+			} catch (error) {
+				wx.hideLoading()
+			}
+			
 		})
 		// wx.downloadFile({
 		// 	url: '',

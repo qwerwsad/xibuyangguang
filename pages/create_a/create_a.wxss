@@ -4,12 +4,32 @@
     filter: brightness(0.5);
 }
 
+.cotentBox {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-top: 60rpx;
+}
+
 .home {
     position: absolute;
     top: 62rpx;
     left: 71rpx;
-    width: 61rpx;
-    height: 79rpx;
+    width: 82rpx;
+    height: 102rpx;
+    z-index: 10;
+}
+
+.homes {
+    position: absolute;
+    top: 62rpx;
+    right: 71rpx;
+    width: 82rpx;
+    height: 102rpx;
+    z-index: 10;
 }
 
 .title {
@@ -56,16 +76,20 @@
     width: 79rpx;
     height: 20rpx;
     color: #ffffff;
-    font-size: 12rpx;
+    font-size: 24rpx;
     margin-top: 10rpx;
 }
 
 .swiper {
-    position: absolute;
-    width: 750rpx;
-    height: 724rpx;
-    top: 300rpx;
-    left: 0;
+    width: 100%;
+    height: 752rpx;
+    margin-top: 60rpx;
+    margin-bottom: 30rpx;
+}
+
+.swiperItem {
+    width: 100% !important;
+    height: 752rpx !important;
 }
 
 .row {
@@ -76,11 +100,11 @@
 .title {
     font-size: 36rpx;
     text-align: center;
-    margin: 20rpx 0;
+    margin: 35rpx 0;
 }
 
 .col {
-    width: 480rpx;
+    width: 100%;
     margin: 0 auto;
     height: 100%;
     transform: scale(0.9);
@@ -182,15 +206,14 @@
     border-radius: 30rpx;
     text-align: center;
 }
-.active_btn{
+
+.active_btn {
     display: flex;
     flex-direction: row;
     align-items: center;
-    position: absolute;
     width: 100%;
-    left: 0;
-    bottom: 153rpx;
     padding: 0 230rpx;
     box-sizing: border-box;
     justify-content: center;
+    margin-bottom: 30rpx;
 }

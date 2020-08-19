@@ -1,20 +1,40 @@
 view {
   box-sizing: border-box;
 }
-.bg{
+
+.bgBox {
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  position: relative;
 }
+
+.bg {
+  width: 100%;
+  /* height: 100%; */
+}
+
+.logoname {
+  position: absolute;
+  top: 200rpx;
+  width: 236rpx;
+  height: 811rpx;
+  right: 54rpx;
+  color: #ffffff;
+  text-align: center;
+}
+
 .work0 {
   position: absolute;
-  top: 745rpx;
-  width: 268rpx;
-  height: 459rpx;
-  left: -70rpx;
+  top: 550rpx;
+  width: 384rpx;
+  height: 549rpx;
+  left: 13rpx;
   transform: rotate(10deg);
   color: #ffffff;
   text-align: center;
 }
+
 .work1 {
   position: absolute;
   top: 40rpx;
@@ -47,7 +67,7 @@ view {
   text-align: center;
 }
 
-.friend{
+.friend {
   position: fixed;
   right: 0;
   bottom: 50rpx;
@@ -60,35 +80,45 @@ view {
   flex-direction: row;
   align-items: center;
 }
-.acv{
+
+.acv {
   width: 65rpx;
   height: 65rpx;
   border-radius: 65rpx;
   margin-left: 18rpx;
   margin-right: 20rpx;
 }
-.info{
+
+.info {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
 }
-.name{
+
+.name {
   font-size: 26rpx;
   color: #725E5E;
 }
-.level{
+
+.level {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-top: 12rpx;
 }
-.lev{
+
+.lev {
   font-size: 24rpx;
   color: #725E5E;
 }
-.send{
+
+.send {
   color: #ffffff;
   font-size: 24rpx;
   margin-left: 5rpx;
+}
+
+.opacity1 {
+  opacity: 0.5;
 }

@@ -1,68 +1,71 @@
-<image src="{{ curBg }}" mode="aspectFill" class="bg" />
-<image src="/img/home.png" bindtap="goHome" class="home" />
+<view style="background:url({{ curBg }});background-size: 120% 120%;background-repeat: no-repeat;background-position: 30% 30%;" mode="aspectFill" class="bg" ></view>
+<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/gohomes.png" bindtap="goHome" class="home" />
 <view class="title">艺术馆大厅</view>
+<image  src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/{{isPlay? 'kai': 'guan'}}.png" bindtap="toggleMusic" class="homes {{isPlay? 'playing': ''}}"></image>
 <!-- 轮播 -->
-<swiper class="swiper" next-margin="120rpx" previous-margin="120rpx" current="{{currentItemId}}" bindchange="swiperChange" indicator-dots="{{false}}" indicator-active-color="#0C6D4A" circular>
-		<block wx:for="{{ works }}" wx:for-item="item" wx:for-index="index" wx:key="index">
-				<swiper-item item-id="{{index}}" data-item-id="{{index}}" bindtap='clickChange'>
-						<view class='row'>
-								<view class='col {{currentItemId == index ? "selected" : ""}}' style="background:url('{{ item.pictureUrl }}') no-repeat; background-size:480rpx 724rpx; padding:20rpx 0 0 0rpx; text-align:center;">
-										<image src="{{ item.poetryPictureUrl }}" mode="aspectFit" style="width:350rpx; height:770rpx;" />
-								</view>
-						</view>
-				</swiper-item>
-		</block>
-</swiper>
-<view class="work_like" style="display:flex; color:#ffffff; font-size:24rpx; margin-left:auto">
-		<view style="display:flex; align-items:center;" bindtap="onLike">
-				<image wx:if="{{curWork.like == 0}}" src="/img/like.png" style="width:32rpx; height:32rpx; margin-right:5rpx;" />
-				<image wx:else src="/img/like1.png" style="width:32rpx; height:32rpx; margin-right:5rpx;" />
-				{{curWork.likeCount || 0}}
-		</view>
-		<view style="display:flex; align-items:center; margin-left: 10rpx;">
-				<image src="/img/comment.png" style="width:32rpx; height:32rpx; margin-right:5rpx;" />
-				{{curWork.commentCount || 0}}
-		</view>
-</view>
-<view class="comments" style="height: 120rpx; overflow-y:scroll;">
-		<view wx:for="{{ commentData }}" wx:for-item="comment" data-item="{{comment}}" wx:key="index" wx:for-index="index" class="comment" bindtap="submitReplayComment">
-				<image src="{{comment.commentatorAvatar }}" />
-				<view>
-						<view class="nickname">
-								<span style="display: inline-block;">
-										@{{comment.commentatorNickName }}
-										<span wx:if="{{comment.authorNickName}}">回复@{{comment.authorNickName }}</span>
-								</span>
-						</view>
-						<view class="text">{{comment.content }}</view>
-				</view>
-		</view>
-</view>
-<view class="action">
-		<view class="g-btn-white" wx:if="{{ pageAttribution == 'mine' }}" bindtap="showForward">
-				转  发
-		</view>
-		<view class="g-btn-white" wx:if="{{ pageAttribution == 'mine' && curWork.given == 1 }}">
-				已  拍  卖
-		</view>
-		<view class="g-btn-white" wx:if="{{ pageAttribution == 'mine' && curWork.given == 0 }}" bindtap="showSell">
-				拍  卖
-		</view>
-		<view class="g-btn-white" wx:if="{{ pageAttribution == 'others' }}" bindtap="showSponsor">
-				打  赏
-		</view>
-		<view class="g-btn-white" wx:if="{{ pageAttribution == 'others' }}" bindtap="showComment">
-				留  言
-		</view>
-		<view class="g-btn-white" wx:if="{{ pageAttribution == 'others' }}" bindtap="receiveSun">
-				蹭  阳  光
-		</view>
-		<!-- <image wx:if="{{ pageAttribution == 'mine' }}" src="/img/forward.png" bindtap="showForward" style="width:145rpx; height:60rpx;" />
+<view class="cotentBox">
+		<swiper class="swiper" next-margin="90rpx" previous-margin="90rpx" current="{{currentItemId}}" bindchange="swiperChange" indicator-dots="{{false}}" indicator-active-color="#0C6D4A" circular>
+					<block wx:for="{{ works }}" wx:for-item="item" wx:for-index="index" wx:key="index">
+									<swiper-item class="swiperItem" item-id="{{index}}" data-item-id="{{index}}" bindtap='clickChange'>
+													<view class='row'>
+																	<view class='col {{currentItemId == index ? "selected" : ""}}' style="background:url('{{ item.pictureUrl }}') no-repeat; background-size:103% 100%; padding:20rpx 0 0 0rpx; text-align:center;"></view>
+																	<image src="{{ item.poetryPictureUrl }}" style="width:100%; " />
+													</view>
+									</swiper-item>
+					</block>
+	</swiper>
+	<view class="work_like" style="display:flex; color:#ffffff; font-size:32rpx; margin-left:auto">
+					<view style="display:flex; align-items:center;" bindtap="onLike">
+									<image wx:if="{{curWork.like == 0}}" src="/img/like.png" style="width:48rpx; height:48rpx; margin-right:5rpx;" />
+									<image wx:else src="/img/like1.png" style="width:48rpx; height:48rpx; margin-right:5rpx;" />
+									{{curWork.likeCount || 0}}
+					</view>
+					<view bindtap="showComment" style="display:flex; align-items:center; margin-left: 10rpx;">
+									<image src="/img/comment.png" style="width:48rpx; height:48rpx; margin-right:5rpx;" />
+									{{curWork.commentCount || 0}}
+					</view>
+	</view>
+	<view wx:if="{{commentData.length > 0}}" class="comments" style="overflow-y:scroll;">
+					<view wx:for="{{ commentData }}" wx:for-item="comment" data-item="{{comment}}" wx:key="index" wx:for-index="index" class="comment" bindtap="submitReplayComment">
+									<image src="{{comment.commentatorAvatar }}" />
+									<view>
+													<view class="nickname">
+																	<span style="display: inline-block;">
+																					@{{comment.commentatorNickName }}
+																					<span wx:if="{{comment.authorNickName}}">回复@{{comment.authorNickName }}</span>
+																	</span>
+													</view>
+													<view class="text">{{comment.content }}</view>
+									</view>
+					</view>
+	</view>
+	<view class="action">
+					<view class="g-btn-white" wx:if="{{ pageAttribution == 'mine' }}" bindtap="showForward">
+									转  发
+					</view>
+					<view class="g-btn-white" wx:if="{{ pageAttribution == 'mine' && curWork.given == 1 }}">
+									已  拍  卖
+					</view>
+					<view class="g-btn-white" wx:if="{{ pageAttribution == 'mine' && curWork.given == 0 }}" bindtap="showSell">
+									拍  卖
+					</view>
+					<view class="g-btn-white" wx:if="{{ pageAttribution == 'others' }}" bindtap="showSponsor">
+									打  赏
+					</view>
+					<view class="g-btn-white" wx:if="{{ pageAttribution == 'others' }}" bindtap="showComment">
+									留  言
+					</view>
+					<view class="g-btn-white" wx:if="{{ pageAttribution == 'others' }}" bindtap="receiveSun">
+									蹭  阳  光
+					</view>
+					<!-- <image wx:if="{{ pageAttribution == 'mine' }}" src="/img/forward.png" bindtap="showForward" style="width:145rpx; height:60rpx;" />
 		<image wx:if="{{ pageAttribution == 'mine' && curWork.given == 1 }}" src="/img/sell.png" bindtap="showSell" style="width:145rpx; height:60rpx;" />
 		<image wx:if="{{ pageAttribution == 'mine' && curWork.given == 0 }}" src="/img/sell.png" bindtap="showSell" style="width:145rpx; height:60rpx;" />
 		<image wx:if="{{ pageAttribution == 'others' }}" src="/img/sponsor.png" bindtap="showSponsor" style="width:145rpx; height:60rpx;" />
 		<image wx:if="{{ pageAttribution == 'others' }}" src="/img/showcomment.png" bindtap="showComment" style="width:145rpx; height:60rpx;" /> -->
+	</view>
 </view>
+
 <view class="bg_black" wx:if="{{ sponsorShow || commentShow }}"></view>
 <view class="sponsor" wx:if="{{ sponsorShow }}">
 		<image src="/img/sunflower.png" style="width:217rpx; height:221rpx; margin-top:82rpx;" />
@@ -74,8 +77,8 @@
 				<view>- 阳光值</view>
 		</view>
 		<view class="">
-				<image src="/img/submit.png" style="width:145rpx; height:60rpx; margin-top:30rpx;" bindtap="submitSponsor" />
-				<image src="/img/cancel.png" style="width:145rpx; height:60rpx; margin-top:30rpx; margin-left:70rpx;" bindtap="cancelSponsor" />
+				<image src="/img/submit.png" style="width:215rpx; height:90rpx; margin-top:30rpx;" bindtap="submitSponsor" />
+				<image src="/img/cancel.png" style="width:215rpx; height:90rpx; margin-top:30rpx; margin-left:70rpx;" bindtap="cancelSponsor" />
 		</view>
 </view>
 <!-- 发布评论 -->
@@ -84,8 +87,8 @@
 				<textarea placeholder="说点什么吧......" bindinput="commentInput" data-name="describe" placeholder-class="placeholder" placeholder-style="padding:20rpx;" style="margin:50rpx; background-color:#ffffff; width:407rpx; height:301rpx; font-size:24rpx; padding:20rpx;"></textarea>
 		</view>
 		<view class="">
-				<image src="/img/send.png" style="width:145rpx; height:60rpx; margin-top:30rpx;" bindtap="submitComment" />
-				<image src="/img/cancel.png" style="width:145rpx; height:60rpx; margin-top:30rpx; margin-left:70rpx;" bindtap="cancelComment" />
+				<image src="/img/send.png" style="width:215rpx; height:90rpx; margin-top:30rpx;" bindtap="submitComment" />
+				<image src="/img/cancel.png" style="width:215rpx; height:90rpx; margin-top:30rpx; margin-left:70rpx;" bindtap="cancelComment" />
 		</view>
 </view>
 <!-- 回复评论 -->
@@ -94,8 +97,8 @@
 				<textarea placeholder="说点什么吧......" bindinput="commentReplayInput" data-name="describe" placeholder-class="placeholder" placeholder-style="padding:20rpx;" style="margin:50rpx; background-color:#ffffff; width:407rpx; height:301rpx; font-size:24rpx; padding:20rpx;"></textarea>
 		</view>
 		<view class="">
-				<image src="/img/send.png" style="width:145rpx; height:60rpx; margin-top:30rpx;" bindtap="getCommentOthers" />
-				<image src="/img/cancel.png" style="width:145rpx; height:60rpx; margin-top:30rpx; margin-left:70rpx;" bindtap="cancelReplayComment" />
+				<image src="/img/send.png" style="width:215rpx; height:90rpx; margin-top:30rpx;" bindtap="getCommentOthers" />
+				<image src="/img/cancel.png" style="width:215rpx; height:90rpx; margin-top:30rpx; margin-left:70rpx;" bindtap="cancelReplayComment" />
 		</view>
 </view>
 <!-- 拍卖 -->
@@ -105,19 +108,19 @@
 				<view>该作品可获得660阳光值</view>
 		</view>
 		<view style="display:flex; justify-content:space-around; margin-top:50rpx;">
-				<image src="/img/submit.png" bindtap="confirmSell" style="width:145rpx; height:60rpx;" />
-				<image src="/img/cancel.png" bindtap="hideSell" style="width:145rpx; height:60rpx;" />
+				<image src="/img/submit.png" bindtap="confirmSell" style="width:215rpx; height:90rpx;" />
+				<image src="/img/cancel.png" bindtap="hideSell" style="width:215rpx; height:90rpx;" />
 		</view>
 </view>
 <view wx:if="{{showcengmodel}}" style="position:fixed; z-index:2000;width:515rpx; height:559rpx; background-color:#ffffff; top:300rpx; left:117rpx; border-radius:30rpx; text-align:center;">
 		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/taiyang.png"  style="width:217rpx; height:221rpx; margin-top:83rpx;"/>
-		<view style="font-size:24rpx; padding:30rpx 50rpx; ">
-				<view><text style="color:#FFC400;font-size:32rpx;">+</text><text style="color:#FFC400;font-size:48rpx;">1</text>阳光值</view>
-				<view>访问好友艺术馆，蹭到1个阳光值</view>
+		<view style="font-size:24rpx; padding:30rpx 50rpx 0; ">
+				<view><text style="color:#FFC400;font-size:50rpx;">+ </text><text style="color:#FFC400;font-size:48rpx;">5 </text>阳光值</view>
+				<view style="line-height:40rpx">访问好友艺术馆，蹭到5个阳光值</view>
 		</view>
-		<view style="display:flex; justify-content:space-around; margin-top:50rpx;">
-				<image src="/img/submit.png" bindtap="hideSell" style="width:145rpx; height:60rpx;" />
-				<image src="/img/cancel.png" bindtap="hideSell" style="width:145rpx; height:60rpx;" />
+		<view style="display:flex; justify-content:space-around; margin-top:30rpx;">
+				<image src="/img/submit.png" bindtap="hideSell" style="width:215rpx; height:90rpx;" />
+				<image src="/img/cancel.png" bindtap="hideSell" style="width:215rpx; height:90rpx;" />
 		</view>
 </view>
 <!-- 海报 -->

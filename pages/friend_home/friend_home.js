@@ -47,6 +47,10 @@ Page({
 	onShow: function () {
 	},
 	onShareAppMessage: function () {
+		return {
+			title: '诗里的童年',
+			path: '/pages/index/index'
+		}
 	},
 	init() {
 		that.getFriendsInfo();

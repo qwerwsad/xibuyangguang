@@ -32,6 +32,10 @@ Page({
 
 	},
 	onShareAppMessage: function () {
+		return {
+			title: '诗里的童年',
+			path: '/pages/index/index'
+		}
 	},
 	init() {
 		that.getWorkBgs();
@@ -132,6 +136,7 @@ Page({
 			curContent: that.data.work_bgs[itemId],
 			currentItemId: itemId
 		});
+		that.gotoCreateB()
 	},
 	showPicStory() {
 		that.setData({

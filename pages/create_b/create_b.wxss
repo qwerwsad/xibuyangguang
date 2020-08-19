@@ -4,12 +4,32 @@
     filter: brightness(0.5);
 }
 
+.cotentBox {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-top: 60rpx;
+}
+
 .home {
     position: absolute;
     top: 62rpx;
     left: 71rpx;
-    width: 61rpx;
-    height: 79rpx;
+    width: 82rpx;
+    height: 102rpx;
+    z-index: 9;
+}
+
+.homes {
+    position: absolute;
+    top: 62rpx;
+    right: 71rpx;
+    width: 82rpx;
+    height: 102rpx;
+    z-index: 9;
 }
 
 .title {
@@ -56,16 +76,15 @@
     width: 79rpx;
     height: 20rpx;
     color: #ffffff;
-    font-size: 12rpx;
+    font-size: 24rpx;
     margin-top: 10rpx;
 }
 
 .swiper {
-    position: absolute;
     width: 750rpx;
     height: 724rpx;
-    top: 300rpx;
-    left: 0;
+    margin-top: 60rpx;
+    margin-bottom: 30rpx;
 }
 
 .row {
@@ -76,15 +95,16 @@
 .title {
     font-size: 36rpx;
     text-align: center;
-    margin: 20rpx 0;
+    margin: 35rpx 0;
 }
 
 .col {
-    width: 480rpx;
+    width: 100%;
     margin: 0 auto;
     height: 100%;
     transform: scale(0.9);
     border-radius: 10rpx;
+
 }
 
 .col image {
@@ -182,9 +202,8 @@
     border-radius: 30rpx;
     text-align: center;
 }
-.btnPoemStory{
-    position: absolute;
-    bottom: 160rpx;
+
+.btnPoemStory {
     width: 100%;
     box-sizing: border-box;
     left: 0;
@@ -193,4 +212,5 @@
     align-items: center;
     padding: 0 200rpx;
     justify-content: center;
+    margin-bottom: 30rpx;
 }

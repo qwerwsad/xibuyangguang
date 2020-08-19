@@ -23,7 +23,10 @@ Page({
 		mp3Url: '',
 		bgmId: '',
 		inCreate: false,
-		showCreatemodel: false
+		showCreatemodel: false,
+		playRecording: false,
+		currentBgmUrl: '',
+		currentRecordIndex: -1
 	},
 	gotoCreateC: function() {
 		if(that.data.inCreate) return
@@ -58,9 +61,9 @@ Page({
 				wx.navigateTo({
 					url: '/pages/work/work?user_id=' + that.data.user.data.id + '&pageAttribution=mine',
 				})
-
-				this.innerAudioContext && this.innerAudioContext.pause()
-				this.innerAudioContext = ''
+				wx.stopBackgroundAudio()
+				// this.innerAudioContext && this.innerAudioContext.pause()
+				// this.innerAudioContext = ''
 			})
 			
 		})
@@ -77,8 +80,9 @@ Page({
 		wx.navigateTo({
 			url: '/pages/work/work?user_id=' + that.data.user.data.id + '&pageAttribution=mine',
 		})
-		this.innerAudioContext && this.innerAudioContext.pause()
-		this.innerAudioContext = ''
+		wx.stopBackgroundAudio()
+		// this.innerAudioContext && this.innerAudioContext.pause()
+		// this.innerAudioContext = ''
 	},
 	onLoad: function (options) {
 		that = this;
@@ -110,12 +114,18 @@ Page({
 		that.init();
 	},
 	onUnload: function() {
-		this.innerAudioContext && this.innerAudioContext.pause()
-		this.innerAudioContext = ''
+		wx.stopBackgroundAudio()
+		// this.innerAudioContext && this.innerAudioContext.pause()
+		// this.innerAudioContext = ''
 	},
 	onReady: function () {},
 	onShow: function () {},
-	onShareAppMessage: function () {},
+	onShareAppMessage: function () {
+		return {
+			title: '诗里的童年',
+			path: '/pages/index/index'
+		}
+	},
 	init() {
 		that.getWorkBg();
 		that.getPoem();
@@ -157,9 +167,21 @@ Page({
 	},
 	hideCert() {
 		// this.data.ifShowRecord = false
-		this.setData({
-			ifShowRecord: false
-		})
+		if (that.data.currentRecordIndex >=0 ) {
+			wx.playBackgroundAudio({
+				dataUrl: that.data.currentBgmUrl
+			})
+			that.setData({
+				currentMusicIndex: that.data.currentRecordIndex,
+				currentRecordIndex: -1,
+				ifShowRecord: false
+			})
+		} else {
+			that.setData({
+				ifShowRecord: false
+			})
+		}
+		
 	},
 	getBgms() {
 		requestFunc.requestFunc({
@@ -193,7 +215,7 @@ Page({
 	},
 	play(e) {
 		if (e.currentTarget.dataset.currentmusicindex == this.data.currentMusicIndex) {
-			this.innerAudioContext.pause()
+			wx.stopBackgroundAudio()
 			this.setData({
 				currentMusicIndex: -1
 			})
@@ -203,26 +225,41 @@ Page({
 			currentMusicIndex: e.currentTarget.dataset.currentmusicindex
 		})
 		if (this.innerAudioContext) {
-			this.innerAudioContext.src = e.currentTarget.dataset.bgmurl;
-			this.innerAudioContext.play()
+			wx.playBackgroundAudio({
+				dataUrl: e.currentTarget.dataset.bgmurl
+			})
+			that.setData({
+				currentBgmUrl: e.currentTarget.dataset.bgmurl
+			})
 		} else {
-			this.innerAudioContext = wx.createInnerAudioContext()
-			this.innerAudioContext.autoplay = true
-			this.innerAudioContext.src = e.currentTarget.dataset.bgmurl;
-			this.innerAudioContext.onPlay(() => {
-				console.log('开始播放')
+			wx.playBackgroundAudio({
+				dataUrl: e.currentTarget.dataset.bgmurl
 			})
-			this.innerAudioContext.onError((res) => {
-				console.log(res.errMsg)
-				console.log(res.errCode)
+			that.setData({
+				currentBgmUrl: e.currentTarget.dataset.bgmurl
 			})
+			// this.innerAudioContext = wx.createInnerAudioContext()
+			// this.innerAudioContext.autoplay = true
+			// this.innerAudioContext.src = e.currentTarget.dataset.bgmurl;
+			// this.innerAudioContext.onPlay(() => {
+			// 	console.log('开始播放')
+			// })
+			// this.innerAudioContext.onError((res) => {
+			// 	console.log(res.errMsg)
+			// 	console.log(res.errCode)
+			// })
 		}
 	},
 	record(e) {
 		const bgmId = e.currentTarget.dataset.bgmid;
+		const cuurentIndex = that.data.currentMusicIndex
+		// this.innerAudioContext && this.innerAudioContext.pause()
+		wx.stopBackgroundAudio()
 		that.setData({
 			ifShowRecord: 1,
-			bgmId: bgmId
+			bgmId: bgmId,
+			currentMusicIndex: -1,
+			currentRecordIndex: cuurentIndex
 		});
 	},
 	clickChange: function (e) {
@@ -235,10 +272,20 @@ Page({
 		if ( that.data.recordStatus == "stop" ) {
 			that.startRecord();
 		} else {
-			that.stopRecord();
+			that.stopRecord(); 
+			if (that.data.currentRecordIndex >= 0) {
+				// wx.playBackgroundAudio({
+				// 	dataUrl: that.data.currentBgmUrl
+				// })
+				that.setData({
+					currentMusicIndex: that.data.currentRecordIndex,
+					currentRecordIndex: -1
+				})
+			}
 		}
 	},
 	startRecord() {
+		wx.stopBackgroundAudio()
 		wx.getSystemInfo({
 			success: function (res) {
 				that.setData({
@@ -286,11 +333,27 @@ Page({
 		// 		})
 		// 	}
 		// })
+		wx.playBackgroundAudio({
+			dataUrl: that.data.currentBgmUrl
+		})
 		recorderManager.stop();
 		that.setData({
 			recordStatus: "stop",
 			recordIcon: "/img/mic.png",
 		});
+	},
+	playRecord: function() {
+		if (that.data.playRecording) {
+			that.stopPlayRecordFile()
+			that.setData({
+				playRecording: false
+			})
+		} else {
+			that.playRecordFile()
+			that.setData({
+				playRecording: true
+			})
+		}
 	},
 	playRecordFile: function (e) {
 		innerAudioContext.src = that.data.recordFile; //"http://soundpreview.ohipic.com/preview/sound/00/29/33/515ppt-S293364-183B1F2B.mp3";
@@ -302,6 +365,12 @@ Page({
 		})
 		innerAudioContext.onPause(() => {
 			console.log('暂停播放录音文件');
+		})
+		innerAudioContext.onEnded(() => {
+			that.stopPlayRecordFile()
+			that.setData({
+				playRecording: false
+			})
 		})
 		innerAudioContext.play();
 	},

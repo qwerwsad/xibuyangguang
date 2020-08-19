@@ -1,8 +1,15 @@
-<image src="{{pictureUrl}}" mode="widthFix" class="bg" />
-<image bindtap="gowork" src="{{worksList[3].pictureUrl || 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijing1.png'}}" class="work0" />
-<image bindtap="gowork" src="{{worksList[2].pictureUrl || 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijing1.png'}}" mode="aspectFill" class="work1" />
-<image bindtap="gowork" src="{{worksList[1].pictureUrl || 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijing1.png'}}" mode="aspectFill" class="work2" />
-<image bindtap="gowork" src="{{worksList[0].pictureUrl || 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijing1.png'}}" mode="aspectFill" class="work3" />
+<view class="bgBox">
+    <image src="{{pictureUrl}}" mode="widthFix" class="bg" />
+    <image src="/img/name.png" class="logoname"></image>
+</view>
+<image bindtap="gowork" src="{{worksList[3].pictureUrl || 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijing1.png'}}" class="{{worksList[0].pictureUrl ? 'work0':'opacity1 work0'}}" />
+<image bindtap="gowork" src="{{worksList[2].pictureUrl || 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijing1.png'}}" mode="aspectFill" class="{{worksList[1].pictureUrl ? 'work1':'opacity1 work1'}}" />
+<image bindtap="gowork" src="{{worksList[1].pictureUrl || 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijing1.png'}}" mode="aspectFill" class="{{worksList[2].pictureUrl ? 'work2':'opacity1 work2'}}" />
+<image bindtap="gowork" src="{{worksList[0].pictureUrl || 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijing1.png'}}" mode="aspectFill" class="{{worksList[3].pictureUrl ? 'work3':'opacity1 work3'}}" />
+<!-- <image bindtap="gowork" src="{{'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijing1.png'}}" class="opacity1 work0" />
+<image bindtap="gowork" src="{{'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijing1.png'}}" mode="aspectFill" class="opacity1 work1" />
+<image bindtap="gowork" src="{{'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijing1.png'}}" mode="aspectFill" class="opacity1 work2" />
+<image bindtap="gowork" src="{{'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beijing1.png'}}" mode="aspectFill" class="opacity1 work3" /> -->
 <view class="friend">
   <image class="acv" src="{{avatar}}" />
   <view class="info">

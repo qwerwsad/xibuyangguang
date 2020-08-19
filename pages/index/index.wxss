@@ -146,12 +146,24 @@ view {
 
 .buttons {
     position: absolute;
-    top: 1100rpx;
     width: 750rpx;
     padding: 0 30rpx;
     display: flex;
     align-items: center;
     justify-content: space-around;
+    top: 1220rpx;
+    z-index: 100;
+}
+
+.buttonsed {
+    position: fixed;
+    bottom: 30rpx;
+    width: 750rpx;
+    padding: 0 30rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    z-index: 200;
 }
 
 .buttons view {
@@ -162,7 +174,19 @@ view {
     align-items: center;
     justify-content: center;
     border-radius: 30rpx;
-    font-size: 20rpx;
+    font-size: 24rpx;
+    box-shadow: 10rpx 10rpx 6px #000;
+}
+
+.buttonsed view {
+    background-color: #ffffff;
+    width: 120rpx;
+    height: 40rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30rpx;
+    font-size: 24rpx;
     box-shadow: 10rpx 10rpx 6px #000;
 }
 
@@ -227,6 +251,17 @@ view {
     background: #E9E6EA;
 }
 
+.tab2s {
+    width: 50%;
+    text-align: right;
+    line-height: 95rpx;
+    padding-right: 73rpx;
+    color: #000;
+    font-size: 28rpx;
+    border-top-right-radius: 30rpx;
+    background: #fff;
+}
+
 .activeTab {
     background: #FDCA35;
 }
@@ -285,18 +320,49 @@ view {
     padding-bottom: 30rpx;
 }
 
+.chengjiuBox {
+    position: relative;
+}
 
+.chengjiulogo {
+    width: 180rpx;
+    height: 20rpx;
+    position: absolute;
+    right: -20rpx;
+    top: 150rpx;
+    text-align: right;
+}
 
+.yangguangbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.taskContentBox image {
+    width: 24rpx;
+    height: 24rpx;
+}
+
+.yangguangbox image {
+    width: 24rpx;
+    height: 24rpx;
+}
 
 
 
 
 .swiper {
-    position: absolute;
-    width: 750rpx;
-    height: 724rpx;
-    top: 200rpx;
-    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.swiperItem {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .row {
@@ -307,7 +373,7 @@ view {
 .title {
     font-size: 36rpx;
     text-align: center;
-    margin: 20rpx 0;
+    margin: 24rpx 0;
 }
 
 .col {
@@ -382,11 +448,12 @@ view {
     width: 210rpx;
     height: 203rpx;
     float: left;
-    margin-bottom: 74rpx;
+    /* margin-bottom: 74rpx; */
+    margin: 80rpx 60rpx 0;
 }
 
 .medal:nth-of-type(odd) {
-    margin-right: 100rpx;
+    /* margin-right: 100rpx; */
 }
 
 .medal view {
@@ -400,7 +467,7 @@ view {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 50rpx;
+    margin-top: 60rpx;
 }
 
 
@@ -613,4 +680,14 @@ view {
     font-family: FZZhengHeiS-M-GB;
     font-weight: 400;
     color: rgba(25, 25, 25, 1);
+}
+
+.zhengshuList {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999999;
 }

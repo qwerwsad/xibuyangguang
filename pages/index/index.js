@@ -43,7 +43,48 @@ Page({
 		showSignIn: false,
 		showsignmodel: false,
 		showCreateFriendmodel: false,
-		worksList: []
+		worksList: [],
+		isShowZhengshuList: false,
+		zhengshuList: [],
+		signInNumber: [10, 10, 20, 30, 40, 50, 60]
+	},
+	closezhengshuList() {
+		that.setData({
+			isShowZhengshuList: false
+		})
+		// wx.hideLoading()
+	},
+	clickMedal(e) {
+		var counts = e.currentTarget.dataset.counts
+		if (counts > 0) {
+			requestFunc.requestFunc({
+				url: '/medal/certificates',
+				method: "GET",
+				header: {
+					'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+				},
+				data: {
+					receiveId: e.currentTarget.dataset.receiveid,
+					userId: that.data.user.data.id
+				},
+			}).then((data) => {
+				if (data.result == 0) {
+					for (let index = 0; index < data.data.length; index++) {
+						data.data[index].currentDate = data.data[index].createTime.split(' ')
+					}
+					that.setData({
+						zhengshuList: data.data,
+						isShowZhengshuList: true
+					})
+				}
+			})
+		} else {
+			wx.showToast({
+				title: '您还没有获得该证书',
+				icon: 'none',
+				duration: 2000
+			})
+		}
 	},
 	gotoTask(e) {
 		const index = e.currentTarget.dataset.taskindex
@@ -78,6 +119,92 @@ Page({
 			url: `/pages/friend_home/friend_home?pictureUrl=${friend.pictureUrl}&visitId=${friend.id}&avatar=${friend.avatar}}&nickname=${friend.nickName}&level=${friend.level}&donate=${friend.givePoint}`,
 		});
 	},
+	huizhicanvased(e) {
+		var receiveid = e.currentTarget.dataset.receiveid || that.data.curRecipient.id
+		var str1 = ''
+		var str2 = ''
+		if (receiveid == 1) {
+			str1 = '我在诗里的童年艺术馆创作了诗画作品,通过我的努力,'
+			str2 = '一名乡村儿童得到了一天的幼儿教学服务,快来看看吧!'
+		} else if (receiveid == 2) {
+			str1 = '我在诗里的童年艺术馆创作了诗画作品,通过我的努力,'
+			str2 = '一名乡村教师得到了一天的职业启蒙教育服务,快来看看吧!'
+		} else if (receiveid == 3) {
+			str1 = '我在诗里的童年艺术馆创作了诗画作品,通过我的努力,'
+			str2 = '一名乡村学生得到了一天的社工陪伴,快来看看吧!'
+		} else if (receiveid == 4) {
+			str1 = '我在诗里的童年艺术馆创作了诗画作品,通过我的努力,'
+			str2 = '一名孩子得到了一天的公益服务,快来看看吧!'
+		}
+		const ctx = wx.createCanvasContext('ruleCanvased');
+		wx.showLoading({
+			title: '图片生成中'
+		})
+		wx.downloadFile({
+			url: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/womenbeijing.png',
+			success: function (res) {
+				ctx.drawImage(res.tempFilePath, 0, 0, 750, 1334);
+				ctx.setGlobalAlpha(0.4)
+				ctx.setFillStyle('black')
+				ctx.fillRect(0, 0, 750, 1334)
+				ctx.setGlobalAlpha(1)
+				wx.downloadFile({
+					url: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/womenlogo.png',
+					success: function (res) {
+						ctx.drawImage(res.tempFilePath, 57, 71, 144, 122);
+						wx.downloadFile({
+							url: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/women.png',
+							success: function (res) {
+								ctx.drawImage(res.tempFilePath, 427, 125, 244, 839);
+								ctx.setFontSize(28);
+								ctx.setFillStyle('yellow');
+								ctx.setTextAlign('left');
+								ctx.fillText(that.data.user.data.nickName , 66, 1124);
+								ctx.setFontSize(18);
+								ctx.setFillStyle('white');
+								ctx.setTextAlign('left');
+								ctx.fillText(str1, 57, 1167);
+								ctx.fillText(str2, 57, 1200);
+								wx.downloadFile({
+									url: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/qrcodebg.png',
+									success: function (res4) {
+										ctx.drawImage(res4.tempFilePath, 521, 1065, 180, 216);
+										wx.downloadFile({
+											url: util.svrUrl + '/qrcode?scene=1',
+											success: function (res3) {
+												ctx.drawImage(res3.tempFilePath, 526, 1110, 170, 170);
+												ctx.save();
+												ctx.draw(true, function () {
+													wx.canvasToTempFilePath({
+														x: 0,
+														y: 0,
+														width: 750,
+														height: 1334,
+														destWidth: 750,
+														destHeight: 1334,
+														fileType: 'png',
+														canvasId: 'ruleCanvased',
+														success(res) {
+															console.log(res.tempFilePath)
+															wx.hideLoading()
+															wx.previewImage({
+																current: res.tempFilePath, // 当前显示图片的http链接
+																urls: [res.tempFilePath] // 需要预览的图片http链接列表
+															})
+														}
+													})
+												})
+											}
+										})
+									}
+								})
+							}
+						})
+					}
+				})
+			}
+		})
+	},
 	huizhicanvas() {
 		wx.showLoading('图片生成中')
 		const ctx = wx.createCanvasContext('ruleCanvas');
@@ -101,7 +228,7 @@ Page({
 						ctx.setFontSize(12);
 						ctx.setFillStyle('black');
 						ctx.setTextAlign('left');
-						ctx.fillText('THANK YOU FOR YOUR DONATION!', 280, 210);
+						ctx.fillText('THANK YOU FOR YOUR DONATION!', 280, 213);
 						var date = new Date();
 						var currentDate = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日'
 						var lineWidth = 0;
@@ -195,8 +322,8 @@ Page({
 			}
 		}
 		return {
-			title: '自定义转发标题',
-			path: '/page/user?id=123'
+			title: '诗里的童年',
+			path: '/pages/index/index'
 		}
 	},
 	move: function() {
@@ -253,8 +380,15 @@ Page({
 			},
 		}).then((data) => {
 			if (data.result == 0) {
-				that.setData({
-					showsignmodel: true
+				// that.setData({
+				// 	showsignmodel: true
+				// })
+				that.getSignData();
+				that.getTask();
+				wx.showToast({
+					title: '签到成功',
+					icon: 'none',
+					duration: 2000
 				})
 			}
 		})
@@ -335,10 +469,16 @@ Page({
 		}
 		if (options.scene) {
 			if (options.scene.indexOf('A-') >= 0) {
-				console.log(options.scene.slice(2))
-				wx.navigateTo({
-					url: '/pages/work/work?user_id=' + options.scene.slice(2),
-				});
+				const friendId = options.scene.slice(2)
+				if (friendId == that.data.user.data.id) {
+					wx.navigateTo({
+						url: '/pages/work/work?user_id=' + that.data.user.data.id + '&pageAttribution=mine',
+					});
+				} else {
+					wx.navigateTo({
+						url: '/pages/work/work?user_id=' + options.scene.slice(2),
+					});
+				}
 			}
 		}
 	},
@@ -352,8 +492,15 @@ Page({
 			},
 		}).then((data) => {
 			console.log(data, 'task')
+			let taskList = data.data
+			taskList.map((item, index) => {
+				const desArr = item.description.split(':')
+				item.content = desArr[0]
+				item.count = desArr[1]
+				return item
+			})
 			that.setData({
-				taskData: data.data
+				taskData: taskList
 			})
 		})
 	},
@@ -436,6 +583,11 @@ Page({
 				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
 			}
 		}).then((data) => {
+			for (let index = 0; index < data.data.length; index++) {
+				if (data.data[index].id == that.data.user.data.id) {
+					data.data.splice(index, 1)
+				}
+			}
 			that.setData({
 				friends: data.data
 			});
@@ -736,10 +888,9 @@ Page({
 					url: '/medal/count-donation',
 					method: "GET",
 					data: {
+						receiveId: that.data.curRecipient.id,
+						userId: that.data.user.data.id
 					},
-					// header: {
-					// 	'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-					// }
 				}).then((data) => {
 					that.setData({
 						zhengshubianhao: data.data,
@@ -772,6 +923,7 @@ Page({
 		that.setData({
 			ifShowDonateCert:0
 		});
+		// wx.hideLoading()
 	},
 	toWork() {
 		wx.navigateTo({
