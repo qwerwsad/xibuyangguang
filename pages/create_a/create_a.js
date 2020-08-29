@@ -34,7 +34,7 @@ Page({
 	onShareAppMessage: function () {
 		return {
 			title: '诗里的童年',
-			path: '/pages/index/index'
+			path: '/pages/index/index?shareUserId=' + that.data.user.data.id
 		}
 	},
 	init() {
@@ -54,13 +54,19 @@ Page({
 				userId: that.data.user.data.id
 			}
 		}).then((data) => {
-				that.setData({
-					work_bgs: data.data,
-				});
-				that.setData({
-					curBg: that.data.work_bgs[0].pictureUrl,
-					curContent: that.data.work_bgs[0]
-				});
+			let work_bgs = data.data;
+			work_bgs = work_bgs.map((item, index) => {
+				item.pictureUrl = item.pictureUrl.replace('.png', "_light.png")
+				console.log(item)
+				return item
+			})
+			that.setData({
+				work_bgs,
+			});
+			that.setData({
+				curBg: that.data.work_bgs[0].pictureUrl,
+				curContent: that.data.work_bgs[0]
+			});
 		})
 		// wx.request({
 		// 	url: util.svrUrl + '/work_bgs.php',

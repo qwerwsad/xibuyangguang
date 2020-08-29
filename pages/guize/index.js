@@ -13,25 +13,7 @@ Page({
 	pictureUrl: ''
 	},
 	onLoad: function (options) {
-		that = this;
-		if (options.visitId == undefined) {
-			wx.navigateBack();
-		}
-    console.log(options.visitId, 'options.visitId')
-    this.onHandleOptions(options)
-		this.setData({
-			visitId: options.visitId
-		});
-
-		if ( app.globalData.user != null ) {
-			that.setData({ user: app.globalData.user }); 
-			that.init();
-		} else {
-			app.employIdCallback = res => {
-				that.setData({ user: res });
-				that.init();
-			};
-		}
+		
   },
   onHandleOptions(options) {
     this.setData({

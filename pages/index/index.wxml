@@ -18,6 +18,18 @@
 	</view>
 </view>
 <view class="title">艺术馆大厅</view>
+<view class="guize" bindtap="toGuize">
+	<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/guize1.png"></image>
+</view>
+<view wx:if="{{showblacktip}}" class="blackTip" bindtap="closeblacktip">
+	<image class="jiantou" src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/jiantou.png"></image>
+	<image class="wenzi" src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/wenzi.png"></image>
+</view>
+<view class="addfriend">
+	<button style="background-color: #fff; padding: 0; margin: 0;background:none; line-height: 1rpx; border: none; min-height: 0;width:100%; height:100%;" open-type="share">
+		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/addfriend.png"></image>
+	</button>
+</view>
 <view class="sunshinevalue">
 	<view style="position:relative; height:50rpx;">
 		<image src="/img/sunshinevalue.png" style="width:166rpx; height:50rpx;" />
@@ -427,7 +439,7 @@
 </view>
 <view class="qiandaoBox" wx:if="{{showSignIn}}">
 	<view class="qiandaoContent">
-		<view class="qiandaoTitle">每日签到得积分</view>
+		<view class="qiandaoTitle"></view>
 		<view class="currentNumber">连续签到{{signInData.times}}天</view>
 		<view class="qiandaoTaiyangBox">
 			<view class="qiandaoTaiyangItem">

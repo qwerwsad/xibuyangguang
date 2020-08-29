@@ -1,4 +1,4 @@
-const svrUrl = "http://123.57.180.141";
+const svrUrl = "https://sldtn.com/wxapplet";
 // const svrUrl = "http://westsunshine.sapet.cn/_minipro"
 // const authKey = "484F215F522B6B7B2A60265D5C4C266F28654A6B4B225835202D41584F673B2C";
 

@@ -599,11 +599,11 @@ Page({
 								ctx.setFillStyle('black')
 								ctx.fillRect(0, 0, 750, 1334)
 								ctx.setGlobalAlpha(1)
-								ctx.drawImage(res1.tempFilePath, 95, 295, 571, 770);
+								ctx.drawImage(res1.tempFilePath, 70, 295, 631, 770);
 								wx.downloadFile({
 									url: that.data.works[that.data.currentItemId].poetryPictureUrl,
 									success: function (res2) {
-										ctx.drawImage(res2.tempFilePath, 95, 295, 571, 770);
+										ctx.drawImage(res2.tempFilePath, 70, 295, 631, 770);
 										ctx.setFontSize(24);
 										ctx.setFillStyle('#F9C500');
 										ctx.setTextAlign('left');

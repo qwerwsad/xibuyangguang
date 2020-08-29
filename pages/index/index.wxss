@@ -60,6 +60,62 @@ view {
     height: 50rpx;
 }
 
+.guize {
+    position: absolute;
+    top: 230rpx;
+    right: 30rpx;
+    width: 50rpx;
+    height: 50rpx;
+
+}
+
+.blackTip {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+}
+
+.jiantou {
+    width: 100rpx;
+    height: 175rpx;
+    position: absolute;
+    top: 175rpx;
+    right: 104rpx;
+    transform: rotate(20deg);
+
+}
+
+.wenzi {
+    width: 190rpx;
+    height: 121rpx;
+    position: absolute;
+    top: 350rpx;
+    right: 151rpx;
+
+}
+
+.addfriend {
+    position: absolute;
+    top: 150rpx;
+    right: 30rpx;
+    width: 50rpx;
+    height: 50rpx;
+}
+
+.addfriend image {
+    width: 100%;
+    height: 100%;
+}
+
+.guize image {
+    width: 100%;
+    height: 100%;
+}
+
 .blank {
     position: absolute;
     top: 680rpx;

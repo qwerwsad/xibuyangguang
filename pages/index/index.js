@@ -36,23 +36,28 @@ Page({
 		userFriendRank: 0,
 		userAllRank: 0,
 		taskData: [],
-		signInData: {
-			times: 1,
-			state: false
-		},
+		signInData: '',
 		showSignIn: false,
 		showsignmodel: false,
 		showCreateFriendmodel: false,
 		worksList: [],
 		isShowZhengshuList: false,
 		zhengshuList: [],
-		signInNumber: [10, 10, 20, 30, 40, 50, 60]
+		signInNumber: [10, 10, 20, 30, 40, 50, 60],
+		showblacktip: false,
+		options: ''
 	},
 	closezhengshuList() {
 		that.setData({
 			isShowZhengshuList: false
 		})
 		// wx.hideLoading()
+	},
+	closeblacktip() {
+		that.setData({
+			showblacktip: false
+		})
+		that.init(that.data.options)
 	},
 	clickMedal(e) {
 		var counts = e.currentTarget.dataset.counts
@@ -287,6 +292,9 @@ Page({
 	},
 	onLoad: function (options) {
 		that = this;
+		that.setData({
+			options: options
+		})
 		console.log(options, app.globalData.user, 'app.globalData.user')
 		if ( app.globalData.user != null ) {
 			let levelWid = 0
@@ -314,6 +322,11 @@ Page({
 	},
 	onReady: function () {
 	},
+	toGuize() {
+		wx.navigateTo({
+			url: `/pages/guize/index`,
+		});
+	},
 	onShareAppMessage: function (res) {
 		if (res.from === 'button') {
 			return {
@@ -323,7 +336,7 @@ Page({
 		}
 		return {
 			title: '诗里的童年',
-			path: '/pages/index/index'
+			path: '/pages/index/index?shareUserId=' + that.data.user.data.id
 		}
 	},
 	move: function() {
@@ -641,9 +654,9 @@ Page({
 		});
 	},
 	hideShouQuan() {
-		// this.setData({
-		// 	getWechatInfoViewShow: false
-		// });
+		this.setData({
+			getWechatInfoViewShow: false
+		});
 		wx.showToast({
 			title: '授权用户信息才能开启创作之路',
 			icon: 'none',
@@ -686,9 +699,9 @@ Page({
 					// console.log( res2 );
 					that.setData({
 						user: app.globalData.user,
-						getWechatInfoViewShow: false
+						getWechatInfoViewShow: false,
+						showclosetip: true
 					});
-					that.init()
 					wx.hideLoading();
 				});
 			} else {
@@ -700,39 +713,6 @@ Page({
 			}
 			
 		})
-		// wx.request({ method: "POST", dataType: "json", header: { 'content-type': 'application/x-www-form-urlencoded' },
-		// 	url: util.svrUrl + '/system/add-user-basic',
-		// 	data: {
-		// 		auth_key: util.authKey,
-		// 		user_id: that.data.user.user_id,
-		// 		openid: that.data.user.openid,
-		// 		portrait: e.detail.userInfo.avatarUrl,
-		// 		nickname: e.detail.userInfo.nickName,
-		// 		gender: e.detail.userInfo.gender,
-		// 		country: e.detail.userInfo.country,
-		// 		province: e.detail.userInfo.province,
-		// 		city: e.detail.userInfo.city,
-		// 		area: e.detail.userInfo.area,
-		// 		address: e.detail.userInfo.address,
-		// 		ifGetedWeixinInfo: 1,
-		// 		encryptedData: e.detail.encryptedData,
-		// 		iv: e.detail.iv,
-		// 	},
-		// 	success: function (res) {
-		// 		console.log( res );
-		// 		wx.showToast({
-		// 			title: res.data.msg,
-		// 		});
-		// 		util.loginSync().then(function ( res2 ) {
-		// 			// console.log( res2 );
-		// 			that.setData({
-		// 				user: app.globalData.user,
-		// 				getWechatInfoViewShow: false
-		// 			});
-		// 			wx.hideLoading();
-		// 		});
-		// 	}
-		// });
 	},
 	closeModel() {
 		that.setData({

@@ -1,0 +1,13 @@
+view {
+  box-sizing: border-box;
+}
+
+.bgBox {
+  width: 100%;
+  height: auto;
+  position: relative;
+}
+
+.bgBox image {
+  width: 100%;
+}
