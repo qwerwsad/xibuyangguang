@@ -121,7 +121,7 @@ Page({
 	toFriendHome(e) {
 		const friend = e.currentTarget.dataset.frienddata
 		wx.navigateTo({
-			url: `/pages/friend_home/friend_home?pictureUrl=${friend.pictureUrl}&visitId=${friend.id}&avatar=${friend.avatar}}&nickname=${friend.nickName}&level=${friend.level}&donate=${friend.givePoint}`,
+			url: `/pages/friend_home/friend_home?pictureUrl=${friend.pictureUrl}&visitId=${friend.id}&avatar=${friend.avatar}&nickname=${friend.nickName}&level=${friend.level}&donate=${friend.givePoint}`,
 		});
 	},
 	huizhicanvased(e) {
@@ -331,12 +331,14 @@ Page({
 		if (res.from === 'button') {
 			return {
 				title: '快来和我一起制作吧',
-				path: '/pages/index/index?shareUserId=' + that.data.user.data.id
+				path: '/pages/index/index?shareUserId=' + that.data.user.data.id,
+				imageUrl: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/share.png'
 			}
 		}
 		return {
 			title: '诗里的童年',
-			path: '/pages/index/index?shareUserId=' + that.data.user.data.id
+			path: '/pages/index/index?shareUserId=' + that.data.user.data.id,
+			imageUrl: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/share.png'
 		}
 	},
 	move: function() {
@@ -596,11 +598,11 @@ Page({
 				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
 			}
 		}).then((data) => {
-			for (let index = 0; index < data.data.length; index++) {
-				if (data.data[index].id == that.data.user.data.id) {
-					data.data.splice(index, 1)
-				}
-			}
+			// for (let index = 0; index < data.data.length; index++) {
+			// 	if (data.data[index].id == that.data.user.data.id) {
+			// 		data.data.splice(index, 1)
+			// 	}
+			// }
 			that.setData({
 				friends: data.data
 			});

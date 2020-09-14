@@ -43,7 +43,7 @@
 <view wx:if="{{ ifShowRecord }}" style="z-index:102; position:absolute; top:300rpx; width:660rpx; height:689rpx; left:45rpx; background-color:#ffffff; border-radius:50rpx; overflow:hidden;">
 	<view style="text-align:center; font-size:24rpx; height:485rpx;overflow-y:scroll;">
 		<view style="width:100%;text-align:center;line-hieght:50rpx;font-size: 32rpx;"></view>
-		<text style="line-height: 50rpx;font-size: 32rpx;">
+		<text style="line-height: 50rpx;font-size: 32rpx;display: block;">
 			{{ poem.content || '暂无故事' }}
 		</text>
 	</view>

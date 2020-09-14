@@ -62,7 +62,8 @@ Page({
 	onShareAppMessage: function () {
 		return {
 			title: '诗里的童年',
-			path: '/pages/index/index?scene=A-' + that.data.user.data.id
+			path: '/pages/index/index?scene=A-' + that.data.user.data.id,
+			imageUrl: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/share.png'
 		}
 	},
 	init() {
@@ -595,10 +596,10 @@ Page({
 							url: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/changpian.png',
 							success: function(res3) {
 								ctx.drawImage(res3.tempFilePath, 0, 60, 750, 658);
-								ctx.setGlobalAlpha(0.4)
-								ctx.setFillStyle('black')
-								ctx.fillRect(0, 0, 750, 1334)
-								ctx.setGlobalAlpha(1)
+								// ctx.setGlobalAlpha(0.4)
+								// ctx.setFillStyle('black')
+								// ctx.fillRect(0, 0, 750, 1334)
+								// ctx.setGlobalAlpha(1)
 								ctx.drawImage(res1.tempFilePath, 70, 295, 631, 770);
 								wx.downloadFile({
 									url: that.data.works[that.data.currentItemId].poetryPictureUrl,

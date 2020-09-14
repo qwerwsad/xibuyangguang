@@ -34,7 +34,8 @@ Page({
 	onShareAppMessage: function () {
 		return {
 			title: '诗里的童年',
-			path: '/pages/index/index?shareUserId=' + that.data.user.data.id
+			path: '/pages/index/index?shareUserId=' + that.data.user.data.id,
+			imageUrl: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/share.png'
 		}
 	},
 	init() {

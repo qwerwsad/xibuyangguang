@@ -147,7 +147,7 @@ page {
 }
 
 .comments view.comment {
-    height: 80rpx;
+    min-height: 80rpx;
     display: flex;
     align-items: center;
 }

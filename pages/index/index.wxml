@@ -1,5 +1,5 @@
 <image src="{{user.data.pictureUrl}}" mode="widthFix" class="bg" />
-
+<!-- <view class="topBox"></view> -->
 <view class="level">
 	<view style="position:relative; background-color:#ffffff; height:50rpx; border-radius:25rpx;">
 		<!-- <image src="/img/level.png" style="width:166rpx; height:50rpx;" /> -->
@@ -76,17 +76,22 @@
 
 <!--合作伙伴-->
 <view style="position: absolute; top:2350rpx; left:30rpx; border-radius: 50rpx; width:690rpx; background-color:#E7E7E7; min-height:200rpx; padding:46rpx 0 32rpx;">
-	<image src="/img/hezuohuoban.png" style="display:block; width:132rpx; height:31rpx; margin:auto;" />
-	<view style="margin-top:69rpx; display:flex; flex-direction:row; align-items:center; justify-content:center;">
+	<!-- <image src="/img/hezuohuoban.png" style="display:block; width:132rpx; height:31rpx; margin:auto;" /> -->
+	<view class="huobanname">共创伙伴</view>
+	<view style="margin-top:30rpx; display:flex; flex-direction:row; align-items:center; justify-content:center;">
 		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/partner1.png" mode="aspectFit" style="display:block; width:100rpx; height:100rpx; " />
-		<image src="http://westsunshine.sapet.cn/static/partner/partner2.png" mode="aspectFit" style="display:block; width:100rpx; height:100rpx; margin-left:50rpx;" />
+		<image src="http://westsunshine.sapet.cn/static/partner/partner2.png" mode="aspectFit" style="display:block; width:100rpx; height:100rpx; margin-left:20rpx;" />
 	</view>
-	<image src="/img/aixinqiye.png" style="display:block; width:132rpx; height:31rpx; margin:auto; margin-top:46rpx;" />
-	<view style="margin-top:69rpx; display:flex; ">
-		<image src="http://westsunshine.sapet.cn/static/aixinqiye/aixinqiye1.png" mode="aspectFit" style="display:block; width:98rpx; height:76rpx; margin:auto;" />
+	<view class="huobanname" style="margin-top:66rpx;">合作伙伴</view>
+	<!-- <image src="/img/aixinqiye.png" style="display:block; width:132rpx; height:31rpx; margin:auto; margin-top:46rpx;" /> -->
+	<view style="margin-top:0rpx;   display:flex; flex-direction:row; align-items:center;justify-content:center;">
+				<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/ycyx.png" mode="aspectFit" style="display:block;  width:200rpx; height:120rpx;margin-left:20rpx; " />
+		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/dfrs.png" mode="aspectFit" style="display:block;  width:200rpx; height:120rpx;  margin-left:20rpx;" />
+		<!-- <image src="http://westsunshine.sapet.cn/static/aixinqiye/aixinqiye1.png" mode="aspectFit" style="display:block; width:98rpx; height:76rpx; margin:auto;" />
 		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/hsbc.png" mode="aspectFit" style="display:block; width:190rpx; height:52rpx; margin:auto;" />
 		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beike.png" mode="aspectFit" style="display:block; width:74rpx; height:69rpx; margin:auto;" />
-		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/xin.png" mode="aspectFit" style="display:block; width:64rpx; height:66rpx; margin:auto;" />
+		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/xin.png" mode="aspectFit" style="display:block; width:64rpx; height:66rpx; margin:auto;" /> -->
+		
 	</view>
 </view>
 <!-- 排行榜 -->
@@ -114,29 +119,29 @@
 	<view style="background-color:{{showFriend? '#E7E7E7': '#FFC936'}}; padding:90rpx 0 30rpx; height:800rpx; overflow-y:scroll;">
 		<view 
 			style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
-			<view style="margin-left:50rpx; font-size:24rpx; width:50rpx; text-align:center;">{{ showFriend?  userFriendRank:userAllRank }}</view>
-			<image src="{{ user.data.avatar }}" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
+			<view style="margin-left:50rpx; font-size:24rpx; width:100rpx; text-align:center;">{{ showFriend?  userFriendRank:userAllRank }}</view>
+			<image src="{{ user.data.avatar }}" style="width:63rpx; height:63rpx; margin-left:20rpx; border-radius:50%;" />
 			<view style="width:200rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">我</view>
 			<view class="yangguangbox" style="margin-left:0rpx; color:#676767; font-size:24rpx;">捐赠  <image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/yangguang.png"></image>{{ user.data.givePoint }} </view>
 		</view>
 		<view wx:if="{{!showFriend}}" class="paihangbangBox">
 			<view wx:for="{{ totalRanks }}" bindtap="toFriendHome" data-frienddata="{{rank}}" wx:for-item="rank" wx:key="index" wx:for-index="index" style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
-				<view style="margin-left:50rpx; width:50rpx; padding-top:5rpx;">
+				<view style="margin-left:50rpx; width:100rpx; padding-top:5rpx;">
 					<view wx:if="{{index>=3}}">NO.{{index + 1}}</view>
 					<image wx:if="{{index<3}}" src="/img/no{{index + 1}}.png" style="width:50rpx; height:50rpx; border-radius:50%;" />
 				</view>
-				<image src="{{ rank.avatar }}" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
+				<image src="{{ rank.avatar }}" style="width:63rpx; height:63rpx; margin-left:20rpx; border-radius:50%;" />
 				<view style="width:200rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">{{ rank.nickName || '--' }}</view>
 				<view class="yangguangbox" style="margin-left:0rpx; color:#676767; font-size:24rpx;">捐赠 <image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/yangguang.png"></image>{{ rank.givePoint }}</view>
 			</view>
 		</view>
 		<view wx:if="{{showFriend}}"  class="paihangbangBox">
 			<view wx:for="{{  friends }}" data-frienddata="{{friend}}" bindtap="toFriendHome" wx:for-item="friend" wx:key="index" wx:for-index="index" style="width:650rpx; height:100rpx; background-color:#ffffff; border-radius:60rpx; margin:auto; margin-bottom:20rpx; display:flex; align-items:center;">
-				<view style="margin-left:50rpx; width:50rpx; padding-top:5rpx;">
+				<view style="margin-left:50rpx; width:100rpx; padding-top:5rpx;">
 					<view wx:if="{{index>=3}}">NO.{{index + 1}}</view>
 					<image wx:if="{{index<3}}" src="/img/no{{index + 1}}.png" style="width:50rpx; height:50rpx; border-radius:50%;" />
 				</view>
-				<image src="{{ friend.avatar }}" style="width:63rpx; height:63rpx; margin-left:40rpx; border-radius:50%;" />
+				<image src="{{ friend.avatar }}" style="width:63rpx; height:63rpx; margin-left:20rpx; border-radius:50%;" />
 				<view style="width:200rpx; margin-left:30rpx; color:#606060; font-size:26rpx;">{{ friend.nickName || '--' }}</view>
 				<view class="yangguangbox" style="margin-left:0rpx; color:#676767; font-size:24rpx;">捐赠 <image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/yangguang.png"></image>{{ friend.givePoint }}</view>
 			</view>
@@ -293,7 +298,7 @@
 		</view>
 	</view>
 	<view style="background-color:#E7E7E7; width:100%; height:50rpx; border-top-left-radius:50rpx; border-top-right-radius:50rpx;"></view>
-	<view style="background-color:#E7E7E7; padding:90rpx 40rpx 40rpx;border-bottom-left-radius: 25px;border-bottom-right-radius: 25px;">
+	<view style="background-color:#E7E7E7; padding:90rpx 40rpx 0 40rpx;border-bottom-left-radius: 25px;border-bottom-right-radius: 25px;">
 		<view style="display:flex; align-items:center;">
 			<view style="width:50%; text-align:center;">
 				<view style="font-size:22rpx; color:#6E6E6E;">捐赠项目</view>
@@ -315,9 +320,12 @@
 		<view style="text-align:center; margin-top:0rpx;">
 			<image src="/img/hr.png" style="width:545rpx; height:2rpx;" />
 		</view>
-		<view style="display:flex; align-items:center; margin-top:30rpx;">
-			<view style="color:#757575; font-size:24rpx; width:70%;line-height:32rpx;">{{ curRecipient.surpporter }}</view>
-			<view style="width:30%;"><image  wx:if="{{ curRecipient.introLogo }}" src="{{ curRecipient.introLogo }}" mode="aspectFit" style="width:168rpx; height:46rpx;" /></view>
+		<view style="display:flex; align-items:center;">
+			<view style="color:#757575; font-size:24rpx; width:70%;line-height:32rpx;">
+				<!-- 西部阳光基金会负责执行该项目 -->
+				{{ curRecipient.surpporter }}	
+			</view>
+			<view style="width:30%;"><image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/xibuyangguanglogo.png" mode="aspectFit" style="width:200rpx; height:200rpx;" /></view>
 		</view>
 	</view>
 
@@ -350,16 +358,16 @@
 		你于{{currentDate}}给西部阳光捐赠了{{curRecipient.point}}阳光值，汇丰银行将给予项目同等价值的支持。因为有你，孩子们能在梦想中的教室中玩耍！
 	</view> -->
 	<view wx:if="{{curRecipient.id == 1}}" catchtap="" style="margin-top:30rpx; padding:0 100rpx; line-height:32rpx; font-size:24rpx; text-align:justify;">
-		你于{{currentDate}}给西部阳光捐赠了{{curRecipient.point}}阳光值，赠与亚洲（美国）北京代表处将给予项目同等价值的支持。因为有你，孩子们能在梦想中的教室中玩耍！
+		你于{{currentDate}}给西部阳光阳光童趣园项目捐赠了{{curRecipient.point}}阳光值，西部阳光基金会将给与乡村儿童同等价值的支持。因为有你，孩子们能在梦想中的教室中玩耍！
 	</view>
 	<view wx:if="{{curRecipient.id == 2}}" catchtap="" style="margin-top:30rpx; padding:0 100rpx; line-height:32rpx; font-size:24rpx; text-align:justify;">
-		你于{{currentDate}}给西部阳光捐赠了{{curRecipient.point}}阳光值，汇丰（中国）银行有限公司将给与项目同等价值的支持，是你为孩子们铺好前行的道路，从独自探索中看到了光明！
+		你于{{currentDate}}给西部阳光青葵花导师计划捐赠了{{curRecipient.point}}阳光值，西部阳光基金会将给与乡村儿童同等价值的支持，是你为孩子们铺好前行的道路，从独自探索中看到了光明！
 	</view>
 	<view wx:if="{{curRecipient.id == 3}}" catchtap="" style="margin-top:30rpx; padding:0 100rpx; line-height:32rpx; font-size:24rpx; text-align:justify;">
-		你于{{currentDate}}给西部阳光捐赠了{{curRecipient.point}}阳光值，汇丰（中国）银行有限公司将给与项目同等价值的支持，因为你的付出，孩子们在成长的道路上将得到知心的陪伴。
+		你于{{currentDate}}给西部阳光陪伴助行项目捐赠了{{curRecipient.point}}阳光值，西部阳光基金会将给与乡村儿童同等价值的支持，因为你的付出，孩子们在成长的道路上将得到知心的陪伴。
 	</view>
 	<view wx:if="{{curRecipient.id == 4}}" catchtap="" style="margin-top:30rpx; padding:0 100rpx; line-height:32rpx; font-size:24rpx; text-align:justify;">
-		你于{{currentDate}}给西部阳光捐赠了{{curRecipient.point}}阳光值，灵山慈善基金会将给与项目同等价值的支持，是你的付出推动了中国教育公益事业的发展，也让欠发达地区的孩子们能够被看见。
+		你于{{currentDate}}给西部阳光桥畔计划捐赠了{{curRecipient.point}}阳光值，西部阳光基金会将给与乡村儿童同等价值的支持，是你的付出推动了中国教育公益事业的发展，也让欠发达地区的孩子们能够被看见。
 	</view>
 	<view  catchtap="" style="margin-top:30rpx; padding:0 100rpx; font-size:22rpx; text-align:center; color:#DB6E37;">
 		证书编号：{{zhengshubianhao}}
@@ -385,16 +393,16 @@
 								</view>
 							</view>
 							<view wx:if="{{item.receiveId == 1}}" catchtap="" style="margin-top:30rpx; padding:0 100rpx; line-height:32rpx; font-size:24rpx; text-align:justify;">
-								你于{{item.currentDate[0]}}给西部阳光捐赠了{{item.point}}阳光值，赠与亚洲（美国）北京代表处将给予项目同等价值的支持。因为有你，孩子们能在梦想中的教室中玩耍！
+								你于{{item.currentDate[0]}}给西部阳光阳光童趣园项目捐赠了{{item.point}}阳光值，西部阳光基金会将给与乡村儿童同等价值的支持。因为有你，孩子们能在梦想中的教室中玩耍！
 							</view>
 							<view wx:if="{{item.receiveId == 2}}" catchtap="" style="margin-top:30rpx; padding:0 100rpx; line-height:32rpx; font-size:24rpx; text-align:justify;">
-								你于{{item.currentDate[0]}}给西部阳光捐赠了{{item.point}}阳光值，汇丰（中国）银行有限公司将给与项目同等价值的支持，是你为孩子们铺好前行的道路，从独自探索中看到了光明！
+								你于{{item.currentDate[0]}}给西部阳光青葵花导师计划捐赠了{{item.point}}阳光值，西部阳光基金会将给与乡村儿童同等价值的支持，是你为孩子们铺好前行的道路，从独自探索中看到了光明！
 							</view>
 							<view wx:if="{{item.receiveId == 3}}" catchtap="" style="margin-top:30rpx; padding:0 100rpx; line-height:32rpx; font-size:24rpx; text-align:justify;">
-								你于{{item.currentDate[0]}}给西部阳光捐赠了{{item.point}}阳光值，汇丰（中国）银行有限公司将给与项目同等价值的支持，因为你的付出，孩子们在成长的道路上将得到知心的陪伴。
+								你于{{item.currentDate[0]}}给西部阳光陪伴助行项目捐赠了{{item.point}}阳光值，西部阳光基金会将给与乡村儿童同等价值的支持，因为你的付出，孩子们在成长的道路上将得到知心的陪伴。
 							</view>
 							<view wx:if="{{item.receiveId == 4}}" catchtap="" style="margin-top:30rpx; padding:0 100rpx; line-height:32rpx; font-size:24rpx; text-align:justify;">
-								你于{{item.currentDate[0]}}给西部阳光捐赠了{{item.point}}阳光值，灵山慈善基金会将给与项目同等价值的支持，是你的付出推动了中国教育公益事业的发展，也让欠发达地区的孩子们能够被看见。
+								你于{{item.currentDate[0]}}给西部阳光桥畔计划捐赠了{{item.point}}阳光值，西部阳光基金会将给与乡村儿童同等价值的支持，是你的付出推动了中国教育公益事业的发展，也让欠发达地区的孩子们能够被看见。
 							</view>
 							<view  catchtap="" style="margin-top:30rpx; padding:0 100rpx; font-size:22rpx; text-align:center; color:#DB6E37;">
 								证书编号：{{item.certificateNo}}

@@ -7,6 +7,10 @@ view {
     filter: brightness(0.6);
 }
 
+.topBox {
+    width: 100%;
+    height: 1300rpx;
+}
 .level {
     position: absolute;
     top: 78rpx;
@@ -713,29 +717,33 @@ view {
 
 .qiandao {
     width: 143rpx;
-    height: 60rpx;
+    height: 50rpx;
     text-align: center;
-    line-height: 40rpx;
-    background: url(https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/anniu.png) no-repeat;
+    line-height: 50rpx;
+    background: #FFC936;
+    box-shadow: 10rpx 10rpx 6px #000;
     background-size: 100% 100%;
     margin-right: 127rpx;
-    font-size: 18rpx;
+    font-size: 24rpx;
     font-family: FZZhengHeiS-M-GB;
     font-weight: 400;
     color: rgba(25, 25, 25, 1);
+    border-radius: 30px;
 }
 
 .fanhui {
     width: 143rpx;
-    height: 60rpx;
+    height: 50rpx;
     text-align: center;
-    line-height: 40rpx;
-    background: url(https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/anniu.png) no-repeat;
+    line-height: 50rpx;
+    background: #FFC936;
+    box-shadow: 10rpx 10rpx 6px #000;
     background-size: 100% 100%;
-    font-size: 18rpx;
+    font-size: 24rpx;
     font-family: FZZhengHeiS-M-GB;
     font-weight: 400;
     color: rgba(25, 25, 25, 1);
+    border-radius: 30px;
 }
 
 .zhengshuList {
@@ -746,4 +754,13 @@ view {
     top: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: 999999;
+}
+
+.huobanname {
+    width: 100%;
+    height: 40rpx;
+    color: rgb(129, 129, 129);
+    font-size: 40rpx;
+    text-align: center;
+    /* font-weight: bold; */
 }

@@ -49,7 +49,8 @@ Page({
 	onShareAppMessage: function () {
 		return {
 			title: '诗里的童年',
-			path: '/pages/index/index?shareUserId=' + that.data.user.data.id
+			path: '/pages/index/index?shareUserId=' + that.data.user.data.id,
+			imageUrl: 'https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/share.png'
 		}
 	},
 	init() {
@@ -75,9 +76,18 @@ Page({
 			// }
 		})
   },
-  gowork() {
-    wx.navigateTo({
-      url: '/pages/work/work?user_id=' + that.data.visitId + '&pageAttribution=others'
-    })
+  gowork(e) {
+		var picture = e.currentTarget.dataset.picture
+		if (picture.length > 0) {
+			wx.navigateTo({
+				url: '/pages/work/work?user_id=' + that.data.visitId + '&pageAttribution=others'
+			})
+		} else {
+			wx.showToast({
+				title: '好友暂无画作',
+				icon: 'none',
+				duration: 2000
+			})
+		}
   }
 })

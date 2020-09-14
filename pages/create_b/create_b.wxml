@@ -58,9 +58,7 @@
 						{{poems[currentItemId].storyAuther}} {{poems[currentItemId].autherAge?poems[currentItemId].autherAge + '岁': ''}} {{poems[currentItemId].autherProvince || ''}}
 				</view>
 		</view>
-		<view style="font-size:24rpx; padding:40rpx 60rpx; text-align:justify; line-height:40rpx; height:370rpx;  overflow-y:scroll;">
-				{{poems[currentItemId].storyContent}}
-		</view>
+		<text style="display: block;font-size:24rpx; padding:30rpx 60rpx 50rpx; text-align:justify; line-height:40rpx; height:370rpx;  overflow-y:scroll;">{{poems[currentItemId].storyContent}}</text>
 		<view>
 				<image src="/img/xibuyangguangjijinhui.png" style="width:544rpx; height:64rpx;" />
 		</view>
@@ -73,7 +71,7 @@
 		<view class="g-modal-mask"></view>
 		<view class="g-modal-content">
 				<image class="g-modal-logo" src="/img/sunflower.png" />
-				<view class="g-modal-info">该作品需要300阳光值</view>
+				<view class="g-modal-info">该作品需要3000阳光值</view>
 				<view class="g-modal-btn">
 						<view bindtap="onConfirm" class="g-btn-40">确认</view>
 						<view bindtap="onCancal" class="g-btn-40">返回</view>
