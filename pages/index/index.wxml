@@ -1,4 +1,4 @@
-<image src="{{user.data.pictureUrl}}" mode="widthFix" class="bg" />
+<image src="{{user.data.pictureUrl}}"  style="height:3154rpx;" class="bg" />
 <!-- <view class="topBox"></view> -->
 <view class="level">
 	<view style="position:relative; background-color:#ffffff; height:50rpx; border-radius:25rpx;">
@@ -85,13 +85,19 @@
 	<view class="huobanname" style="margin-top:66rpx;">合作伙伴</view>
 	<!-- <image src="/img/aixinqiye.png" style="display:block; width:132rpx; height:31rpx; margin:auto; margin-top:46rpx;" /> -->
 	<view style="margin-top:0rpx;   display:flex; flex-direction:row; align-items:center;justify-content:center;">
-				<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/ycyx.png" mode="aspectFit" style="display:block;  width:200rpx; height:120rpx;margin-left:20rpx; " />
+		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/ycyx.png" mode="aspectFit" style="display:block;  width:200rpx; height:120rpx;margin-left:20rpx; " />
 		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/dfrs.png" mode="aspectFit" style="display:block;  width:200rpx; height:120rpx;  margin-left:20rpx;" />
-		<!-- <image src="http://westsunshine.sapet.cn/static/aixinqiye/aixinqiye1.png" mode="aspectFit" style="display:block; width:98rpx; height:76rpx; margin:auto;" />
-		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/hsbc.png" mode="aspectFit" style="display:block; width:190rpx; height:52rpx; margin:auto;" />
-		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/beike.png" mode="aspectFit" style="display:block; width:74rpx; height:69rpx; margin:auto;" />
-		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/xin.png" mode="aspectFit" style="display:block; width:64rpx; height:66rpx; margin:auto;" /> -->
-		
+		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/hfzg.png" mode="aspectFit" style="display:block;  width:200rpx; height:120rpx;  margin-left:20rpx;" />
+	</view>
+	<view style="margin-top:0rpx;   display:flex; flex-direction:row; align-items:center;justify-content:center;">
+		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/ywqn.png" mode="aspectFit" style="display:block;  width:200rpx; height:120rpx;  margin-left:20rpx;" />
+		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/lsxq.png" mode="aspectFit" style="display:block;  width:200rpx; height:120rpx;  margin-left:20rpx;" />
+		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/qyh.png" mode="aspectFit" style="display:block;  width:200rpx; height:120rpx;margin-left:20rpx; " />
+	</view>
+	<view style="margin-top:0rpx;   display:flex; flex-direction:row; align-items:center;justify-content:center;">
+		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/shbe.png" mode="aspectFit" style="display:block;  width:200rpx; height:120rpx;  margin-left:20rpx;" />
+		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/ddyy.png" mode="aspectFit" style="display:block;  width:200rpx; height:120rpx;  margin-left:20rpx;" />
+		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/szly.png" mode="aspectFit" style="display:block;  width:200rpx; height:120rpx;margin-left:20rpx; " />
 	</view>
 </view>
 <!-- 排行榜 -->
