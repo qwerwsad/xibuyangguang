@@ -1,0 +1,39 @@
+/* components/clearInput/clearInput.wxss */
+
+.clearInput {
+     display: -webkit-flex;
+     margin: 16rpx;
+     padding: 8rpx 14rpx 8rpx 8rpx;
+     font-size: 24rpx;
+     border-radius: 16rpx;
+     border: 1rpx solid gray;
+     align-items: center;
+}
+
+.searchImg {
+     width: 35rpx;
+     height: 35rpx;
+     vertical-align: center;
+}
+
+.clearImgShow {
+     width: 50rpx;
+     height: 50rpx;
+     vertical-align: center;
+}
+
+.clearImgHide {
+     display: none;
+}
+
+.wancheng {
+    width: 750rpx;
+    height: 100rpx;
+    border-radius: 10rpx;
+    margin-top: 30rpx;
+    background: #FFC836;
+    margin-left: 0;
+    margin-right:0;
+    padding: 0;
+    line-height: 100rpx;
+}

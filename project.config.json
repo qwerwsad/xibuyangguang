@@ -1,91 +1,98 @@
 {
-	"description": "项目配置文件",
-	"packOptions": {
-		"ignore": []
-	},
-	"setting": {
-		"urlCheck": true,
-		"es6": true,
-		"enhance": false,
-		"postcss": true,
-		"preloadBackgroundData": false,
-		"minified": true,
-		"newFeature": true,
-		"coverView": true,
-		"nodeModules": false,
-		"autoAudits": false,
-		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false,
-		"uglifyFileName": false,
-		"checkInvalidKey": true,
-		"checkSiteMap": true,
-		"uploadWithSourceMap": true,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		},
-		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": false,
-		"compileHotReLoad": false,
-		"useIsolateContext": true
-	},
-	"compileType": "miniprogram",
-	"libVersion": "2.11.3",
-	"appid": "wx1281d4670d34f1fb",
-	"projectname": "%E8%A5%BF%E9%83%A8%E9%98%B3%E5%85%89",
-	"debugOptions": {
-		"hidedInDevtools": []
-	},
-	"isGameTourist": false,
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"condition": {
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
-		"game": {
-			"currentL": -1,
-			"list": []
-		},
-		"gamePlugin": {
-			"current": -1,
-			"list": []
-		},
-		"miniprogram": {
-			"current": -1,
-			"list": [
-				{
-					"id": -1,
-					"name": "pages/friend_home/friend_home",
-					"pathName": "pages/friend_home/friend_home",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 1,
-					"name": "pages/work/work",
-					"pathName": "pages/work/work",
-					"query": "user_id=1284296336682803200&pageAttribution=mine",
-					"scene": null
-				},
-				{
-					"id": 2,
-					"name": "fenxiang",
-					"pathName": "pages/index/index",
-					"query": "scene=A-1284843276445179904",
-					"scene": null
-				}
-			]
-		}
-	}
+  "description": "项目配置文件",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": false,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": false,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "useCompilerModule": false,
+    "userConfirmedUseCompilerModuleSwitch": false,
+    "compileHotReLoad": false,
+    "useIsolateContext": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.11.3",
+  "appid": "wx1281d4670d34f1fb",
+  "projectname": "%E8%A5%BF%E9%83%A8%E9%98%B3%E5%85%89",
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "isGameTourist": false,
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {
+    "search": {
+      "current": -1,
+      "list": []
+    },
+    "conversation": {
+      "current": -1,
+      "list": []
+    },
+    "plugin": {
+      "current": -1,
+      "list": []
+    },
+    "game": {
+      "currentL": -1,
+      "list": []
+    },
+    "gamePlugin": {
+      "current": -1,
+      "list": []
+    },
+    "miniprogram": {
+      "current": -1,
+      "list": [
+        {
+          "id": -1,
+          "name": "pages/friend_home/friend_home",
+          "pathName": "pages/friend_home/friend_home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 1,
+          "name": "pages/work/work",
+          "pathName": "pages/work/work",
+          "query": "user_id=1284296336682803200&pageAttribution=mine",
+          "scene": null
+        },
+        {
+          "id": 2,
+          "name": "fenxiang",
+          "pathName": "pages/index/index",
+          "query": "scene=A-1284843276445179904",
+          "scene": null
+        },
+        {
+          "id": 3,
+          "name": "pages/index/in",
+          "pathName": "pages/edit/edit",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
 }

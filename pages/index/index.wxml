@@ -106,7 +106,7 @@
 	<view class="headerBox">
 		<view class="infoBox">
 			<view class="nameBox">
-				<image src="/img/portraiticon.png" style="width:28rpx; height:28rpx;" />
+				<image src="/img/xiugai.png" style="width:28rpx; height:28rpx;" bindtap="toEditName"/>
 				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
 			</view>
 			<view class="sunNumberBox">
@@ -161,7 +161,7 @@
 	<view class="headerBox">
 		<view class="infoBox">
 			<view class="nameBox">
-				<image src="/img/portraiticon.png" style="width:28rpx; height:28rpx;" />
+				<image src="/img/xiugai.png" style="width:28rpx; height:28rpx;"  bindtap="toEditName"/>
 				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
 			</view>
 			<view class="sunNumberBox">
@@ -198,7 +198,7 @@
 	<view class="headerBox">
 		<view class="infoBox">
 			<view class="nameBox">
-				<image src="/img/portraiticon.png" style="width:28rpx; height:28rpx;" />
+				<image src="/img/xiugai.png" style="width:28rpx; height:28rpx;"  bindtap="toEditName"/>
 				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
 			</view>
 			<view class="sunNumberBox">
@@ -236,7 +236,7 @@
 	<view class="headerBox">
 		<view class="infoBox">
 			<view class="nameBox">
-				<image src="/img/portraiticon.png" style="width:28rpx; height:28rpx;" />
+				<image src="/img/xiugai.png" style="width:28rpx; height:28rpx;"  bindtap="toEditName"/>
 				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
 			</view>
 			<view class="sunNumberBox">
@@ -268,7 +268,7 @@
 	<view class="headerBox">
 		<view class="infoBox">
 			<view class="nameBox">
-				<image src="/img/portraiticon.png" style="width:28rpx; height:28rpx;" />
+				<image src="/img/xiugai.png" style="width:28rpx; height:28rpx;"  bindtap="toEditName"/>
 				<view style="text-align:center; font-size:28rpx; margin-left:20rpx;">{{ user.data.nickName }}</view>
 			</view>
 			<view class="sunNumberBox">

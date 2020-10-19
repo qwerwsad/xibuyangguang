@@ -1,0 +1,4 @@
+
+<view class="container">
+  <clearInput inputValue='{{user.data.nickName}}' icon-class='common_search_img' input-class='common_search_input' confirmType='search'  bindinputConfirm='searchEvent' />
+</view>

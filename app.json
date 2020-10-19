@@ -7,7 +7,8 @@
     "pages/create_a/create_a",
     "pages/logs/logs",
     "pages/friend_home/friend_home",
-    "pages/guize/index"
+    "pages/guize/index",
+    "pages/edit/edit"
   ],
   "window": {
     "backgroundTextStyle": "light",

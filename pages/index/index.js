@@ -47,6 +47,11 @@ Page({
 		showblacktip: false,
 		options: ''
 	},
+	toEditName(){
+		wx.navigateTo({
+			url: '/pages/edit/edit'
+		})
+	},
 	closezhengshuList() {
 		that.setData({
 			isShowZhengshuList: false

@@ -1,0 +1,7 @@
+<view class='input-class'>
+     <input placeholder-style="line-height:100rpx;" placeholder='请输入昵称' bindconfirm='{{confirmTap}}' style='flex:1;width:100%;padding-left:12rpx;height:100rpx;' bindinput='inputListener'  value='{{inputValue}}' type='{{inputType}}' password='{{isPassword}}' confirm-type='{{confirmType}}'></input>
+     <image class="{{isClearShow || inputValue.length > 0?'clearImgShow':'clearImgHide'}}" src='/img/qingchu.png' bindtap='clearTap' mode='widthFix'></image>
+</view>
+<button class="wancheng" type="primary" bindtap="submit">
+    完成
+</button>
