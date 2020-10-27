@@ -80,7 +80,7 @@
 	<view class="huobanname">共创伙伴</view>
 	<view style="margin-top:30rpx; display:flex; flex-direction:row; align-items:center; justify-content:center;">
 		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/partner1.png" mode="aspectFit" style="display:block; width:100rpx; height:100rpx; " />
-		<image src="http://westsunshine.sapet.cn/static/partner/partner2.png" mode="aspectFit" style="display:block; width:100rpx; height:100rpx; margin-left:20rpx;" />
+		<image src="https://wosz.oss-cn-beijing.aliyuncs.com/poetrychildhood/lhgy.png" mode="aspectFit" style="display:block; width:100rpx; height:100rpx; margin-left:20rpx;" />
 	</view>
 	<view class="huobanname" style="margin-top:66rpx;">合作伙伴</view>
 	<!-- <image src="/img/aixinqiye.png" style="display:block; width:132rpx; height:31rpx; margin:auto; margin-top:46rpx;" /> -->
@@ -352,7 +352,7 @@
 </view>
 <!-- 捐赠证书 -->
 <view wx:if="{{ ifShowDonateCert }}" class="bg_black" style="z-index:205;" bindtap="hideCert"></view>
-<view wx:if="{{ ifShowDonateCert }}"   bindtap="hideCert" style="z-index:206; width:634rpx;    height:895rpx; position:fixed; top:50%; left:60rpx;transform:translateY(-50%); background:url('http://westsunshine.sapet.cn/static/cert/cert.png') no-repeat; background-size:634rpx 895rpx;">
+<view wx:if="{{ ifShowDonateCert }}"   bindtap="hideCert" style="z-index:206; width:634rpx;    height:895rpx; position:fixed; top:50%; left:60rpx;transform:translateY(-50%); background:url('https://poetrychildhood.oss-accelerate.aliyuncs.com/poetrychildhood/cert.png') no-repeat; background-size:634rpx 895rpx;">
 	<view catchtap="" style="display:flex; align-items:center; justify-content:center; margin-top:136rpx;">
 		<image src="{{user.data.avatar}}" style="width:88rpx; height:88rpx; border-radius:50%; margin-left:42rpx;" />
 		<view style="margin-left:15rpx;">
@@ -390,7 +390,7 @@
 	<swiper class="swiper" catchtap="" next-margin="60rpx" previous-margin="60rpx" current="{{0}}" bindchange="swiperChange" indicator-dots="{{false}}" indicator-active-color="#0C6D4A" circular>
 		<block wx:for="{{zhengshuList}}" wx:for-item="item" wx:for-index="index" wx:key="index">
 				<swiper-item class="swiperItem" item-id="{{index}}" data-item-id="{{index}}">
-						<view  style="z-index:106; width:634rpx;  transform: scale(0.9);   height:895rpx; background:url('http://westsunshine.sapet.cn/static/cert/cert.png') no-repeat; background-size:100% 100%;">
+						<view  style="z-index:106; width:634rpx;  transform: scale(0.9);   height:895rpx; background:url('https://poetrychildhood.oss-accelerate.aliyuncs.com/poetrychildhood/cert.png') no-repeat; background-size:100% 100%;">
 							<view catchtap="" style="display:flex; align-items:center; justify-content:center; margin-top:136rpx;">
 								<image src="{{user.data.avatar}}" style="width:88rpx; height:88rpx; border-radius:50%; margin-left:42rpx;" />
 								<view style="margin-left:15rpx;">

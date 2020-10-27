@@ -219,7 +219,7 @@ Page({
 		wx.showLoading('图片生成中')
 		const ctx = wx.createCanvasContext('ruleCanvas');
 		wx.downloadFile({
-			url: 'http://westsunshine.sapet.cn/static/cert/cert.png',
+			url: 'https://poetrychildhood.oss-accelerate.aliyuncs.com/poetrychildhood/cert.png',
 			success: function (res) {
 				ctx.drawImage(res.tempFilePath, 0, 0, 634, 859);
 				ctx.save();

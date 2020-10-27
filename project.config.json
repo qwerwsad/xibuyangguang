@@ -20,15 +20,19 @@
     "checkInvalidKey": true,
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "useMultiFrameRuntime": false,
+    "useApiHook": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
-    "useCompilerModule": false,
+    "useIsolateContext": true,
+    "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
-    "compileHotReLoad": false,
-    "useIsolateContext": true
+    "packNpmManually": false,
+    "packNpmRelationList": []
   },
   "compileType": "miniprogram",
   "libVersion": "2.11.3",

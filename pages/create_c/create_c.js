@@ -14,7 +14,6 @@ Page({
 		poem: {},
 		currentItemId: 0,
 		bgms: [],
-		// curBg: "http://westsunshine.sapet.cn/static/work_bg/work_bg1.png",
 		ifShowRecord: 0,
 		recordFile: "",
 		recordStatus: "stop",
@@ -384,7 +383,7 @@ Page({
 		// });
 		console.log(that.data.recordFile)
 		wx.uploadFile({
-			url: util.svrUrl + '/upload',
+			url: util.svrUrl + '/upload-poetry',
 			filePath: that.data.recordFile,
 			name: "file", //后台要绑定的名称
 			// header: { "Content-Type": "multipart/form-data" },
@@ -393,6 +392,14 @@ Page({
 				console.log(res, '上传cheng')
 				const data = res.data && JSON.parse(res.data)
 				if (data) {
+					if (data.errorCode == 5011) {
+						wx.showToast({
+							title: '您今日爱心创作已达到上限，明天再来玩吧。',
+							icon: 'none',
+							duration: 2000
+						})
+						return
+					}
 					that.setData({
 						mp3Url: data.data.fileUrl,
 						ifShowRecord: false
